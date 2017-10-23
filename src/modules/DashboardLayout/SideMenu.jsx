@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Icon } from 'antd';
+import { Link } from 'react-router-dom';
 
 const { Item } = Menu;
 
@@ -16,6 +17,14 @@ class SideMenu extends Component {
 
     return (
       <Menu {...menuProps}>
+        <Item key="-2">
+          <Link to="/" >
+            <Icon type="home" />
+            <span>
+            HOME
+            </span>
+          </Link>
+        </Item>
         {accounts.map((elem) => {
           return (
             <Item key={elem.id}>

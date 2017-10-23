@@ -8,8 +8,9 @@ import {
   Button,
 } from 'antd';
 import SideMenu from './SideMenu';
+import TopMenu from './TopMenu';
 
-const { Header, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 const MOCKACCOUNTS = [
   {
@@ -67,27 +68,10 @@ class DashboardLayout extends Component {
           />
         </Sider>
         <Layout>
-          <Header style={{
-            background: '#fff',
-            padding:    0,
-            border:     'solid 1px red',
-          }}
-          >
-            <span
-              style={{ border: 'solid 1px black', padding: 8 }}
-            >
-              <Button
-                onClick={() => { return this.handleMenuCollapse(); }}
-              >
-                <Icon
-                  className="trigger"
-                  type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                  size="medium"
-                />
-              </Button>
-            </span>
-
-          </Header>
+          <TopMenu
+            collapseAction={() => { return this.handleMenuCollapse(); }}
+            collapseStatus={this.state.collapsed}
+          />
           <Content
             style={{
               margin:     '24px 16px',

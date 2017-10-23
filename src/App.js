@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Homepage from './pages/Home/';
 import logo from './logo.svg';
 import './App.css';
+import './theme/index.less';
 
 class App extends Component {
   componentDidMount() {
