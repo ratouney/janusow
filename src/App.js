@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
 import { withRouter } from 'react-router-dom';
-import Homepage from './pages/Home/';
 import logo from './logo.svg';
 import './App.css';
 import './theme/index.less';
@@ -12,9 +10,13 @@ class App extends Component {
   }
 
   render() {
+    const {
+      children,
+    } = this.props;
+
     return (
       <div>
-        <Homepage />
+        {children}
       </div>
     );
   }

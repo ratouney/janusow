@@ -36,10 +36,12 @@ class SideMenu extends Component {
           );
         })}
         <Item key="-1">
-          <Icon type="plus" style={{ backgroundColor: 'green', color: 'white' }} />
-          <span>
+          <Link to="/select">
+            <Icon type="plus" style={{ backgroundColor: 'green', color: 'white' }} />
+            <span>
             Add Account
-          </span>
+            </span>
+          </Link>
         </Item>
       </Menu>
     );

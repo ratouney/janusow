@@ -18,7 +18,8 @@ import AppReducer from './reducers/';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { SelectUser } from './modules/SelectUser/';
+import SelectPage from './pages/Select/';
+import Homepage from './pages/Home/';
 import NotFound from './modules/NotFound';
 
 const history = createBrowserHistory();
@@ -37,7 +38,8 @@ ReactDOM.render(
         <Router history={history} >
           <App>
             <Switch>
-              <Route path="/select" exact component={SelectUser} />
+              <Route path="/select" exact component={SelectPage} />
+              <Route path="/" exact component={Homepage} />
               <Route component={NotFound} />
             </Switch>
           </App>

@@ -1,16 +1,6 @@
 import { combineReducers } from 'redux';
-
-const initialState = {
-  value: true
-};
-
-function mockReducer(state = initialState, action) {
-  switch (action.type) {
-    default:
-      return state;  
-  }
-}
+import accountReducer from './accounts';
 
 export default combineReducers({
-  mockReducer,
+  accountReducer,
 });

@@ -12,20 +12,6 @@ import TopMenu from './TopMenu';
 
 const { Sider, Content } = Layout;
 
-const MOCKACCOUNTS = [
-  {
-    id:   '1',
-    icon: 'apple',
-    text: 'Ratouney-2516',
-  },
-  {
-    id:   '2',
-    icon: 'pie-chart',
-    text: 'apieceofshit-21134',
-  },
-];
-
-
 class DashboardLayout extends Component {
   constructor(props) {
     super(props);
@@ -60,7 +46,7 @@ class DashboardLayout extends Component {
           style={{ height: '100vh' }}
         >
           <SideMenu
-            accounts={MOCKACCOUNTS}
+            accounts={[]}
             menuProps={{
               theme:               'dark',
               defaultSelectedKeys: ['2'],

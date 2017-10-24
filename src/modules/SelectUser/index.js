@@ -1,8 +1,8 @@
-import { SelectUser } from './SelectUser';
+import SelectUser from './SelectUser';
 
 const TMP = '';
 
 export {
   SelectUser,
   TMP,
-}
+};

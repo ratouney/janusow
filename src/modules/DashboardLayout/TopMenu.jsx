@@ -13,6 +13,16 @@ import { Link } from 'react-router-dom';
 
 const { Header } = Layout;
 
+const DropDownMenu = ({ userName }) => {
+  return (
+    <div>
+      <Avatar shape="square" size="small" icon="user" style={{ marginLeft: 8, marginRight: 8, overflow: 'visible' }} />
+      {userName}
+      <Icon type="down" style={{ fontSize: 14, marginLeft: 5 }} />
+    </div>
+  );
+};
+
 class TopMenu extends Component {
   componentDidMount() {
     // fetch stuff
@@ -52,36 +62,28 @@ class TopMenu extends Component {
         border:     'solid 1px red',
       }}
       >
-        <Row type="flex" justify="space-around" align="middle">
+        <Row gutter={16} type="flex" justify="space-around" align="middle">
           <Col span={2} >
-            <span style={{ border: 'solid 1px black' }} >
+            <span>
               <Button
+                style={{ marginLeft: 10 }}
                 type="primary"
+                size="large"
                 onClick={() => { return collapseAction(); }}
-              >
-                <Icon
-                  className="trigger"
-                  type={collapseStatus ? 'menu-unfold' : 'menu-fold'}
-                  size="medium"
-                />
-              </Button>
+                icon={collapseStatus ? 'menu-unfold' : 'menu-fold'}
+              />
             </span>
           </Col>
-          <Col offset={16} span={1} style={{ border: 'solid 1px blue' }} >
-            <Button
-              disabled
-            >
-              <Icon type="mail" style={{ fontSize: 18 }} />
-            </Button>
-          </Col>
-          <Col span={4} style={{ border: 'solid 1px black' }}>
-            <Avatar shape="square" icon="user" />
-            {userName}
-          </Col>
-          <Col span={1} >
-            <Dropdown overlay={settingsOverlay}>
-              <Icon type="setting" style={{ fontSize: 18 }} />
-            </Dropdown>
+          <Col span={22}>
+            <Row type="flex" justify="end" align="middle" style={{ marginRight: 50 }} >
+              <Button
+                disabled
+                icon="mail"
+              />
+              <Dropdown overlay={settingsOverlay}>
+                <DropDownMenu userName={userName} />
+              </Dropdown>
+            </Row>
           </Col>
         </Row>
 
