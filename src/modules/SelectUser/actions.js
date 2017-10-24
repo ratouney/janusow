@@ -2,11 +2,59 @@ import {
   ADD_NEW_USER_REQUEST,
   ADD_NEW_USER_SUCCESS,
   ADD_NEW_USER_FAILURE,
+  FETCH_FULL_DATA_REQUEST,
+  FETCH_FULL_DATA_SUCCESS,
+  FETCH_FULL_DATA_FAILURE,
 } from './types';
-import axios from 'axios';
 import fetch from 'isomorphic-fetch';
 
 const API_URL = 'https://ow-api.com/v1/stats';
+
+const fetchFullDataRequest = (userData) => {
+  return {
+    type: FETCH_FULL_DATA_REQUEST,
+    userData,
+  };
+};
+
+const fetchFullDataSuccess = (data) => {
+  return {
+    type: FETCH_FULL_DATA_SUCCESS,
+    data,
+  };
+};
+
+const fetchFullDataFailure = (error) => {
+  return {
+    type: FETCH_FULL_DATA_FAILURE,
+    error,
+  };
+};
+
+const fetchFullData = (userData) => {
+  const url = `${API_URL}/${userData.platform}/${userData.region}/${userData.username}-${userData.battletag}/complete`;
+  const params = {
+    method: 'GET',
+    mode:   'cors',
+  };
+
+  return (dispatch) => {
+    dispatch(fetchFullDataRequest());
+    fetch(url, params)
+      .then((response) => {
+        return response.json();
+      }).then((data) => {
+        if (data.error) {
+          dispatch(fetchFullDataFailure(data.error));
+        } else {
+          dispatch(fetchFullDataSuccess(data));
+        }
+      })
+      .catch((error) => {
+        console.log('FUCK OFF : ', error.toString());
+      });
+  };
+};
 
 const addNewUserRequest = (userData) => {
   return {
@@ -29,31 +77,33 @@ const addNewUserFailure = (error) => {
   };
 };
 
-const headers = {
-  Accept:         'application/json',
-  'Content-Type': 'application/json',
-};
-
 const addNewUser = (userData) => {
   const url = `${API_URL}/${userData.platform}/${userData.region}/${userData.username}-${userData.battletag}/profile`;
   const params = {
     method: 'GET',
-    headers,
+    mode:   'cors',
   };
 
   return (dispatch) => {
     dispatch(addNewUserRequest());
-    axios.get(url, { headers: { 'Access-Control-Allow-Origin': '*' } })
+    fetch(url, params)
       .then((response) => {
-        debugger;
-        dispatch(addNewUserSuccess(response.data));
+        return response.json();
+      }).then((data) => {
+        if (data.error) {
+          dispatch(addNewUserFailure(data.error));
+        } else {
+          dispatch(addNewUserSuccess(data));
+          dispatch(fetchFullData(userData));
+        }
       })
       .catch((error) => {
-        dispatch(addNewUserFailure(error));
+        console.log('FUCK OFF : ', error.toString());
       });
   };
 };
 
 export {
+  fetchFullData,
   addNewUser,
 };
