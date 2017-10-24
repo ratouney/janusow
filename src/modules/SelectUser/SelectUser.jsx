@@ -115,6 +115,12 @@ class SelectUser extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+
+  };
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     onSubmit: (userConfig) => {
@@ -132,4 +138,4 @@ const mapPropsToFields = () => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Form.create({ mapPropsToFields })(SelectUser));
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ mapPropsToFields })(SelectUser));

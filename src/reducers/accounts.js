@@ -6,14 +6,19 @@ import {
   FETCH_FULL_DATA_SUCCESS,
   FETCH_FULL_DATA_FAILURE,
 } from '../modules/SelectUser/types';
+import _ from 'lodash';
+import { message } from 'antd';
 
 const initialState = {
-  accountNames: [],
-  accountData:  [],
-  isFetching:   false,
-  hasFound:     false,
-  hasLoaded:    false,
+  accountData: [],
+  isFetching:  false,
+  hasFound:    false,
+  hasLoaded:   false,
 };
+
+function getBtag(username, btag) {
+  return `${username}#${btag}`;
+}
 
 function accountReducer(state = initialState, action) {
   switch (action.type) {
@@ -25,16 +30,26 @@ function accountReducer(state = initialState, action) {
         isFetching: true,
       };
 
-    case FETCH_FULL_DATA_SUCCESS:
-      console.log('User loaded : ', action.data);
+    case FETCH_FULL_DATA_SUCCESS: {
+      const {
+        accountData,
+      } = state;
+
+      const fulltag = getBtag(action.data.name, action.btag);
+      accountData.push({ ...action.data, fullname: fulltag, key: fulltag });
+
+      message.success(`User ${fulltag} successfully loaded`);
       return {
         ...state,
+        accountData,
         hasFound:   true,
         hasLoaded:  true,
         isFetching: false,
       };
+    }
 
     case FETCH_FULL_DATA_FAILURE:
+      message.error(action.error.toString());
       return {
         ...state,
         hasFound:   true,
@@ -43,6 +58,7 @@ function accountReducer(state = initialState, action) {
       };
 
     case ADD_NEW_USER_FAILURE:
+      message.error(action.error.toString());
       return {
         ...state,
         hasFound:   false,
@@ -57,7 +73,6 @@ function accountReducer(state = initialState, action) {
       };
 
     case ADD_NEW_USER_SUCCESS:
-      console.log('User found : ', action.data);
       return {
         ...state,
         hasFound:   true,

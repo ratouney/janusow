@@ -17,10 +17,11 @@ const fetchFullDataRequest = (userData) => {
   };
 };
 
-const fetchFullDataSuccess = (data) => {
+const fetchFullDataSuccess = (data, btag) => {
   return {
     type: FETCH_FULL_DATA_SUCCESS,
     data,
+    btag,
   };
 };
 
@@ -39,7 +40,7 @@ const fetchFullData = (userData) => {
   };
 
   return (dispatch) => {
-    dispatch(fetchFullDataRequest());
+    dispatch(fetchFullDataRequest(userData));
     fetch(url, params)
       .then((response) => {
         return response.json();
@@ -47,7 +48,7 @@ const fetchFullData = (userData) => {
         if (data.error) {
           dispatch(fetchFullDataFailure(data.error));
         } else {
-          dispatch(fetchFullDataSuccess(data));
+          dispatch(fetchFullDataSuccess(data, userData.battletag));
         }
       })
       .catch((error) => {
@@ -85,7 +86,7 @@ const addNewUser = (userData) => {
   };
 
   return (dispatch) => {
-    dispatch(addNewUserRequest());
+    dispatch(addNewUserRequest(userData));
     fetch(url, params)
       .then((response) => {
         return response.json();
