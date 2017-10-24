@@ -28,10 +28,12 @@ class SideMenu extends Component {
         {accounts.map((elem) => {
           return (
             <Item key={elem.key}>
-              <Icon type={elem.icon} />
-              <span>
-                {elem.text}
-              </span>
+              <Link to={`/account/${elem.text}`} >
+                <Icon type={elem.icon} />
+                <span>
+                  {elem.text}
+                </span>
+              </Link>
             </Item>
           );
         })}

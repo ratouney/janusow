@@ -6,7 +6,6 @@ import {
   FETCH_FULL_DATA_SUCCESS,
   FETCH_FULL_DATA_FAILURE,
 } from '../modules/SelectUser/types';
-import _ from 'lodash';
 import { message } from 'antd';
 
 const initialState = {
