@@ -1,3 +1,5 @@
+import { message } from 'antd';
+import _ from 'lodash';
 import {
   ADD_NEW_USER_FAILURE,
   ADD_NEW_USER_REQUEST,
@@ -6,13 +8,13 @@ import {
   FETCH_FULL_DATA_SUCCESS,
   FETCH_FULL_DATA_FAILURE,
 } from '../modules/SelectUser/types';
-import { message } from 'antd';
 
 const initialState = {
   accountData: [],
   isFetching:  false,
   hasFound:    false,
   hasLoaded:   false,
+  progress:    0,
 };
 
 function getBtag(username, btag) {
@@ -27,6 +29,7 @@ function accountReducer(state = initialState, action) {
         hasFound:   false,
         hasLoaded:  false,
         isFetching: true,
+        progress:   3,
       };
 
     case FETCH_FULL_DATA_SUCCESS: {
@@ -35,14 +38,27 @@ function accountReducer(state = initialState, action) {
       } = state;
 
       const fulltag = getBtag(action.data.name, action.btag);
-      accountData.push({ ...action.data, fullname: fulltag, key: fulltag });
 
+      if (_.find(accountData, { fullname: fulltag })) {
+        message.error(`User ${fulltag} already saved`);
+        return {
+          ...state,
+          accountData,
+          hasFound:   true,
+          hasLoaded:  false,
+          progress:   -4,
+          isFetching: false,
+        };
+      }
+
+      accountData.push({ ...action.data, fullname: fulltag, key: fulltag });
       message.success(`User ${fulltag} successfully loaded`);
       return {
         ...state,
         accountData,
         hasFound:   true,
         hasLoaded:  true,
+        progress:   4,
         isFetching: false,
       };
     }
@@ -53,6 +69,7 @@ function accountReducer(state = initialState, action) {
         ...state,
         hasFound:   true,
         hasLoaded:  false,
+        progress:   -4,
         isFetching: false,
       };
 
@@ -62,6 +79,7 @@ function accountReducer(state = initialState, action) {
         ...state,
         hasFound:   false,
         isFetching: false,
+        progress:   -2,
       };
 
     case ADD_NEW_USER_REQUEST:
@@ -69,6 +87,7 @@ function accountReducer(state = initialState, action) {
         ...state,
         hasFound:   false,
         isFetching: true,
+        progress:   1,
       };
 
     case ADD_NEW_USER_SUCCESS:
@@ -76,6 +95,7 @@ function accountReducer(state = initialState, action) {
         ...state,
         hasFound:   true,
         isFetching: false,
+        progress:   2,
       };
 
     default:

@@ -9,11 +9,15 @@ class AccountDisplay extends Component {
   render() {
     const {
       id,
+      userData,
     } = this.props;
+
+    console.log('UserData : ', userData);
 
     return (
       <div>
         Displaying account stuff for : {id}
+
       </div>
     );
   }

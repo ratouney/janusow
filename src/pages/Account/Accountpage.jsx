@@ -8,8 +8,6 @@ const AccountPage = (props) => {
     location,
   } = props;
 
-  console.log('Props in page : ', props);
-
   return (
     <DashboardLayout>
       <AccountDisplay id={`${match.params.id}${location.hash}`} />

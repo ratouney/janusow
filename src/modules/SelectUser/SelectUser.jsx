@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Row, Col, Card } from 'antd';
+import {
+  Form,
+  Row,
+  Col,
+  Card,
+  Steps,
+} from 'antd';
 import {
   FormItemInput,
   FormItemSubmit,
   FormItemSelect,
 } from '../../utils/Form/';
 import { addNewUser } from './actions';
+import ProgressDiag from './ProgressDiag';
+
+const { Step } = Steps;
 
 const REGIONS = [
   {
@@ -45,8 +54,13 @@ const PLATFORMS = [
 ];
 
 class SelectUser extends Component {
-  componentDidMount() {
-    // stuff
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ...this.state,
+      isSubmitting: false,
+    };
   }
 
   handleSubmit(e) {
@@ -55,6 +69,9 @@ class SelectUser extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.props.onSubmit(values);
+        this.setState({
+          isSubmitting: true,
+        });
       }
     });
   }
@@ -62,7 +79,14 @@ class SelectUser extends Component {
   render() {
     const {
       form,
+      hasFound,
+      hasLoaded,
+      isFetching,
     } = this.props;
+
+    const {
+      isSubmitting,
+    } = this.state;
 
     const {
       getFieldDecorator,
@@ -109,6 +133,8 @@ class SelectUser extends Component {
             <FormItemSubmit />
 
           </Form>
+
+          <ProgressDiag />
         </Card>
       </div>
     );
@@ -117,7 +143,10 @@ class SelectUser extends Component {
 
 function mapStateToProps(state) {
   return {
-
+    hasFound:   state.accountReducer.hasFound,
+    hasLoaded:  state.accountReducer.hasLoaded,
+    isFetching: state.accountReducer.isFetching,
+    progress:   state.accountReducer.progress,
   };
 }
 
