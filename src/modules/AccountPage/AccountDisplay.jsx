@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 class AccountDisplay extends Component {
   componentDidMount() {
@@ -12,12 +13,18 @@ class AccountDisplay extends Component {
       userData,
     } = this.props;
 
+    const currentUser = _.find(userData, { fullname: id });
+
     console.log('UserData : ', userData);
+    console.log('CurrentUser : ', currentUser);
 
     return (
       <div>
         Displaying account stuff for : {id}
 
+        <br />
+        <br />
+        {JSON.stringify(currentUser)}
       </div>
     );
   }
