@@ -17,11 +17,11 @@ const fetchFullDataRequest = (userData) => {
   };
 };
 
-const fetchFullDataSuccess = (data, btag) => {
+const fetchFullDataSuccess = (data, userData) => {
   return {
     type: FETCH_FULL_DATA_SUCCESS,
     data,
-    btag,
+    userData,
   };
 };
 
@@ -48,7 +48,7 @@ const fetchFullData = (userData) => {
         if (data.error) {
           dispatch(fetchFullDataFailure(data.error));
         } else {
-          dispatch(fetchFullDataSuccess(data, userData.battletag));
+          dispatch(fetchFullDataSuccess(data, userData));
         }
       })
       .catch((error) => {

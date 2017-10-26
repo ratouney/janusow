@@ -42,7 +42,12 @@ class DashboardLayout extends Component {
 
     if (accountData.length) {
       accounts = accountData.map((elem) => {
-        return { key: elem.fullname, text: elem.fullname, value: elem.fullname };
+        return {
+          key:     elem.fullname,
+          text:    elem.fullname,
+          value:   elem.fullname,
+          iconUrl: elem.icon,
+        };
       });
     }
 
@@ -56,7 +61,7 @@ class DashboardLayout extends Component {
           style={{ height: '100vh' }}
         >
           <SideMenu
-            accounts={accounts.length ? accounts : []}
+            collapsed={this.state.collapsed}
             menuProps={{
               theme:               'dark',
               defaultSelectedKeys: ['2'],

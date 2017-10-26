@@ -7,51 +7,9 @@ import {
   Card,
   Steps,
 } from 'antd';
-import {
-  FormItemInput,
-  FormItemSubmit,
-  FormItemSelect,
-} from '../../utils/Form/';
 import { addNewUser } from './actions';
 import ProgressDiag from './ProgressDiag';
-
-const { Step } = Steps;
-
-const REGIONS = [
-  {
-    key:   '1',
-    value: 'eu',
-    text:  'Europe',
-  },
-  {
-    key:   '2',
-    value: 'us',
-    text:  'US',
-  },
-  {
-    key:   '3',
-    value: 'kr',
-    text:  'Korea',
-  },
-];
-
-const PLATFORMS = [
-  {
-    key:   '1',
-    value: 'pc',
-    text:  'Masterrace',
-  },
-  {
-    key:   '2',
-    value: 'pns',
-    text:  'Playstation 4',
-  },
-  {
-    key:   '3',
-    value: 'xbl',
-    text:  'Xbox One',
-  },
-];
+import { SelectForm } from '../SelectForm/';
 
 class SelectUser extends Component {
   constructor(props) {
@@ -77,66 +35,20 @@ class SelectUser extends Component {
   }
 
   render() {
-    const {
-      form,
-      hasFound,
-      hasLoaded,
-      isFetching,
-    } = this.props;
-
-    const {
-      isSubmitting,
-    } = this.state;
-
-    const {
-      getFieldDecorator,
-    } = form;
-
     return (
-      <div>
-        <Card title="Select your account" >
-          <Form onSubmit={(e) => { return this.handleSubmit(e); }} >
-            <Row>
-              <Col span={4} style={{ margin: 5 }} >
-                <FormItemSelect
-                  id="region"
-                  getFieldDecorator={getFieldDecorator}
-                  dataSource={REGIONS}
-                />
-              </Col>
-              <Col span={4} style={{ margin: 5 }} >
-                <FormItemSelect
-                  id="platform"
-                  getFieldDecorator={getFieldDecorator}
-                  dataSource={PLATFORMS}
-                />
-              </Col>
-              <Col span={4} style={{ margin: 5 }} >
-                <FormItemInput
-                  isRequired
-                  customFormItemProps={{ label: 'Username' }}
-                  customInputProps={{ placeholder: 'Krusher99' }}
-                  getFieldDecorator={getFieldDecorator}
-                  id="username"
-                />
-              </Col>
-              <Col span={4} style={{ margin: 5 }} >
-                <FormItemInput
-                  isRequired
-                  customFormItemProps={{ label: 'Battletag' }}
-                  customInputProps={{ placeholder: '1337' }}
-                  getFieldDecorator={getFieldDecorator}
-                  id="battletag"
-                />
-              </Col>
-            </Row>
-            <FormItemSubmit />
+      <Card title="Select your account" >
+        <Row>
+          <SelectForm />
 
-          </Form>
+          <Col xs={0} sm={0} md={24} lg={24} xl={24}>
+            <ProgressDiag direction="horizontal" />
+          </Col>
 
-          <ProgressDiag />
-        </Card>
-      </div>
+          <Col xs={24} sm={24} md={0} lg={0} xl={0}>
+            <ProgressDiag direction="vertical" />
+          </Col>
+        </Row>
+      </Card>
     );
   }
 }
@@ -158,13 +70,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const mapPropsToFields = () => {
-  return {
-    region:    { value: 'eu' },
-    platform:  { value: 'pc' },
-    username:  { value: 'Ratouney' },
-    battletag: { value: '2516' },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ mapPropsToFields })(SelectUser));
+export default connect(mapStateToProps, mapDispatchToProps)(SelectUser);

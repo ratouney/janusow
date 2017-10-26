@@ -3,11 +3,16 @@ import { Form, Select } from 'antd';
 
 const defaultSelectProps = {
   placeholder: 'Enter',
+  style:       {
+    width: '100%',
+  },
 };
 
 const defaultFormItemProps = {
-  hasFeedback: true,
-  label:       'Select',
+  label: false,
+  style: {
+    width: '100%',
+  },
 };
 
 const FormItemSelect = (props) => {
@@ -21,7 +26,7 @@ const FormItemSelect = (props) => {
     requiredMessage = 'Please select an entry',
   } = props;
 
-  const SelectProps = {
+  const selectProps = {
     ...defaultSelectProps,
     ...customSelectProps,
   };
@@ -39,10 +44,10 @@ const FormItemSelect = (props) => {
         getFieldDecorator(
           id,
           { rules: [{ required: isRequired, message: requiredMessage }] },
-        )(<Select {...SelectProps}>
+        )(<Select {...selectProps}>
           {dataSource.map((elem) => {
             return (
-              <Select.Option key={elem.key} value={elem.value} >
+              <Select.Option key={elem.key} value={elem.value}>
                 {elem.text}
               </Select.Option>
             );

@@ -8,6 +8,16 @@ import {
 const { Step } = Steps;
 
 class ProgressDiag extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      steps: [
+        { title: 'Exist', wait: 'Checking if User can be found', error: null },
+        { title: 'Found', wait: 'User found!', error: 'User could not be found' },
+      ],
+    };
+  }
+
   componentDidMount() {
     // stuff
   }
@@ -15,6 +25,7 @@ class ProgressDiag extends Component {
   render() {
     const {
       progress,
+      direction = 'vertical',
     } = this.props;
 
     const error = progress < 0;
@@ -27,7 +38,7 @@ class ProgressDiag extends Component {
     }
     // debugger;
     return (
-      <Steps direction="vertical" current={error ? -progress - 1 : progress} status={error ? 'error' : 'wait'}>
+      <Steps direction={direction} current={error ? -progress - 1 : progress} status={error ? 'error' : 'wait'}>
         <Step title="Exist" description="Checking if User can be found" />
         {
           progress === -2

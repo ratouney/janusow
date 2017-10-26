@@ -6,8 +6,8 @@ const defaultInputProps = {
 };
 
 const defaultFormItemProps = {
-  hasFeedback: true,
-  label:       'Input',
+  width: '100vh',
+  label: 'Input',
 };
 
 const FormItemInput = ({

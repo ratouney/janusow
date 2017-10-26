@@ -5,6 +5,7 @@ const defaultFormItemProps = {};
 
 const defaultButtonProps = {
   type:     'primary',
+  width:    '100vh',
   htmlType: 'submit',
 };
 

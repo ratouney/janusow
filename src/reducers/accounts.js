@@ -8,6 +8,34 @@ import {
   FETCH_FULL_DATA_SUCCESS,
   FETCH_FULL_DATA_FAILURE,
 } from '../modules/SelectUser/types';
+import DB from '../utils/DB/';
+
+const LOADING_STEP = (key, description = '') => {
+  return {
+    title: 'is loading',
+    icon:  'loading',
+    description,
+    key,
+  };
+};
+
+const FAILED_STEP = (key, description = '') => {
+  return {
+    title: 'error',
+    icon:  'error',
+    description,
+    key,
+  };
+};
+
+const INITIAL_STEPS = [
+  { key: 1, title: 'User', icon: 'user' },
+  { key: 2, title: 'Saving', icon: 'save' },
+];
+
+const failedStep = (steps, current) => {
+  steps.map((s) => { return (s.key === current ? FAILED_STEP(s.key, s.description) : s); });
+};
 
 const initialState = {
   accountData: [],
@@ -37,9 +65,13 @@ function accountReducer(state = initialState, action) {
         accountData,
       } = state;
 
-      const fulltag = getBtag(action.data.name, action.btag);
+      const fulltag = getBtag(action.data.name, action.userData.battletag);
 
-      if (_.find(accountData, { fullname: fulltag })) {
+      const found = DB.get('users')
+        .find({ ...action.userData })
+        .value();
+
+      if (found) {
         message.error(`User ${fulltag} already saved`);
         return {
           ...state,
@@ -51,6 +83,9 @@ function accountReducer(state = initialState, action) {
         };
       }
 
+      DB.get('users')
+        .push({ ...action.userData, icon: action.data.icon })
+        .write();
       accountData.push({ ...action.data, fullname: fulltag, key: fulltag });
       message.success(`User ${fulltag} successfully loaded`);
       return {
@@ -80,14 +115,17 @@ function accountReducer(state = initialState, action) {
         hasFound:   false,
         isFetching: false,
         progress:   -2,
+        steps:      failedStep(state.steps, state.currentStep),
       };
 
     case ADD_NEW_USER_REQUEST:
       return {
         ...state,
-        hasFound:   false,
-        isFetching: true,
-        progress:   1,
+        hasFound:    false,
+        isFetching:  true,
+        progress:    1,
+        steps:       INITIAL_STEPS,
+        currentStep: 1,
       };
 
     case ADD_NEW_USER_SUCCESS:
