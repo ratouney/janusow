@@ -26,7 +26,7 @@ const accountsFromLocalStorage =
 
 const accountListFromLocalStorage = accountsFromLocalStorage
   .map((elem) => {
-    return { username: `${elem.username}#${elem.battletag}`, loaded: false };
+    return { ...elem, loaded: false };
   });
 
 const initialState = {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Card, Button, Row, Col } from 'antd';
 
 class AccountList extends Component {
   componentDidMount() {
@@ -13,7 +14,20 @@ class AccountList extends Component {
 
     return (
       <div>
-        {JSON.stringify(accountList)}
+        {accountList.map((elem) => {
+          console.log('AccountList : ', elem);
+          return (
+            <Card key={`${elem.username}#${elem.battletag}`} title={`${elem.username}#${elem.battletag}`}>
+              {
+                !elem.loaded
+                  ? <Button onClick={() => { return console.log('FETCH DATA FOR : ', elem.username, '#', elem.battletag); }}>
+                  Fetch Data
+                  </Button>
+                  : 'Data fetched'
+              }
+            </Card>
+          );
+        })}
       </div>
     );
   }
