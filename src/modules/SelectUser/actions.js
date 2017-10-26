@@ -11,6 +11,10 @@ import {
 import fetch from 'isomorphic-fetch';
 import DB from '../../utils/DB/';
 
+const settings =
+  DB.get('settings')
+    .value();
+
 const API_URL = 'https://ow-api.com/v1/stats';
 
 const resetSearchSteps = () => {
@@ -125,7 +129,9 @@ const fetchUserExist = (userData) => {
               .push({ ...userData, icon: data.icon })
               .write();
             dispatch(fetchUserExistSuccess(data, userData, true));
-            dispatch(fetchUserData(userData));
+            if (settings.autoLoad) {
+              dispatch(fetchUserData(userData));
+            }
           } else {
             dispatch(fetchUserExistSuccess(data, userData, false));
           }

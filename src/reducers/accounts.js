@@ -18,8 +18,20 @@ import {
 } from '../utils/consts';
 import DB from '../utils/DB/';
 
+const fulltagGen = (userData) => { return `${userData.username}#${userData.battletag}`; };
+
+const accountsFromLocalStorage =
+  DB.get('users')
+    .value();
+
+const accountListFromLocalStorage = accountsFromLocalStorage
+  .map((elem) => {
+    return { username: `${elem.username}#${elem.battletag}`, loaded: false };
+  });
+
 const initialState = {
   accountData:     [],
+  accountList:     accountListFromLocalStorage,
   isFetchingExist: false,
   isFetchingData:  false,
   searchStep:      0,
@@ -52,13 +64,24 @@ function accountReducer(state = initialState, action) {
         searchError:    false,
       };
 
-    case FETCH_USER_DATA_SUCCESS:
+    case FETCH_USER_DATA_SUCCESS: {
+      const currentTag = fulltagGen(action.userData);
+      const accountData = [...state.accountData, { ...action.data, fullname: fulltagGen(action.userData) }];
+      const accountList = state.accountList.map((elem) => {
+        if (fulltagGen(elem) === currentTag) {
+          return { ...elem, loaded: true };
+        } return elem;
+      });
+
       return {
         ...state,
+        accountData,
+        accountList,
         isFetchingData: false,
         searchStep:     4,
         searchError:    false,
       };
+    }
 
     case FETCH_USER_DATA_FAILURE:
       return {
@@ -77,13 +100,17 @@ function accountReducer(state = initialState, action) {
       };
 
     case FETCH_USER_EXIST_SUCCESS: {
+      const { accountList } = state;
+
       if (!action.save) {
         message.warn(`User ${action.userData.username}#${action.userData.battletag} already exists`);
       } else {
         message.success(`User ${action.userData.username}#${action.userData.battletag} saved in list`);
+        accountList.push({ ...action.userData, loaded: false });
       }
       return {
         ...state,
+        accountList,
         isFetchingExist: false,
         searchStep:      2,
         searchError:     false,

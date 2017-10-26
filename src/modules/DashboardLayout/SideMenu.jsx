@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Menu, Icon, Avatar, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import DB from '../../utils/DB/';
@@ -84,4 +85,10 @@ class SideMenu extends Component {
   }
 }
 
-export default SideMenu;
+function mapStateToProps(state) {
+  return {
+    searchStep: state.accountReducer.searchStep,
+  };
+}
+
+export default connect(mapStateToProps)(SideMenu);

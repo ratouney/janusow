@@ -7,12 +7,22 @@ class AccountList extends Component {
   }
 
   render() {
+    const {
+      accountList,
+    } = this.props;
+
     return (
       <div>
-        accountList
+        {JSON.stringify(accountList)}
       </div>
     );
   }
 }
 
-export default AccountList;
+function mapStateToProps(state) {
+  return {
+    accountList: state.accountReducer.accountList,
+  };
+}
+
+export default connect(mapStateToProps)(AccountList);
