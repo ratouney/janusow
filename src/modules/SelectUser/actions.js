@@ -1,38 +1,54 @@
 import {
-  ADD_NEW_USER_REQUEST,
-  ADD_NEW_USER_SUCCESS,
-  ADD_NEW_USER_FAILURE,
-  FETCH_FULL_DATA_REQUEST,
-  FETCH_FULL_DATA_SUCCESS,
-  FETCH_FULL_DATA_FAILURE,
+  FETCH_USER_DATA_FAILURE,
+  FETCH_USER_DATA_REQUEST,
+  FETCH_USER_DATA_SUCCESS,
+  FETCH_USER_EXIST_FAILURE,
+  FETCH_USER_EXIST_REQUEST,
+  FETCH_USER_EXIST_SUCCESS,
+  RESET_SEARCH_STEPS,
+  FETCH_ERROR_STEP,
 } from './types';
 import fetch from 'isomorphic-fetch';
+import DB from '../../utils/DB/';
 
 const API_URL = 'https://ow-api.com/v1/stats';
 
-const fetchFullDataRequest = (userData) => {
+const resetSearchSteps = () => {
   return {
-    type: FETCH_FULL_DATA_REQUEST,
+    type: RESET_SEARCH_STEPS,
+  };
+};
+
+const fetchErrorStep = (step) => {
+  return {
+    type: FETCH_ERROR_STEP,
+    step,
+  };
+};
+
+const fetchUserDataRequest = (userData) => {
+  return {
+    type: FETCH_USER_DATA_REQUEST,
     userData,
   };
 };
 
-const fetchFullDataSuccess = (data, userData) => {
+const fetchUserDataSuccess = (data, userData) => {
   return {
-    type: FETCH_FULL_DATA_SUCCESS,
+    type: FETCH_USER_DATA_SUCCESS,
     data,
     userData,
   };
 };
 
-const fetchFullDataFailure = (error) => {
+const fetchUserDataFailure = (error) => {
   return {
-    type: FETCH_FULL_DATA_FAILURE,
+    type: FETCH_USER_DATA_FAILURE,
     error,
   };
 };
 
-const fetchFullData = (userData) => {
+const fetchUserData = (userData) => {
   const url = `${API_URL}/${userData.platform}/${userData.region}/${userData.username}-${userData.battletag}/complete`;
   const params = {
     method: 'GET',
@@ -40,71 +56,91 @@ const fetchFullData = (userData) => {
   };
 
   return (dispatch) => {
-    dispatch(fetchFullDataRequest(userData));
+    dispatch(fetchUserDataRequest(userData));
     fetch(url, params)
       .then((response) => {
         return response.json();
       }).then((data) => {
         if (data.error) {
-          dispatch(fetchFullDataFailure(data.error));
+          dispatch(fetchUserDataFailure(data.error));
         } else {
-          dispatch(fetchFullDataSuccess(data, userData));
+          dispatch(fetchUserDataSuccess(data, userData));
         }
       })
       .catch((error) => {
         console.log('FUCK OFF : ', error.toString());
+        dispatch(fetchErrorStep(3));
       });
   };
 };
 
-const addNewUserRequest = (userData) => {
+const fetchUserExistRequest = (userData) => {
   return {
-    type: ADD_NEW_USER_REQUEST,
+    type: FETCH_USER_EXIST_REQUEST,
     userData,
   };
 };
 
-const addNewUserSuccess = (data) => {
+const fetchUserExistSuccess = (data, userData, save) => {
   return {
-    type: ADD_NEW_USER_SUCCESS,
+    type: FETCH_USER_EXIST_SUCCESS,
     data,
+    userData,
+    save,
   };
 };
 
-const addNewUserFailure = (error) => {
+const fetchUserExistFailure = (error) => {
   return {
-    type: ADD_NEW_USER_FAILURE,
+    type: FETCH_USER_EXIST_FAILURE,
     error,
   };
 };
 
-const addNewUser = (userData) => {
+const fetchUserExist = (userData) => {
   const url = `${API_URL}/${userData.platform}/${userData.region}/${userData.username}-${userData.battletag}/profile`;
   const params = {
     method: 'GET',
     mode:   'cors',
   };
 
+
+  // TODO : Refactor this, it's unreadable
   return (dispatch) => {
-    dispatch(addNewUserRequest(userData));
+    dispatch(fetchUserExistRequest(userData));
     fetch(url, params)
       .then((response) => {
         return response.json();
       }).then((data) => {
         if (data.error) {
-          dispatch(addNewUserFailure(data.error));
+          dispatch(fetchUserExistFailure(data.error));
         } else {
-          dispatch(addNewUserSuccess(data));
-          dispatch(fetchFullData(userData));
+          const found =
+            DB.get('users')
+              .find({ ...userData })
+              .value();
+
+          if (!found) {
+            DB.get('users')
+              .push({ ...userData, icon: data.icon })
+              .write();
+            dispatch(fetchUserExistSuccess(data, userData, true));
+            dispatch(fetchUserData(userData));
+          } else {
+            dispatch(fetchUserExistSuccess(data, userData, false));
+          }
         }
       })
       .catch((error) => {
         console.log('FUCK OFF : ', error.toString());
+        dispatch(fetchErrorStep(1));
       });
   };
 };
 
 export {
-  fetchFullData,
-  addNewUser,
+  fetchUserExist,
+  fetchUserData,
+  fetchErrorStep,
+  resetSearchSteps,
 };

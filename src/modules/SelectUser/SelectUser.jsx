@@ -7,7 +7,6 @@ import {
   Card,
   Steps,
 } from 'antd';
-import { addNewUser } from './actions';
 import ProgressDiag from './ProgressDiag';
 import { SelectForm } from '../SelectForm/';
 
@@ -35,39 +34,39 @@ class SelectUser extends Component {
   }
 
   render() {
+    const {
+      searchStep,
+    } = this.props;
+
+    console.log('Search Step : ', searchStep);
     return (
-      <Card title="Select your account" >
-        <Row>
+      <Row>
+        <Card title="Select your account" style={{ marginBottom: 15 }} >
           <SelectForm />
+        </Card>
 
-          <Col xs={0} sm={0} md={24} lg={24} xl={24}>
-            <ProgressDiag direction="horizontal" />
-          </Col>
+        {
+          searchStep > 0 ?
+            <Card title="Query progress" >
+              <Col xs={0} sm={0} md={24} lg={24} xl={24}>
+                <ProgressDiag direction="horizontal" />
+              </Col>
 
-          <Col xs={24} sm={24} md={0} lg={0} xl={0}>
-            <ProgressDiag direction="vertical" />
-          </Col>
-        </Row>
-      </Card>
+              <Col xs={24} sm={24} md={0} lg={0} xl={0}>
+                <ProgressDiag direction="vertical" />
+              </Col>
+            </Card>
+            : ''
+        }
+      </Row>
     );
   }
 }
 
 function mapStateToProps(state) {
   return {
-    hasFound:   state.accountReducer.hasFound,
-    hasLoaded:  state.accountReducer.hasLoaded,
-    isFetching: state.accountReducer.isFetching,
-    progress:   state.accountReducer.progress,
+    searchStep: state.accountReducer.searchStep,
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onSubmit: (userConfig) => {
-      dispatch(addNewUser(userConfig));
-    },
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SelectUser);
+export default connect(mapStateToProps)(SelectUser);

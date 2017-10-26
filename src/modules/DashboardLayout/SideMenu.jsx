@@ -10,10 +10,22 @@ class SideMenu extends Component {
     super(props);
 
     const users =
-      DB.get('users')
-        .write();
+    DB.get('users')
+      .value();
 
     this.state = {
+      accounts: users || [],
+    };
+  }
+
+  componentDidUpdate() {
+    const users =
+    DB.get('users')
+      .value();
+
+    console.log('InUpdate : ', users);
+    this.state = {
+      ...this.state,
       accounts: users || [],
     };
   }
@@ -27,6 +39,7 @@ class SideMenu extends Component {
     const {
       accounts,
     } = this.state;
+
 
     return (
       <Menu {...menuProps}>
@@ -50,7 +63,7 @@ class SideMenu extends Component {
                     !collapsed
                       ? <Col span={18} >
                         {`${elem.username}#${elem.battletag}`}
-                        </Col>
+                      </Col>
                       : ''
                   }
                 </Row>

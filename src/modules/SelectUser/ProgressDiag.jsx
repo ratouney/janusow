@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Steps,
-  Icon,
 } from 'antd';
+import { resetSearchSteps } from './actions';
 
 const { Step } = Steps;
 
@@ -12,45 +12,75 @@ class ProgressDiag extends Component {
     super(props);
     this.state = {
       steps: [
-        { title: 'Exist', wait: 'Checking if User can be found', error: null },
-        { title: 'Found', wait: 'User found!', error: 'User could not be found' },
+        {
+          key:   '1',
+          title: 'Search Query',
+          wait:  'Checking if User can be found',
+          error: 'Query failed',
+        },
+        {
+          key:   '2',
+          title: 'User Check',
+          wait:  'User found!',
+          error: 'User could not be found',
+        },
+        {
+          key:   '3',
+          title: 'Fetch Data',
+          wait:  'Fetching profile data',
+          error: 'Profile could not be fetched',
+        },
+        {
+          key:   '4',
+          title: 'Save Data',
+          wait:  'Saving data',
+          error: 'Data could not be saved',
+        },
       ],
     };
   }
 
   componentDidMount() {
-    // stuff
+    this.props.onMountReset();
   }
 
   render() {
     const {
-      progress,
       direction = 'vertical',
+      searchError,
+      searchStep,
     } = this.props;
 
-    const error = progress < 0;
+    const {
+      steps,
+    } = this.state;
 
-    console.log('Progress : ', progress);
-    if (progress === 0) {
+    if (searchStep === 0) {
       return (
         ''
       );
     }
-    // debugger;
+
     return (
-      <Steps direction={direction} current={error ? -progress - 1 : progress} status={error ? 'error' : 'wait'}>
-        <Step title="Exist" description="Checking if User can be found" />
+      <Steps
+        direction={direction}
+        current={searchError ? searchStep - 1 : searchStep}
+        status={searchError ? 'error' : 'wait'}
+      >
         {
-          progress === -2
-            ? <Step title="Error" description="User could not be found" />
-            : <Step title="Found" description="User found !" />
+          steps.map((elem, index) => {
+            const ind = index + 1;
+
+            return (
+              <Step
+                key={ind}
+                title={elem.title}
+                description={searchStep === ind && searchError ? elem.error : elem.wait}
+              />
+            );
+          })
         }
-        <Step title="Complete" description="Loading additional User data" />
-        {
-          progress === -4
-            ? <Step title="Error" description="User could not be saved" />
-            : <Step title="Saved" description="User saved to list" />
-        }
+
       </Steps>
     );
   }
@@ -58,8 +88,17 @@ class ProgressDiag extends Component {
 
 function mapStateToProps(state) {
   return {
-    progress: state.accountReducer.progress,
+    searchStep:  state.accountReducer.searchStep,
+    searchError: state.accountReducer.searchError,
   };
 }
 
-export default connect(mapStateToProps)(ProgressDiag);
+function mapDispatchToProps(dispatch) {
+  return {
+    onMountReset: () => {
+      dispatch(resetSearchSteps());
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProgressDiag);

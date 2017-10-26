@@ -11,7 +11,7 @@ import {
   REGIONS,
   PLATFORMS,
 } from '../../utils/consts';
-import { addNewUser } from './../SelectUser/actions';
+import { fetchUserExist } from './../SelectUser/actions';
 
 class SelectForm extends Component {
   constructor(props) {
@@ -105,7 +105,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onSubmit: (userConfig) => {
-      dispatch(addNewUser(userConfig));
+      dispatch(fetchUserExist(userConfig));
     },
   };
 }
