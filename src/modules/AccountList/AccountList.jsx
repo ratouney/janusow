@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, Button, Row, Col } from 'antd';
+import { Card, Button } from 'antd';
+import { fetchUserData } from '../SelectUser';
 
 class AccountList extends Component {
   componentDidMount() {
@@ -39,4 +40,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(AccountList);
+function mapDispatchToProps(dispatch) {
+  return {
+    onRequestData: () => {
+      dispatch(fetchUserData());
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountList);

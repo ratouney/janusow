@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Form,
   Row,
   Col,
   Card,
-  Steps,
 } from 'antd';
 import ProgressDiag from './ProgressDiag';
 import { SelectForm } from '../SelectForm/';

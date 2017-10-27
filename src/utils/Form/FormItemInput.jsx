@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Form, Input } from 'antd';
 
 const defaultInputProps = {
@@ -10,9 +10,16 @@ const defaultFormItemProps = {
   label: 'Input',
 };
 
-const FormItemInput = ({
-  getFieldDecorator, id, isRequired = false, requiredMessage = 'Please enter a value', customInputProps, customFormItemProps,
-}) => {
+const FormItemInput = (props) => {
+  const {
+    getFieldDecorator,
+    id,
+    isRequired = false,
+    requiredMessage = 'Please enter a value',
+    customInputProps,
+    customFormItemProps,
+  } = props;
+
   const inputProps = {
     ...defaultInputProps,
     ...customInputProps,

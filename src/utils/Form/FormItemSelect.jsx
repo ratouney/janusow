@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Form, Select } from 'antd';
 
 const defaultSelectProps = {
@@ -52,7 +52,7 @@ const FormItemSelect = (props) => {
               </Select.Option>
             );
           })}
-        </Select>)
+          </Select>)
       }
     </Form.Item>
   );

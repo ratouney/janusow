@@ -1,5 +1,4 @@
 import { message } from 'antd';
-import _ from 'lodash';
 import {
   FETCH_USER_DATA_FAILURE,
   FETCH_USER_DATA_REQUEST,
@@ -10,12 +9,7 @@ import {
   RESET_SEARCH_STEPS,
   FETCH_ERROR_STEP,
 } from '../modules/SelectUser/types';
-import {
-  FETCH_COMPLETED,
-  FETCH_CRASHED,
-  FETCH_NONE,
-  FETCH_STARTED,
-} from '../utils/consts';
+
 import DB from '../utils/DB/';
 
 const fulltagGen = (userData) => { return `${userData.username}#${userData.battletag}`; };

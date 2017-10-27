@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
   Layout,
-  Menu,
-  Icon,
-  Row,
-  Col,
-  Button,
 } from 'antd';
 import SideMenu from './SideMenu';
 import TopMenu from './TopMenu';
@@ -34,22 +28,7 @@ class DashboardLayout extends Component {
   render() {
     const {
       children,
-      accountData = [],
-      hasFound,
     } = this.props;
-
-    let accounts = [];
-
-    if (accountData.length) {
-      accounts = accountData.map((elem) => {
-        return {
-          key:     elem.fullname,
-          text:    elem.fullname,
-          value:   elem.fullname,
-          iconUrl: elem.icon,
-        };
-      });
-    }
 
     return (
       <Layout>
@@ -89,11 +68,4 @@ class DashboardLayout extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    accountData: state.accountReducer.accountData,
-    hasFound:    state.accountReducer.hasFound,
-  };
-}
-
-export default connect(mapStateToProps)(DashboardLayout);
+export default DashboardLayout;

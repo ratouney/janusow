@@ -11,10 +11,6 @@ class Homepage extends Component {
   }
 
   render() {
-    const {
-      userData,
-    } = this.props;
-
     const hasUsers =
       DB.get('users')
         .size()
