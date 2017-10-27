@@ -63,9 +63,20 @@ function accountReducer(state = initialState, action) {
       const accountData = [...state.accountData, { ...action.data, fullname: fulltagGen(action.userData) }];
       const accountList = state.accountList.map((elem) => {
         if (fulltagGen(elem) === currentTag) {
-          return { ...elem, loaded: true };
+          return { ...elem, loaded: true, icon: action.data.icon };
         } return elem;
       });
+      const val = DB.get('users')
+        .find({ ...action.userData })
+        .assign({ icon: action.data.icon })
+        .write();
+
+      const fd = DB.get('users')
+        .find({ username: action.userData.username, battletag: action.userData.battletag })
+        .assign({ icon: action.data.icon })
+        .value();
+      console.log('Val  :', val);
+      console.log('fd : ', fd);
 
       return {
         ...state,
