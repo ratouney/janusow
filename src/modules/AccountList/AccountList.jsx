@@ -11,6 +11,7 @@ class AccountList extends Component {
   render() {
     const {
       accountList,
+      onRequestData,
     } = this.props;
 
     return (
@@ -21,7 +22,7 @@ class AccountList extends Component {
             <Card key={`${elem.username}#${elem.battletag}`} title={`${elem.username}#${elem.battletag}`}>
               {
                 !elem.loaded
-                  ? <Button onClick={() => { return console.log('FETCH DATA FOR : ', elem.username, '#', elem.battletag); }}>
+                  ? <Button onClick={() => { onRequestData({ ...elem }); }}>
                   Fetch Data
                   </Button>
                   : 'Data fetched'
@@ -42,8 +43,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onRequestData: () => {
-      dispatch(fetchUserData());
+    onRequestData: (userData) => {
+      dispatch(fetchUserData(userData));
     },
   };
 }
