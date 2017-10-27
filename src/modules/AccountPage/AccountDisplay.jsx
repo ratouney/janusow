@@ -39,30 +39,12 @@ class AccountDisplay extends Component {
     }
 
     const currentUser = _.find(userData, { fullname: id });
-    const QuickPlayHeroesPlaytimeSort = Object.keys(currentUser.quickPlayStats.careerStats).filter((elem) => { return elem !== 'allHeroes'; }).map((hero) => { return { ...currentUser.quickPlayStats.careerStats[hero], hero }; }).sort((a, b) => {
-      const aPlaytime = playtimeToMinute(a.game.timePlayed);
-      const bPlaytime = playtimeToMinute(b.game.timePlayed);
-
-      if (aPlaytime < bPlaytime) { return 1; }
-      if (aPlaytime > bPlaytime) { return -1; }
-      return 0;
-    });
-    const QuickPlayTime = currentUser.quickPlayStats.careerStats.allHeroes.game.timePlayed;
-    const QuickPlayMain = QuickPlayHeroesPlaytimeSort[0];
-    // const QuickPlayMainPercentage = QuickPlayMain.
-
-    console.log('UserData : ', userData);
-    console.log('CurrentUser : ', currentUser);
-    console.log('QPTIME : ', QuickPlayHeroesPlaytimeSort);
-
 
     return (
       <div>
         Displaying account stuff for : {id}
 
-        <MainHeroCard
-          heroName={QuickPlayMain.hero}
-        />
+        {JSON.stringify(currentUser)}
       </div>
     );
   }
