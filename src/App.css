@@ -28,3 +28,11 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.widowmaker .ant-progress-outer .ant-progress-inner .ant-progress-bg {
+  background-color: #ff1;
+}
+
+.mccree .ant-progress-outer .ant-progress-inner .ant-progress-bg {
+  background-color: rgb(141, 57, 57);
+}
