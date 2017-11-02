@@ -5,7 +5,7 @@ import lodashId from 'lodash-id';
 const adapter = new LocalStorage('JanusOw');
 const db = low(adapter);
 
-db.defaults({ users: [], settings: { autoLoad: false } })
+db.defaults({ users: [], settings: { autoLoad: true, language: 'en' } })
   .write();
 
 db._.mixin(lodashId);

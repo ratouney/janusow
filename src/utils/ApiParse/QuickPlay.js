@@ -1,25 +1,49 @@
+import _ from 'lodash';
+import {
+  playtimePercentage,
+  playtimeToMinute,
+} from './func';
+
 export const QuickPlay = (data) => { return data.quickPlayStats.careerStats; };
 export const QuickPlayGeneral = (data) => { return data.quickPlayStats; };
 
 export const QuickPlayHeroes = (data) => {
   return (
-    Object.keys(QuickPlay(data)).filter((elem) => { return elem !== 'allHeroes'; })
+    Object.keys(QuickPlay(data))
+      .filter((elem) => { return elem !== 'allHeroes'; })
+      .map((hero) => { return { ...data.quickPlayStats.careerStats[hero], hero }; })
+      .sort((a, b) => {
+        const aPlaytime = playtimeToMinute(a.game.timePlayed);
+        const bPlaytime = playtimeToMinute(b.game.timePlayed);
+
+        if (aPlaytime < bPlaytime) { return 1; }
+        if (aPlaytime > bPlaytime) { return -1; }
+        return 0;
+      })
   );
 };
 
-/*
-const QuickPlayHeroesPlaytimeSort =
-Object.keys(currentUser.quickPlayStats.careerStats)
-.filter((elem) => { return elem !== 'allHeroes'; })
-.map((hero) => { return { ...currentUser.quickPlayStats.careerStats[hero], hero }; })
-.sort((a, b) => {
-  const aPlaytime = playtimeToMinute(a.game.timePlayed);
-  const bPlaytime = playtimeToMinute(b.game.timePlayed);
+export const QuickPlayHero = (data, hero) => {
+  return _.find(QuickPlayHeroes(data), { hero });
+};
 
-  if (aPlaytime < bPlaytime) { return 1; }
-  if (aPlaytime > bPlaytime) { return -1; }
-  return 0;
-});
-const QuickPlayTime = currentUser.quickPlayStats.careerStats.allHeroes.game.timePlayed;
-const QuickPlayMain = QuickPlayHeroesPlaytimeSort[0]
-*/
+export const QuickPlayMainHero = (data) => {
+  return (
+    QuickPlayHeroes(data)[0].hero
+  );
+};
+
+export const QuickPlayHeroPlaytime = (data, hero) => {
+  return QuickPlayHero(data, hero).game.timePlayed;
+};
+
+export const QuickPlayFullTime = (data) => {
+  return QuickPlay(data).allHeroes.game.timePlayed;
+};
+
+export const QuickPlayHeroPercentage = (data, hero) => {
+  const HeroPL = QuickPlayHeroPlaytime(data, hero);
+  const FullPL = QuickPlayFullTime(data);
+  
+  return playtimeToMinute(HeroPL) / (playtimeToMinute(FullPL) / 100);
+};

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Card, Button, Table, Avatar, Row, Col } from 'antd';
+import { Button, Table, Avatar, Row, Col } from 'antd';
 import { fetchUserData } from '../SelectUser';
 
 class AccountList extends Component {
@@ -26,9 +26,24 @@ class AccountList extends Component {
     });
   }
 
+  renderStatusButton(entry, loaded, isFetchingData) {
+    if (isFetchingData) {
+      return (
+        <Button loading>
+            Loading data...
+        </Button>
+      );
+    }
+    return (
+      loaded ? <Link to={`/account/${entry.username}#${entry.battletag}`} ><Button>Show profile</Button></Link>
+        : <Button onClick={() => { return this.props.onRequestData(entry); }}>Load profile</Button>
+    );
+  }
+
   render() {
     const {
       accountList,
+      isFetchingData,
       onRequestData,
     } = this.props;
 
@@ -60,10 +75,7 @@ class AccountList extends Component {
         title:     'Data Status',
         dataIndex: 'loaded',
         render:    (value, entry) => {
-          return (
-            value ? <Link to={`/account/${entry.username}#${entry.battletag}`} ><Button>Show profile</Button></Link>
-              : <Button onClick={() => { return onRequestData(entry); }}>Load profile</Button>
-          );
+          return this.renderStatusButton(entry, value, isFetchingData);
         },
       },
     ];
@@ -91,7 +103,8 @@ class AccountList extends Component {
 
 function mapStateToProps(state) {
   return {
-    accountList: state.accountReducer.accountList,
+    accountList:    state.accountReducer.accountList,
+    isFetchingData: state.accountReducer.isFetchingData,
   };
 }
 
