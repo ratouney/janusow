@@ -1,4 +1,5 @@
 import { message } from 'antd';
+import { isEmpty } from 'lodash';
 import {
   FETCH_USER_DATA_FAILURE,
   FETCH_USER_DATA_REQUEST,
@@ -9,23 +10,34 @@ import {
   RESET_SEARCH_STEPS,
   FETCH_ERROR_STEP,
 } from '../modules/SelectUser/types';
+import {
+  REMOVE_USER,
+} from '../modules/AccountList/types';
+import {
+  EDIT_USER,
+} from '../modules/AccountForm/types';
+import {
+  OPEN as ACCOUNT_MODAL_OPEN,
+} from '../modules/AccountForm/ModalAccountForm/reducer';
 
 import DB from '../utils/DB/';
 
 const fulltagGen = (userData) => { return `${userData.username}#${userData.battletag}`; };
 
-const accountsFromLocalStorage =
-  DB.get('users')
+const accountsFromLocalStorage = () => {
+  return DB.get('users')
     .value();
+};
 
-const accountListFromLocalStorage = accountsFromLocalStorage
+const accountListFromLocalStorage = accountsFromLocalStorage()
   .map((elem) => {
-    return { ...elem, loaded: false };
+    return { ...elem, loaded: false, key: fulltagGen(elem) };
   });
 
 const initialState = {
   accountData:     [],
   accountList:     accountListFromLocalStorage,
+  errors:          [],
   isFetchingExist: false,
   isFetchingData:  false,
   searchStep:      0,
@@ -34,6 +46,75 @@ const initialState = {
 
 function accountReducer(state = initialState, action) {
   switch (action.type) {
+    case ACCOUNT_MODAL_OPEN: {
+      return {
+        ...state,
+        errors: [],
+      };
+    }
+
+    case EDIT_USER: {
+      if (!action.valid) {
+        return {
+          ...state,
+          errors: [...state.errors, `${fulltagGen(action.current)} already exists in the saved accounts`],
+        };
+      }
+
+      DB.get('users')
+        .find({
+          username:  action.initial.username,
+          battletag: action.initial.battletag,
+          platform:  action.initial.platform,
+        })
+        .assign({ ...action.initial, ...action.current })
+        .write();
+
+      const newAccountData = state.accountData.filter((elem) => {
+        return elem.fullname !== fulltagGen(action.initial);
+      });
+
+      const newAccountList = state.accountList.map((elem) => {
+        return elem.username === action.initial.username &&
+        elem.battletag === action.initial.battletag &&
+          elem.platform === action.initial.platform
+          ? { ...elem, ...action.current, key: fulltagGen(action.current) }
+          : elem;
+      });
+
+      return {
+        ...state,
+        accountData: newAccountData,
+        accountList: newAccountList,
+      };
+    }
+
+    case REMOVE_USER: {
+      const {
+        userData,
+      } = action;
+
+      DB.get('users')
+        .remove({ username: action.userData.username, battletag: action.userData.battletag })
+        .write();
+
+      const newAccountList = state.accountList.filter((elem) => {
+        return !(elem.username === userData.username &&
+          elem.battletag === userData.battletag &&
+          elem.platform === userData.platform);
+      });
+
+      const newAccountData = state.accountData.filter((elem) => {
+        return elem.fullname !== fulltagGen(userData);
+      });
+
+      return {
+        ...state,
+        accountData: newAccountData,
+        accountList: newAccountList,
+      };
+    }
+
     case FETCH_ERROR_STEP:
       return {
         ...state,

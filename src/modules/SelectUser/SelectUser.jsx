@@ -6,7 +6,8 @@ import {
   Card,
 } from 'antd';
 import ProgressDiag from './ProgressDiag';
-import { SelectForm } from '../SelectForm/';
+import { AccountForm } from '../AccountForm/';
+import { fetchUserExist } from './actions';
 
 class SelectUser extends Component {
   constructor(props) {
@@ -34,13 +35,17 @@ class SelectUser extends Component {
   render() {
     const {
       searchStep,
+      onSubmit,
     } = this.props;
 
     console.log('Search Step : ', searchStep);
     return (
       <Row>
         <Card title="Select your account" style={{ marginBottom: 15 }} >
-          <SelectForm />
+          <AccountForm
+            onSubmit={onSubmit}
+            userData={{}}
+          />
         </Card>
 
         {
@@ -67,4 +72,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(SelectUser);
+function mapDispatchToProps(dispatch) {
+  return {
+    onSubmit: (useless, values) => {
+      dispatch(fetchUserExist(values));
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectUser);

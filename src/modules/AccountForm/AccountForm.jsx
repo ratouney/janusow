@@ -1,60 +1,55 @@
-
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Form } from 'antd';
+import {
+  Form,
+} from 'antd';
 import {
   FormItemInput,
-  FormItemSubmit,
   FormItemSelect,
+  FormItemSubmit,
 } from '../../utils/Form/';
 import {
   REGIONS,
   PLATFORMS,
 } from '../../utils/consts';
-import { fetchUserExist } from './../SelectUser/actions';
 
-class SelectForm extends Component {
+class AccountForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      ...this.state,
-      isSubmitting: false,
+
     };
   }
 
-  handleSubmit(e) {
+  handleSubmit(e, onSubmit) {
     e.preventDefault();
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.onSubmit(values);
-        this.setState({
-          isSubmitting: true,
-        });
+        onSubmit(this.props.userData, values);
       }
     });
   }
 
   render() {
     const {
-      form,
-      isFetching,
+      onSubmit,
+      submitButtonContent = 'Submit',
+      loading = false,
+      form: { getFieldDecorator },
     } = this.props;
 
-    const {
-      getFieldDecorator,
-    } = form;
-
     return (
-      <Form onSubmit={(e) => { return this.handleSubmit(e); }} layout="horizontal" >
+      <Form onSubmit={(e) => { return this.handleSubmit(e, onSubmit); }} layout="horizontal" >
         <FormItemSelect
+          customFormItemProps={{ label: 'Region' }}
           id="region"
           getFieldDecorator={getFieldDecorator}
           dataSource={REGIONS}
         />
 
         <FormItemSelect
+          customFormItemProps={{ label: 'Platform' }}
           id="platform"
           getFieldDecorator={getFieldDecorator}
           dataSource={PLATFORMS}
@@ -77,37 +72,30 @@ class SelectForm extends Component {
         />
 
         <FormItemSubmit
-          customButtonProps={{ loading: isFetching }}
-          buttonContent="Search"
+          customButtonProps={{ loading }}
+          buttonContent={submitButtonContent}
         />
       </Form>
     );
   }
 }
 
-const mapPropsToFields = () => {
+const mapPropsToFields = ({
+  userData = {
+    region:    'eu',
+    platform:  'pc',
+    username:  'Ana',
+    battletag: '22345',
+  },
+}) => {
   return {
 
-    region:    { value: 'eu' },
-    platform:  { value: 'pc' },
-    username:  { value: 'Ratouney' },
-    battletag: { value: '2516' },
+    region:    { value: userData.region },
+    platform:  { value: userData.platform },
+    username:  { value: userData.username },
+    battletag: { value: userData.battletag },
 
   };
 };
 
-function mapStateToProps(state) {
-  return {
-    isFetching: state.accountReducer.isFetching,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onSubmit: (userConfig) => {
-      dispatch(fetchUserExist(userConfig));
-    },
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ mapPropsToFields })(SelectForm));
+export default Form.create({ mapPropsToFields })(AccountForm);
