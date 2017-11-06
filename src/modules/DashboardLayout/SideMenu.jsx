@@ -24,7 +24,6 @@ class SideMenu extends Component {
     DB.get('users')
       .value();
 
-    console.log('InUpdate : ', users);
     this.state = {
       ...this.state,
       accounts: users || [],
@@ -64,7 +63,7 @@ class SideMenu extends Component {
                     !collapsed
                       ? <Col span={18} >
                         {`${elem.username}#${elem.battletag}`}
-                      </Col>
+                        </Col>
                       : ''
                   }
                 </Row>

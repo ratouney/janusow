@@ -6,7 +6,7 @@ import {
   Card,
 } from 'antd';
 import ProgressDiag from './ProgressDiag';
-import { SelectForm } from '../SelectForm/';
+import { AccountForm } from '../AccountForm/';
 
 class SelectUser extends Component {
   constructor(props) {
@@ -40,7 +40,9 @@ class SelectUser extends Component {
     return (
       <Row>
         <Card title="Select your account" style={{ marginBottom: 15 }} >
-          <SelectForm />
+          <AccountForm
+            userData={{}}
+          />
         </Card>
 
         {

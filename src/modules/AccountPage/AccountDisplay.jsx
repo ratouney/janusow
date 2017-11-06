@@ -7,7 +7,7 @@ import {
   Pie,
 } from 'react-chartjs-2';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import _, { isEmpty, find }  from 'lodash';
 import {
   QuickPlay,
   QuickPlayGeneral,
@@ -46,7 +46,7 @@ class AccountDisplay extends Component {
       userData,
     } = this.props;
 
-    if (!userData || userData.length === 0) {
+    if (isEmpty(userData) || find(userData, { fullname: id }) === undefined) {
       return (
         <div>
           User not loaded
@@ -58,16 +58,10 @@ class AccountDisplay extends Component {
     const QPHeroes = QuickPlayHeroes(currentUser);
 
     const pieData =  {
-      labels:  QPHeroes.map((elem) => { return elem.hero; }),
-      options: {
-        onClick(evt, item) {
-          console.log('Event : ', evt);
-          console.log('Item : ', item);
-        },
-      },
+      labels:   QPHeroes.map((elem) => { return elem.hero; }),
       datasets: [{
         data: QPHeroes.map((elem) => {
-          return playtimeToMinute(elem.game.timePlayed);
+          return playtimeToMinute(elem.game.timePlayed) / 60;
         }),
         backgroundColor: QPHeroes.map((elem) => { return HERO_COLORS[elem.hero]; }),
       }],
@@ -75,9 +69,7 @@ class AccountDisplay extends Component {
 
     const pieOption = {
       onClick(evt, item, more) {
-        console.log('Evt : ', evt);
-        console.log('Item : ', item[0]._index);
-        console.log('More : ', more);
+        console.log('Item : ', QPHeroes[item[0]._index]);
       },
     };
 

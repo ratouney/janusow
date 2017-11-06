@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DashboardLayout from '../../modules/DashboardLayout';
-import { ModalSelectForm } from '../../modules/SelectForm/';
 import AccountList from '../../modules/AccountList/';
+import { AccountForm } from '../../modules/AccountForm/';
 import DB from '../../utils/DB/';
 
 class Homepage extends Component {
@@ -22,9 +22,9 @@ class Homepage extends Component {
         <div>
           {
             hasUsers < 1
-              ? <ModalSelectForm
-                title="Select User"
-                visible
+              ? <AccountForm
+                userData={{}}
+                onSubmit={(before, after) => { console.log('Feature is a WIP here : ', after); }}
               />
               : <AccountList />
           }
