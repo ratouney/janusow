@@ -13,16 +13,6 @@ import { Link } from 'react-router-dom';
 
 const { Header } = Layout;
 
-const DropDownMenu = ({ userName }) => {
-  return (
-    <div>
-      <Avatar shape="square" size="small" icon="user" style={{ marginLeft: 8, marginRight: 8, overflow: 'visible' }} />
-      {userName}
-      <Icon type="down" style={{ fontSize: 14, marginLeft: 5 }} />
-    </div>
-  );
-};
-
 class TopMenu extends Component {
   componentDidMount() {
     // fetch stuff
@@ -62,7 +52,7 @@ class TopMenu extends Component {
 
       }}
       >
-        <Row gutter={16} type="flex" justify="space-around" align="middle">
+        <Row gutter={16} type="flex" justify="space-around" align="middle" style={{ border: 'solid 1px black' }}>
           <Col span={2} >
             <span>
               <Button
@@ -76,13 +66,25 @@ class TopMenu extends Component {
           </Col>
           <Col span={22}>
             <Row type="flex" justify="end" align="middle" style={{ marginRight: 50 }} >
-              <Button
-                disabled
-                icon="mail"
-              />
+              <Col span={3} style={{ border: 'solid 1px red' }} >
+                <Button
+                  disabled
+                  icon="mail"
+                />
+              </Col>
+              <Col offset={3} span={4} style={{ border: 'solid 1px blue' }}>
+                <Avatar shape="square" size="small" icon="user" style={{ marginLeft: 8, marginRight: 8, overflow: 'visible' }} />
+              </Col>
+              <Col span={5} style={{ border: 'solid 1px green' }}>
+                {userName}
+              </Col>
               <Dropdown overlay={settingsOverlay}>
-                <DropDownMenu userName={userName} />
+                <Button>
+                  <Icon type="down" />
+                </Button>
               </Dropdown>
+
+              {/*  */}
             </Row>
           </Col>
         </Row>
