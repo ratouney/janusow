@@ -102,13 +102,15 @@ class SideMenu extends Component {
         {ITEMS.map((elem) => {
           return (
             <Item key={elem.key} style={{ marginBottom: 5 }} >
-              {elem.icon === false
-                ? <Avatar src={elem.avatar} />
-                : <Icon {...elem.icon} />
-              }
-              {
-                !collapsed && elem.text
-              }
+              <Link to={elem.to} >
+                {elem.icon === false
+                  ? <Avatar src={elem.avatar} />
+                  : <Icon {...elem.icon} />
+                }
+                {
+                  !collapsed && elem.text
+                }
+              </Link>
             </Item>
           );
         })}
