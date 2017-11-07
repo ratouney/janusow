@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Switch } from 'antd';
 
 const defaultSwitchProps = {
-  defaultChecked: false,
+  // defaultChecked: false,
 };
 
 const defaultFormItemProps = {
@@ -36,7 +36,7 @@ const FormItemSwitch = (props) => {
       {
         getFieldDecorator(
           id,
-          { rules: [{ required: isRequired, message: requiredMessage }] },
+          { rules: [{ required: isRequired, message: requiredMessage }], valuePropName: 'checked' },
         )(<Switch {...switchProps} />)
       }
     </Form.Item>

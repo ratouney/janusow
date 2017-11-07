@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Card,
   Button,
@@ -6,7 +7,10 @@ import {
   Col,
 } from 'antd';
 import DashboardLayout from '../../modules/DashboardLayout';
-import { SettingsForm } from '../../modules/Settings/';
+import {
+  SettingsForm,
+  editSettings,
+} from '../../modules/Settings/';
 
 class SettingsPage extends Component {
   componentDidMount() {
@@ -14,6 +18,11 @@ class SettingsPage extends Component {
   }
 
   render() {
+    const {
+      settings,
+      onEditSettings,
+    } = this.props;
+
     return (
       <DashboardLayout>
         <Row>
@@ -21,7 +30,10 @@ class SettingsPage extends Component {
             <Card
               title="Change Settings"
             >
-              <SettingsForm />
+              <SettingsForm
+                onSubmit={onEditSettings}
+                settings={settings}
+              />
             </Card>
           </Col>
           <Col span={12} >
@@ -51,4 +63,19 @@ class SettingsPage extends Component {
   }
 }
 
-export default SettingsPage;
+function mapStateToProps(state) {
+  console.log('State : ', state);
+  return {
+    settings: state.settingsReducer,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onEditSettings: (newSettings) => {
+      dispatch(editSettings(newSettings));
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsPage);

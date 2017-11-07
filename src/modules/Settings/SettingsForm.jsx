@@ -19,7 +19,7 @@ class SettingsForm extends Component {
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        onSubmit(this.props.userData, values);
+        onSubmit(values);
       }
     });
   }
@@ -35,7 +35,7 @@ class SettingsForm extends Component {
       <Form onSubmit={(e) => { return this.handleSubmit(e, onSubmit); }} layout="horizontal" >
         <FormItemSwitch
           customFormItemProps={{ label: 'Auto load' }}
-          id="autoload"
+          id="autoLoad"
           getFieldDecorator={getFieldDecorator}
         />
 
@@ -56,4 +56,12 @@ class SettingsForm extends Component {
   }
 }
 
-export default Form.create()(SettingsForm);
+const mapPropsToFields = ({ settings }) => {
+  console.log('Props to Fields : ', settings);
+  return {
+    autoLoad: { value: settings.autoLoad },
+    language: { value: settings.language },
+  };
+};
+
+export default Form.create({ mapPropsToFields })(SettingsForm);

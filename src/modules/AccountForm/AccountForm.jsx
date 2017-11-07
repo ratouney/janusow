@@ -89,7 +89,6 @@ const mapPropsToFields = ({
   },
 }) => {
   return {
-
     region:    { value: userData.region },
     platform:  { value: userData.platform },
     username:  { value: userData.username },
