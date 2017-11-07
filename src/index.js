@@ -22,6 +22,7 @@ import SelectPage from './pages/Select/';
 import Homepage from './pages/Home/';
 import NotFound from './pages/NotFound';
 import AccountDisplay from './pages/Account/';
+import Settings from './pages/Settings/';
 
 const history = createBrowserHistory();
 const loggerMiddleware = createLogger();
@@ -41,6 +42,7 @@ ReactDOM.render(
             <Switch>
               <Route path="/select" exact component={SelectPage} />
               <Route path="/account/:id" exact component={AccountDisplay} />
+              <Route path="/settings" exact component={Settings} />
               <Route path="/" exact component={Homepage} />
               <Route component={NotFound} />
             </Switch>

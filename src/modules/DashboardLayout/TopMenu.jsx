@@ -52,7 +52,7 @@ class TopMenu extends Component {
 
       }}
       >
-        <Row gutter={16} type="flex" justify="space-around" align="middle" style={{ border: 'solid 1px black' }}>
+        <Row gutter={16} type="flex" justify="space-around" align="middle" >
           <Col span={2} >
             <span>
               <Button
@@ -66,23 +66,18 @@ class TopMenu extends Component {
           </Col>
           <Col span={22}>
             <Row type="flex" justify="end" align="middle" style={{ marginRight: 50 }} >
-              <Col span={3} style={{ border: 'solid 1px red' }} >
+              <Col span={1} >
                 <Button
                   disabled
                   icon="mail"
                 />
               </Col>
-              <Col offset={3} span={4} style={{ border: 'solid 1px blue' }}>
+              <Col span={1} >
                 <Avatar shape="square" size="small" icon="user" style={{ marginLeft: 8, marginRight: 8, overflow: 'visible' }} />
               </Col>
-              <Col span={5} style={{ border: 'solid 1px green' }}>
+              <Dropdown.Button onClick={() => { console.log('Goto account page'); }} overlay={settingsOverlay}>
                 {userName}
-              </Col>
-              <Dropdown overlay={settingsOverlay}>
-                <Button>
-                  <Icon type="down" />
-                </Button>
-              </Dropdown>
+              </Dropdown.Button>
 
               {/*  */}
             </Row>

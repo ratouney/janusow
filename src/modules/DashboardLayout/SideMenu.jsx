@@ -97,7 +97,6 @@ class SideMenu extends Component {
       },
     ];
 
-    console.log('ITEMS : ', ITEMS);
     return (
       <Menu {...menuProps} mode={collapsed ? 'vertical' : 'inline'} >
         {ITEMS.map((elem) => {
