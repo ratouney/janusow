@@ -1,3 +1,6 @@
+export const API_URL = 'https://ow-api.com/v1/stats';
+// export const API_URL = 'http://192.168.99.100:8000/v1/stats';
+
 export const REGIONS = [
   {
     key:   '1',

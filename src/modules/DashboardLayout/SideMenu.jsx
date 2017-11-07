@@ -6,13 +6,46 @@ import DB from '../../utils/DB/';
 
 const { Item } = Menu;
 
+const uncollapsedMenuItemRender = ({ elem }) => {
+  return (
+    <Row>
+      <Col span={5} style={{ margin: 5 }} >
+        {elem.icon === false
+          ? <Avatar src={elem.avatar} />
+          : <Icon {...elem.icon} />
+        }
+      </Col>
+      <Col span={17}>{elem.text} </Col>
+    </Row>
+  );
+};
+
+const collapsedMenuItemRender = ({ elem }) => {
+  return (
+    elem.icon === false
+      ? <Avatar src={elem.avatar} style={{ border: 0, margin: 0 }} />
+      : <Icon {...elem.icon} />
+  );
+};
+
+const MenuItemRender = ({ elem, collapsed }) => {
+  if (collapsed) {
+    return (
+      <collapsedMenuItemRender elem={elem} />
+    );
+  }
+  return (
+    <unCollapsedMenuItemRender elem={elem} />
+  );
+};
+
 class SideMenu extends Component {
   constructor(props) {
     super(props);
 
     const users =
-    DB.get('users')
-      .value();
+      DB.get('users')
+        .value();
 
     this.state = {
       accounts: users || [],
@@ -21,8 +54,8 @@ class SideMenu extends Component {
 
   componentDidUpdate() {
     const users =
-    DB.get('users')
-      .value();
+      DB.get('users')
+        .value();
 
     this.state = {
       ...this.state,
@@ -40,45 +73,46 @@ class SideMenu extends Component {
       accounts,
     } = this.state;
 
+    const ITEMS = [
+      {
+        key:  '-2',
+        to:   '/',
+        icon: { type: 'home' },
+        text: 'HOME',
+      },
+      ...accounts.map((elem) => {
+        return {
+          key:    `${elem.username}#${elem.battletag}`,
+          to:     `/account/${elem.username}#${elem.battletag}`,
+          icon:   false,
+          avatar: elem.icon,
+          text:   `${elem.username}#${elem.battletag}`,
+        };
+      }),
+      {
+        key:  '-1',
+        to:   '/select',
+        icon: { type: 'plus', style: { backgroundColor: 'green', color: 'white' } },
+        text: 'Add Account',
+      },
+    ];
 
+    console.log('ITEMS : ', ITEMS);
     return (
-      <Menu {...menuProps}>
-        <Item key="-2">
-          <Link to="/" >
-            <Icon type="home" />
-            <span>
-            HOME
-            </span>
-          </Link>
-        </Item>
-        {accounts.map((elem) => {
+      <Menu {...menuProps} mode={collapsed ? 'vertical' : 'inline'} >
+        {ITEMS.map((elem) => {
           return (
-            <Item key={`${elem.username}#${elem.battletag}`}>
-              <Link to={`/account/${elem.username}#${elem.battletag}`} >
-                <Row type="flex" justify="space-around" align="middle">
-                  <Col span={6}>
-                    <Avatar src={elem.icon} />
-                  </Col>
-                  {
-                    !collapsed
-                      ? <Col span={18} >
-                        {`${elem.username}#${elem.battletag}`}
-                        </Col>
-                      : ''
-                  }
-                </Row>
-              </Link>
+            <Item key={elem.key} style={{ marginBottom: 5 }} >
+              {elem.icon === false
+                ? <Avatar src={elem.avatar} />
+                : <Icon {...elem.icon} />
+              }
+              {
+                !collapsed && elem.text
+              }
             </Item>
           );
         })}
-        <Item key="-1">
-          <Link to="/select">
-            <Icon type="plus" style={{ backgroundColor: 'green', color: 'white' }} />
-            <span>
-            Add Account
-            </span>
-          </Link>
-        </Item>
       </Menu>
     );
   }

@@ -8,6 +8,7 @@ import {
   RESET_SEARCH_STEPS,
   FETCH_ERROR_STEP,
 } from './types';
+import { API_URL } from '../../utils/consts';
 import fetch from 'isomorphic-fetch';
 import DB from '../../utils/DB/';
 
@@ -15,7 +16,6 @@ const settings =
   DB.get('settings')
     .value();
 
-const API_URL = 'https://ow-api.com/v1/stats';
 
 const resetSearchSteps = () => {
   return {

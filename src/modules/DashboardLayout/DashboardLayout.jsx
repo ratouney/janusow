@@ -37,13 +37,12 @@ class DashboardLayout extends Component {
           position="fixed"
           collapsible
           collapsed={this.state.collapsed}
-          style={{ height: '100vh' }}
+          style={{ height: '100vh', minWidth: '85px' }}
         >
           <SideMenu
             collapsed={this.state.collapsed}
             menuProps={{
-              theme:               'dark',
-              defaultSelectedKeys: ['2'],
+              theme: 'dark',
             }}
           />
         </Sider>
