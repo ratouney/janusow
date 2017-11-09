@@ -58,7 +58,7 @@ class QuickPlayPieChart extends Component {
     console.log('Selected : ', selected);
 
     return (
-      <div style={{ border: 'solid 1px red' }}>
+      <div>
         <Pie data={pieData} options={pieOptions} />
       </div>
     );

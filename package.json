@@ -21,6 +21,7 @@
     "react-chartjs-2": "^2.6.4",
     "react-dom": "^16.0.0",
     "react-intl": "^2.4.0",
+    "react-native": "0.50.3",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.1.1",
