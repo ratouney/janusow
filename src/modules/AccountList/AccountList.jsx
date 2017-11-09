@@ -160,6 +160,15 @@ class AccountList extends Component {
       {
         title:     'Platform',
         dataIndex: 'platform',
+        render:    (val) => {
+          if (val === 'pc') {
+            return 'PC';
+          }
+          if (val === 'psn') {
+            return 'Playstation 4';
+          }
+          return 'XBox One';
+        },
       },
       {
         title:     'Region',

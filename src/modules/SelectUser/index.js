@@ -1,4 +1,4 @@
-import SelectUser from './SelectUser';
+import ProgressDiag from './ProgressDiag';
 import {
   fetchErrorStep,
   fetchUserData,
@@ -6,13 +6,10 @@ import {
   resetSearchSteps,
 } from './actions';
 
-const TMP = '';
-
 export {
   fetchErrorStep,
   fetchUserData,
   fetchUserExist,
   resetSearchSteps,
-  SelectUser,
-  TMP,
+  ProgressDiag,
 };

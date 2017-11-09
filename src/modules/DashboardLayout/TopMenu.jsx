@@ -33,11 +33,6 @@ class TopMenu extends Component {
           </Link>
         </Menu.Item>
         <Menu.Item key="2" >
-          <Link to="/reset">
-          Reset data
-          </Link>
-        </Menu.Item>
-        <Menu.Item key="3" >
           <Link to="/logout">
           Logout
           </Link>

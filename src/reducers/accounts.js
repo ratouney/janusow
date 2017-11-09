@@ -22,7 +22,12 @@ import {
 
 import DB from '../utils/DB/';
 
-const fulltagGen = (userData) => { return `${userData.username}#${userData.battletag}`; };
+const fulltagGen = (userData) => {
+  if (userData.platform === 'pc') {
+    return `${userData.username}#${userData.battletag}`;
+  }
+  return userData.username;
+};
 
 const accountsFromLocalStorage = () => {
   return DB.get('users')
@@ -156,8 +161,6 @@ function accountReducer(state = initialState, action) {
         .find({ username: action.userData.username, battletag: action.userData.battletag })
         .assign({ icon: action.data.icon })
         .value();
-      console.log('Val  :', val);
-      console.log('fd : ', fd);
 
       return {
         ...state,

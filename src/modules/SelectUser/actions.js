@@ -1,3 +1,4 @@
+import fetch from 'isomorphic-fetch';
 import {
   FETCH_USER_DATA_FAILURE,
   FETCH_USER_DATA_REQUEST,
@@ -9,7 +10,6 @@ import {
   FETCH_ERROR_STEP,
 } from './types';
 import { API_URL } from '../../utils/consts';
-import fetch from 'isomorphic-fetch';
 import DB from '../../utils/DB/';
 
 const settings =
@@ -102,7 +102,13 @@ const fetchUserExistFailure = (error) => {
 };
 
 const fetchUserExist = (userData) => {
-  const url = `${API_URL}/${userData.platform}/${userData.region}/${userData.username}-${userData.battletag}/profile`;
+  let url;
+
+  if (userData.platform === 'pc') {
+    url = `${API_URL}/${userData.platform}/${userData.region}/${userData.username}-${userData.battletag}/profile`;
+  } else {
+    url = `${API_URL}/${userData.platform}/${userData.region}/${userData.username}/profile`;
+  }
   const params = {
     method: 'GET',
     mode:   'cors',

@@ -36,8 +36,10 @@ class AccountForm extends Component {
       onSubmit,
       submitButtonContent = 'Submit',
       loading = false,
-      form: { getFieldDecorator },
+      form: { getFieldDecorator, getFieldValue },
     } = this.props;
+
+    const isPC = getFieldValue('platform') === 'pc';
 
     return (
       <Form onSubmit={(e) => { return this.handleSubmit(e, onSubmit); }} layout="horizontal" >
@@ -63,13 +65,15 @@ class AccountForm extends Component {
           id="username"
         />
 
-        <FormItemInput
-          isRequired
-          customFormItemProps={{ label: 'Battletag' }}
-          customInputProps={{ placeholder: '1337' }}
-          getFieldDecorator={getFieldDecorator}
-          id="battletag"
-        />
+        {
+          isPC && <FormItemInput
+            isRequired
+            customFormItemProps={{ label: 'Battletag' }}
+            customInputProps={{ placeholder: '1337' }}
+            getFieldDecorator={getFieldDecorator}
+            id="battletag"
+          />
+        }
 
         <FormItemSubmit
           customButtonProps={{ loading }}

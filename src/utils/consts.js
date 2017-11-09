@@ -45,7 +45,7 @@ export const PLATFORMS = [
   },
   {
     key:   '2',
-    value: 'pns',
+    value: 'psn',
     text:  'Playstation 4',
   },
   {
