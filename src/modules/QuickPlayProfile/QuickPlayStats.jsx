@@ -1,5 +1,5 @@
 import React from 'react';
-import { get } from 'lodash';
+import { get, round } from 'lodash';
 import { Table, Tag } from 'antd';
 import {
   playtimeToMinute,
@@ -33,7 +33,7 @@ const QuickPlayStats = (props) => {
     },
     {
       key:   'Average damage per 10 mins',
-      value: currentSelected.average.allDamageDone * 600,
+      value: round(currentSelected.average.allDamageDone * 600, 1),
     },
     ...HERO_IMPORTANT_STATS[currentHero].map((elem) => {
       return {
