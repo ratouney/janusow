@@ -38,7 +38,7 @@ const QuickPlayStats = (props) => {
     ...HERO_IMPORTANT_STATS[currentHero].map((elem) => {
       return {
         key:   elem.name,
-        value: get(currentSelected, elem.key),
+        value: (elem.render ? elem.render(currentSelected) : get(currentSelected, elem.key)),
       };
     }),
   ];

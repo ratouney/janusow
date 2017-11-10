@@ -37,26 +37,36 @@ class QuickPlayProfile extends Component {
     const currentHero = currentSelected.hero;
 
     return (
-      <Card title={username}>
-        <Row>
-          <Col span={10} >
-            <Card title="Total hours per hero" style={{ height: '300px' }} >
+      <Card title={<h2>{username}</h2>} bordered={false}>
+        <Row gutter={24}>
+          <Col span={10}>
+            <Card
+              title="Total hours per hero"
+              style={{ height: '300px' }}
+              bordered={false}
+            >
               <QuickPlayPieChart data={data} />
             </Card>
           </Col>
-          <Col span={14} >
-            <Card title={capitalize(currentHero)} style={{ height: '300px' }} >
-              <Row>
-                <Col span={5} >
+
+          <Col span={14}>
+            <Card title={capitalize(currentHero)} style={{ height: '300px' }} bordered={false}>
+              <Row gutter={16}>
+                <Col span={5}>
                   <img
                     align="center"
                     alt=""
-                    height="150"
+                    height="auto"
+                    width="100%"
                     src={HERO_ICONS[currentSelected.hero]}
-                    style={{ border: `solid 3px ${currentColor}` }}
+                    style={{
+                      border:  `solid 3px ${currentColor}`,
+                      display: 'inline',
+                    }}
                   />
                 </Col>
-                <Col span={19} >
+
+                <Col span={19}>
                   <QuickPlayStats
                     currentSelected={currentSelected}
                     currentColor={currentColor}

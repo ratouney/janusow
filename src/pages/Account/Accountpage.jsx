@@ -44,7 +44,7 @@ class AccountPage extends Component {
             General
           </TabPane>
           <TabPane tab="QuickPlay" key="2">
-            <QuickPlayProfile username={currentUser.fullname} data={currentUser} />
+            <QuickPlayProfile username={currentUser.fullname || fullname} data={currentUser} />
           </TabPane>
           <TabPane tab="Competitive" key="3">
             Competitive
