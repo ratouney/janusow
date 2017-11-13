@@ -1,8 +1,11 @@
 const RESET = 'QuickPlayProfile/RESET';
 const SET_SELECTED_HERO = 'QuickPlayProfile/SET_SELECTED_HERO';
+const OPEN_MODAL = 'QuickPlayProfile/OPEN_MODAL';
+const CLOSE_MODAL = 'QuickPlayProfile/CLOSE_MODAL';
 
 const initialState = {
-  selected: {},
+  selected:  {},
+  showModal: false,
 };
 
 export const setSelectedHero = (selected) => {
@@ -18,8 +21,34 @@ export const reset = () => {
   };
 };
 
+export const openModal = () => {
+  return {
+    type: OPEN_MODAL,
+  };
+};
+
+export const closeModal = () => {
+  return {
+    type: CLOSE_MODAL,
+  };
+};
+
 const quickPlayReducer = (state = initialState, action) => {
   switch (action.type) {
+    case OPEN_MODAL: {
+      return {
+        ...state,
+        showModal: true,
+      };
+    }
+
+    case CLOSE_MODAL: {
+      return {
+        ...state,
+        showModal: false,
+      };
+    }
+
     case RESET: {
       return initialState;
     }

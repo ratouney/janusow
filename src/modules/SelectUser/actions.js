@@ -144,7 +144,7 @@ const fetchUserExist = (userData) => {
         }
       })
       .catch((error) => {
-        console.log('FUCK OFF : ', error.toString());
+        console.log('Response.Json failed: ', error.toString());
         dispatch(fetchErrorStep(1));
       });
   };

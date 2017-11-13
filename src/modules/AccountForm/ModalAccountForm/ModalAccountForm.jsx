@@ -24,7 +24,6 @@ class ModalAccountForm extends Component {
       errors,
     } = this.props;
 
-    console.log('Footer : ', errors && errors.length > 0);
     return (
       <Modal
         visible={visible}

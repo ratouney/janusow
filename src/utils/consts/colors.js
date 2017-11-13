@@ -1,4 +1,4 @@
-const HERO_COLORS = {
+export const HERO_COLORS = {
   ana:        'rgb(204, 194, 174)',
   bastion:    'rgb(110, 153, 77)',
   doomfist:   'rgb(224, 78, 52)',
@@ -26,4 +26,30 @@ const HERO_COLORS = {
   zenyatta:   'rgb(199, 156, 0)',
 };
 
-export default HERO_COLORS;
+export const HERO_TEXT_COLORS = {
+  ana:        'rgb(51, 61, 81)',
+  bastion:    'rgb(175, 102, 178)',
+  doomfist:   'rgb(31, 177, 203)',
+  dVa:        'rgb(0, 128, 46)',
+  genji:      'rgb(123, 1, 254)',
+  hanzo:      'rgb(88, 99, 153)',
+  junkrat:    'rgb(44, 108, 247)',
+  lucio:      'rgb(116, 19, 221)',
+  mccree:     'rgb(114, 198, 198)',
+  mei:        'rgb(101, 36, 11)',
+  mercy:      'rgb(0, 30, 147)',
+  orisa:      'rgb(35, 101, 255)',
+  pharah:     'rgb(228, 154, 57)',
+  reaper:     'rgb(216, 216, 218)',
+  reinhardt:  'rgb(65, 86, 93)',
+  roadhog:    'rgb(62, 107, 136)',
+  soldier76:  'rgb(187, 163, 93)',
+  sombra:     'rgb(138, 228, 99)',
+  symmetra:   'rgb(163, 19, 0)',
+  torbjorn:   'rgb(0, 157, 255)',
+  tracer:     'rgb(7, 110, 228)',
+  widowmaker: 'rgb(174, 164, 101)',
+  winston:    'rgb(179, 175, 163)',
+  zarya:      'rgb(10, 142, 87)',
+  zenyatta:   'rgb(56, 99, 255)',
+};

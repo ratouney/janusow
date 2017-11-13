@@ -25,8 +25,8 @@ class SettingsPage extends Component {
 
     return (
       <DashboardLayout>
-        <Row>
-          <Col span={12} >
+        <Row gutter={16}>
+          <Col span={12}>
             <Card
               title="Change Settings"
             >
@@ -36,23 +36,23 @@ class SettingsPage extends Component {
               />
             </Card>
           </Col>
-          <Col span={12} >
+          <Col span={12}>
             <Card
               title="Manage Settings"
             >
-              <Button style={{ marginBottom: 5 }} >
+              <Button style={{ marginBottom: 5 }}>
               Clear account data
               </Button>
               <br />
-              <Button style={{ marginBottom: 5 }} >
+              <Button style={{ marginBottom: 5 }}>
               Clear account list
               </Button>
               <br />
-              <Button style={{ marginBottom: 5 }} >
+              <Button style={{ marginBottom: 5 }}>
               Export config
               </Button>
               <br />
-              <Button style={{ marginBottom: 5 }} >
+              <Button style={{ marginBottom: 5 }}>
               Import config
               </Button>
             </Card>

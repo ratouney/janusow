@@ -66,7 +66,8 @@ class AccountForm extends Component {
         />
 
         {
-          isPC && <FormItemInput
+          isPC &&
+          <FormItemInput
             isRequired
             customFormItemProps={{ label: 'Battletag' }}
             customInputProps={{ placeholder: '1337' }}

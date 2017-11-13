@@ -19,16 +19,7 @@ class Homepage extends Component {
     console.log('Has users : ', hasUsers);
     return (
       <DashboardLayout>
-        <div>
-          {
-            hasUsers < 1
-              ? <AccountForm
-                userData={{}}
-                onSubmit={(before, after) => { console.log('Feature is a WIP here : ', after); }}
-              />
-              : <AccountList />
-          }
-        </div>
+        <AccountList />
       </DashboardLayout>
     );
   }

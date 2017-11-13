@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { isEmpty, capitalize } from 'lodash';
 import {
   Card,
+  Switch,
   Row,
   Avatar,
   Col,
@@ -17,18 +18,37 @@ import {
 } from '../../utils/consts';
 import QuickPlayPieChart from './QuickPlayPieChart';
 import QuickPlayStats from './QuickPlayStats';
+import QuickPlayList from './QuickPlayList';
+import QuickPlayModal from './QuickPlayModal';
+import { openModal } from './duck-reducer';
 
 class QuickPlayProfile extends Component {
-  componentDidMount() {
-    // stuff
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showPiechart: false,
+    };
+  }
+
+  handleChange() {
+    this.setState({
+      showPiechart: !this.state.showPiechart,
+    });
   }
 
   render() {
     const {
       data,
       username,
+      showModal,
       selected,
+      onShowModal,
     } = this.props;
+
+    const {
+      showPiechart,
+    } = this.state;
 
     const QPHeroes = QuickPlayHeroes(data);
 
@@ -44,13 +64,32 @@ class QuickPlayProfile extends Component {
               title="Total hours per hero"
               style={{ height: '300px' }}
               bordered={false}
+              extra={
+                <Switch
+                  checkedChildren="List"
+                  unCheckedChildren="Chart"
+                  defaultChecked={!showPiechart}
+                  size="small"
+                  onChange={() => { return this.handleChange(); }}
+                />}
             >
-              <QuickPlayPieChart data={data} />
+              {
+                showPiechart
+                  ? <QuickPlayPieChart data={data} />
+                  : <QuickPlayList data={data} />
+              }
             </Card>
           </Col>
 
+          {showModal && <QuickPlayModal selected={currentSelected} />}
+
           <Col span={14}>
-            <Card title={capitalize(currentHero)} style={{ height: '300px' }} bordered={false}>
+            <Card
+              title={capitalize(currentHero)}
+              style={{ height: '300px' }}
+              bordered={false}
+              onClick={() => { onShowModal(); }}
+            >
               <Row gutter={16}>
                 <Col span={5}>
                   <img
@@ -84,8 +123,17 @@ class QuickPlayProfile extends Component {
 
 function mapStateToProps(state) {
   return {
-    selected: state.quickPlayReducer.selected,
+    selected:  state.quickPlayReducer.selected,
+    showModal: state.quickPlayReducer.showModal,
   };
 }
 
-export default connect(mapStateToProps)(QuickPlayProfile);
+function mapDispatchToProps(dispatch) {
+  return {
+    onShowModal: () => {
+      dispatch(openModal());
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuickPlayProfile);

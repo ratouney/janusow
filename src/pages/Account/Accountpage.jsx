@@ -25,8 +25,8 @@ class AccountPage extends Component {
 
     const fullname = `${match.params.id}${location.hash}`;
 
-    const currentUser = find(userData, { fullname });
-    // const currentUser = xQc;
+    // const currentUser = find(userData, { fullname });
+    const currentUser = xQc;
     if (currentUser === undefined) {
       return (
         <DashboardLayout>

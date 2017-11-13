@@ -16,8 +16,6 @@ const HERO_IMPORTANT_STATS = {
       key:    'heroSpecific',
       name:   'Dragonblade Kills per blade',
       render: (specs) => { return round(specs.heroSpecific.dragonblades / specs.heroSpecific.dragonbladeKills, 1); },
-      // divide by the number of total blades for a kill/blade count
-      // 'heroSpecific.dragonblades'
     },
     {
       key:    '',
@@ -25,10 +23,17 @@ const HERO_IMPORTANT_STATS = {
       render: (specs) => {
         return `${round(specs.heroSpecific.damageReflected / (specs.combat.damageDone / 100), 1)} %`;
       },
-      // divide by total damage for a ratio
     },
   ],
-  hanzo:   [],
+  hanzo: [
+    {
+      key:    'heroSpecific.scatterArrowKills',
+      name:   'Scatter kills',
+      render: (specs) => {
+        return `${round(specs.heroSpecific.scatterArrowKills / (specs.combat.eliminations / 100), 1)} %`;
+      },
+    },
+  ],
   junkrat: [],
   lucio:   [],
   mccree:  [
@@ -40,20 +45,18 @@ const HERO_IMPORTANT_STATS = {
       key:    'combat.eliminations',
       name:   'Eliminations to Crits Ratio',
       render: (specs) => { return round(specs.combat.eliminations / specs.combat.criticalHits, 2); },
-      // Divide it with the critical hits for a HSKill ratio
     },
   ],
   mei:   [],
   mercy: [
     {
       key:    '',
-      name:   'Healing Done',
+      name:   'Time spent healing',
       render: (specs) => {
         const playtime = (playtimeToMinute(specs.game.timePlayed) * 60) - (specs.deaths.deaths * 10);
         const healed = specs.miscellaneous.healingDone;
         return `${round(healed / ((playtime * 60) / 100), 2)} %`;
       },
-      // divide per time played to see the percentage of time spent healing
     },
   ],
   orisa:  [],
@@ -74,7 +77,6 @@ const HERO_IMPORTANT_STATS = {
       key:    '',
       name:   'Blocked to Damage ratio',
       render: (specs) => { return round(specs.heroSpecific.damageBlocked / specs.combat.damageDone, 1); },
-      // create a ratio with the damage blocked 'heroSpecific.damageBlocked'
     },
   ],
   roadhog: [
@@ -94,7 +96,6 @@ const HERO_IMPORTANT_STATS = {
       render: (specs) => {
         return `${round(specs.heroSpecific.helixRocketsKills / (specs.combat.eliminations / 100), 1)} %`;
       },
-      // divide the total elims with this to obtain a percentage
     },
   ],
   sombra:   [],
@@ -106,22 +107,42 @@ const HERO_IMPORTANT_STATS = {
       name: 'Accuracy',
     },
   ],
-  widowmaker: [],
-  winston:    [
+  widowmaker: [
     {
-      key:  'Total Kills',
-      name: 'combat.eliminations',
-      // merge 'heroSpecific.jumpPackKills' and 'heroSpecific.meleeKills' to create a ratio
+      key:    '',
+      name:   'Bodyshot/Headshot kills ratio',
+      render: (specs) => {
+        return `${round(specs.heroSpecific.scopedCriticalHits / (specs.combat.eliminations / 100), 1)} %`;
+      },
+    },
+  ],
+  winston: [
+    {
+      key:    '',
+      name:   'Jumpack and melee kills ratio',
+      render: (specs) => {
+        return `${round((specs.heroSpecific.jumpPackKills + specs.heroSpecific.meleeKills) / (specs.combat.eliminations / 100), 1)} %`;
+      },
     },
   ],
   zarya: [
     {
-      key:  'heroSpecific.projectedBarriersApplied',
-      name: 'Barrier Usage',
-      // divide 'heroSpecific.damageBlocked' by this to have the real barrier usage
+      key:    'heroSpecific.projectedBarriersApplied',
+      name:   'Damage blocked per barrier',
+      render: (specs) => {
+        return round(specs.heroSpecific.damageBlocked / specs.heroSpecific.projectedBarriersApplied, 1);
+      },
     },
   ],
-  zenyatta: [],
+  zenyatta: [
+    {
+      key:    '',
+      name:   'Healing/Damage ratio',
+      render: (specs) => {
+        return round(specs.combat.damageDone / specs.miscellaneous.healingDone, 1);
+      },
+    },
+  ],
 };
 
 export default HERO_IMPORTANT_STATS;

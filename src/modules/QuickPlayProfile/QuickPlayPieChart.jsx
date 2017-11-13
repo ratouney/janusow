@@ -29,7 +29,6 @@ class QuickPlayPieChart extends Component {
     const {
       data,
       onSelectHero,
-      selected,
     } = this.props;
 
     const QPHeroes = QuickPlayHeroes(data);
@@ -54,8 +53,6 @@ class QuickPlayPieChart extends Component {
         }
       },
     };
-
-    console.log('Selected : ', selected);
 
     return (
       <div>
