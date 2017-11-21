@@ -30,9 +30,13 @@
 }
 
 .widowmaker .ant-progress-outer .ant-progress-inner .ant-progress-bg {
-  background-color: #ff1;
+  background-color: #8C8C1B;
 }
 
 .mccree .ant-progress-outer .ant-progress-inner .ant-progress-bg {
   background-color: rgb(141, 57, 57);
+}
+
+.bgtest .ant-modal-content {
+  background-color: #21E43E;
 }

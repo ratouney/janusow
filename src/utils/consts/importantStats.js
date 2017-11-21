@@ -4,9 +4,9 @@ import { Tooltip } from 'antd';
 import { playtimeToMinute } from '../ApiParse/func';
 
 const TooltipStat = ({
-  statUp, statDown, tip, precision = 1, percent = false,
+  statUp, statDown, fullstat, tip, precision = 1, percent = false,
 }) => {
-  const stat = round(statUp / statDown, precision);
+  const stat = fullstat || round(statUp / statDown, precision);
   const text = stat.toString() + (percent ? ' %' : '');
 
   return (
@@ -30,7 +30,12 @@ const HERO_IMPORTANT_STATS = {
       key:    '',
       name:   'Damage blocked per Mech-Life',
       render: (specs) => {
-        return round(specs.heroSpecific.damageBlocked / specs.heroSpecific.mechDeaths, 1);
+        return (<TooltipStat
+          statUp={specs.heroSpecific.damageBlocked}
+          statDown={specs.heroSpecific.mechDeaths}
+          tip="Average usage of Defense Matrix"
+        />);
+        // return round(specs.heroSpecific.damageBlocked / specs.heroSpecific.mechDeaths, 1);
       },
     },
   ],
@@ -38,7 +43,16 @@ const HERO_IMPORTANT_STATS = {
     {
       key:    'heroSpecific',
       name:   'Dragonblade Kills per blade',
-      render: (specs) => { return round(specs.heroSpecific.dragonblades / specs.heroSpecific.dragonbladeKills, 1); },
+      render: (specs) => {
+        return (
+          <TooltipStat
+            statUp={specs.heroSpecific.dragonblades}
+            statDown={specs.heroSpecific.dragonbladeKills}
+            precision={3}
+            tip="Seriously ? It's obvious..."
+          />
+        );
+      },
     },
     {
       key:    '',

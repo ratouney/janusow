@@ -85,7 +85,7 @@ class SideMenu extends Component {
       ...accounts.map((elem) => {
         return {
           key:    `${elem.username}#${elem.battletag}`,
-          to:     `/account/${elem.username}#${elem.battletag}`,
+          to:     `/account/${elem.username}-${elem.battletag}`,
           icon:   false,
           avatar: elem.icon,
           text:   `${elem.username}#${elem.battletag}`,

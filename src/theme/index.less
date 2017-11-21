@@ -1,7 +1,7 @@
 @import "./vars";
 
 body {
-  background-color: #ffffff;
+  background-color: @bgColor;
   width: 100%;
   height: 100%;
 }
@@ -12,3 +12,208 @@ body {
     height: 100%;
   }
 }
+
+.ant-layout {
+  .ant-layout-content {
+    background-color: #C9C9C9;
+    padding: 12px;
+    .ant-tabs {
+      .ant-tabs-bar {
+        border-bottom: none;
+      }
+      .ant-tabs-tab-active {
+        color: @themeColor !important;
+      }
+    }
+  }
+  .ant-layout-sider {
+    .ant-menu {
+      .ant-menu-item-selected {
+        border-right: solid 5px @invertedColor;
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.ant-card {
+  background-color: @softBgColor;
+}
+
+.ant-layout-header {
+  background: @menuBgColor;
+}
+
+.ant-switch-checked {
+  background-color: @themeColor;
+}
+
+.ant-btn {
+  color: @buttonTextColor;
+  background-color: @themeColor;
+}
+
+.ant-btn:hover {
+  color: @buttonTextColor;
+  background-color: @invertedColor;
+}
+
+.ant-btn-primary:focus {
+  color: @buttonTextColor;
+  background-color: darken(@invertedColor, 20%)
+}
+
+.ant-btn-primary {
+  color: @buttonTextColor;
+  background-color: @themeColor;
+  border-color: @themeColor;
+}
+
+.ant-btn-primary:hover {
+  color: @buttonTextColor;
+  background-color: @invertedColor;
+}
+
+.ant-btn-primary:focus {
+  color: @buttonTextColor;
+  background-color: darken(@invertedColor, 20%)
+}
+
+.ant-pagination .ant-pagination-item-active {
+  background-color: @themeColor;
+}
+
+.ant-menu-item .anticon {
+  background-color: @themeColor;
+  color: @invertedColor;
+}
+
+.ant-menu .ant-menu-item-selected {
+  background-color: @themeColor;
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+  background-color: @themeColor;
+}
+
+.heroCard(@primary; @seconday) {
+  .ant-modal-content {
+    box-shadow: none;
+    background-color: @softBgColor;
+  }
+  .ant-modal-body .ant-card  {
+    background-color: @primary;
+    border: solid 4px @seconday
+  }
+  .ant-card-head {
+    background-color: @primary;
+    border-bottom: solid 4px @softBgColor;
+    color: @seconday
+  }
+  .ant-card-head-title {
+    color: @seconday
+  }
+  .ant-card-body {
+    color: @seconday
+  }
+}
+
+.anaCard {
+  .heroCard(rgb(204, 194, 174), rgb(51, 61, 81))
+} 
+
+.bastionCard {
+  .heroCard(rgb(110, 153, 77), rgb(175, 102, 178))
+}
+
+.doomfistCard {
+  .heroCard(rgb(224, 78, 52), rgb(31, 177, 203))
+} 
+
+.dVaCard {
+  .heroCard(rgb(255, 127, 209), rgb(0, 128, 46))
+} 
+
+.genjiCard {
+  .heroCard(rgb(132, 254, 1), rgb(123, 1, 254))
+} 
+
+.hanzoCard {
+  .heroCard(rgb(147, 136, 72), rgb(88, 99, 153))
+} 
+
+.junkratCard {
+  .heroCard(rgb(211, 147, 8), rgb(44, 108, 247))
+} 
+
+.lucioCard {
+  .heroCard(rgb(139, 236, 34), rgb(116, 19, 221))
+} 
+
+.mccreeCard {
+  .heroCard(rgb(141, 57, 57), rgb(114, 198, 198))
+} 
+
+.meiCard {
+  .heroCard(rgb(154, 219, 244), rgb(101, 36, 11))
+} 
+
+.mercyCard {
+  .heroCard(rgb(255, 225, 108), rgb(0, 30, 147))
+} 
+
+.orisaCard {
+  .heroCard(rgb(220, 154, 0), rgb(35, 101, 255))
+} 
+
+.pharahCard {
+  .heroCard(rgb(27, 101, 198), rgb(228, 154, 57))
+} 
+
+.reaperCard {
+  .heroCard(rgb(39, 39, 37), rgb(216, 216, 218))
+} 
+
+.reinhardtCard {
+  .heroCard(rgb(170, 149, 142), rgb(65, 86, 93))
+} 
+
+.roadhogCard {
+  .heroCard(rgb(193, 148, 119), rgb(62, 107, 136))
+} 
+
+.soldier76Card {
+  .heroCard(rgb(88, 112, 182), rgb(187, 163, 93))
+} 
+
+.sombraCard {
+  .heroCard(rgb(117, 27, 156), rgb(138, 228, 99))
+} 
+
+.symmetraCard {
+  .heroCard(rgb(92, 236, 255), rgb(163, 19, 0))
+} 
+
+.torbjornCard {
+  .heroCard(rgb(255, 98, 0), rgb(0, 157, 255))
+} 
+
+.tracerCard {
+  .heroCard(rgb(248, 145, 27), rgb(7, 110, 228))
+} 
+
+.widowmakerCard {
+  .heroCard(rgb(111, 111, 174), rgb(174, 164, 101))
+} 
+
+.winstonCard {
+  .heroCard(rgb(76, 80, 92), rgb(179, 175, 163))
+} 
+
+.zaryaCard {
+  .heroCard(rgb(245, 113, 168), rgb(10, 142, 87))
+} 
+
+.zenyattaCard {
+  .heroCard(rgb(199, 156, 0), rgb(56, 99, 255))
+} 

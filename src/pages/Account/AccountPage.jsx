@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import { find } from 'lodash';
 import {
   Tabs,
+  Card,
+  Button,
 } from 'antd';
 import DashboardLayout from '../../modules/DashboardLayout';
 import AccountDisplay from '../../modules/AccountPage/';
 import { QuickPlayProfile } from '../../modules/QuickPlayProfile/';
+import { fetchUserData } from '../../modules/SelectUser/actions';
 import xQc from '../../utils/mock';
 
 const { TabPane } = Tabs;
@@ -19,18 +22,39 @@ class AccountPage extends Component {
   render() {
     const {
       match,
-      location,
-      userData,
+      accountData,
+      accountList,
+      onFetchUser,
+      isFetchingData,
     } = this.props;
 
-    const fullname = `${match.params.id}${location.hash}`;
+    const fullname = `${match.params.username}#${match.params.battletag}`;
 
-    const currentUser = find(userData, { fullname });
+    const accountConfig = find(accountList, { username: match.params.username, battletag: match.params.battletag });
+    const currentUser = find(accountData, { fullname });
     // const currentUser = xQc;
+
+    if (accountConfig === undefined) {
+      return (
+        <DashboardLayout>
+          User doesnt exist in AccountList
+        </DashboardLayout>
+      );
+    }
+
     if (currentUser === undefined) {
       return (
         <DashboardLayout>
-          User not loaded
+          <Card
+            title={`${fullname} is not loaded`}
+            loading
+            extra={<Button
+              loading={isFetchingData}
+              onClick={() => { return onFetchUser(accountConfig); }}
+            >
+              Load User
+                   </Button>}
+          />
         </DashboardLayout>
       );
     }
@@ -57,8 +81,18 @@ class AccountPage extends Component {
 
 function mapStateToProps(state) {
   return {
-    userData: state.accountReducer.accountData,
+    accountData:    state.accountReducer.accountData,
+    accountList:    state.accountReducer.accountList,
+    isFetchingData: state.accountReducer.isFetchingData,
   };
 }
 
-export default connect(mapStateToProps)(AccountPage);
+function mapDispatchToProps(dispatch) {
+  return {
+    onFetchUser: (userData) => {
+      dispatch(fetchUserData(userData));
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountPage);

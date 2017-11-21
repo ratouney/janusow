@@ -42,9 +42,7 @@ class TopMenu extends Component {
 
     return (
       <Header style={{
-        background: '#fff',
-        padding:    0,
-
+        padding: 0,
       }}
       >
         <Row gutter={16} type="flex" justify="space-around" align="middle" >
