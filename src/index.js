@@ -41,7 +41,7 @@ ReactDOM.render(
           <App>
             <Switch>
               <Route path="/select" exact component={SelectPage} />
-              <Route path="/account/:id" exact component={AccountDisplay} />
+              <Route path="/account/:username-:battletag" exact component={AccountDisplay} />
               <Route path="/settings" exact component={Settings} />
               <Route path="/" exact component={Homepage} />
               <Route component={NotFound} />

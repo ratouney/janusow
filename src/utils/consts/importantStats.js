@@ -1,5 +1,20 @@
+import React from 'react';
 import { round } from 'lodash';
+import { Tooltip } from 'antd';
 import { playtimeToMinute } from '../ApiParse/func';
+
+const TooltipStat = ({
+  statUp, statDown, fullstat, tip, precision = 1, percent = false,
+}) => {
+  const stat = fullstat || round(statUp / statDown, precision);
+  const text = stat.toString() + (percent ? ' %' : '');
+
+  return (
+    <Tooltip title={tip}>
+      {text}
+    </Tooltip>
+  );
+};
 
 const HERO_IMPORTANT_STATS = {
   ana: [
@@ -10,12 +25,34 @@ const HERO_IMPORTANT_STATS = {
   ],
   bastion:  [],
   doomfist: [],
-  dVa:      [],
-  genji:    [
+  dVa:      [
+    {
+      key:    '',
+      name:   'Damage blocked per Mech-Life',
+      render: (specs) => {
+        return (<TooltipStat
+          statUp={specs.heroSpecific.damageBlocked}
+          statDown={specs.heroSpecific.mechDeaths}
+          tip="Average usage of Defense Matrix"
+        />);
+        // return round(specs.heroSpecific.damageBlocked / specs.heroSpecific.mechDeaths, 1);
+      },
+    },
+  ],
+  genji: [
     {
       key:    'heroSpecific',
       name:   'Dragonblade Kills per blade',
-      render: (specs) => { return round(specs.heroSpecific.dragonblades / specs.heroSpecific.dragonbladeKills, 1); },
+      render: (specs) => {
+        return (
+          <TooltipStat
+            statUp={specs.heroSpecific.dragonblades}
+            statDown={specs.heroSpecific.dragonbladeKills}
+            precision={3}
+            tip="Seriously ? It's obvious..."
+          />
+        );
+      },
     },
     {
       key:    '',
@@ -44,7 +81,13 @@ const HERO_IMPORTANT_STATS = {
     {
       key:    'combat.eliminations',
       name:   'Eliminations to Crits Ratio',
-      render: (specs) => { return round(specs.combat.eliminations / specs.combat.criticalHits, 2); },
+      render: (specs) => {
+        return (
+          <Tooltip title="Eliminations divided by critical hits">
+            {round(specs.combat.eliminations / specs.combat.criticalHits, 2)}
+          </Tooltip>
+        );
+      },
     },
   ],
   mei:   [],
@@ -100,8 +143,16 @@ const HERO_IMPORTANT_STATS = {
   ],
   sombra:   [],
   symmetra: [],
-  torbjorn: [],
-  tracer:   [
+  torbjorn: [
+    {
+      key:    '',
+      name:   'Torb/Turret kill ratio',
+      render: (specs) => {
+        return round(specs.heroSpecific.torbjornKills / specs.heroSpecific.turretKills, 1);
+      },
+    },
+  ],
+  tracer: [
     {
       key:  'combat.weaponAccuracy',
       name: 'Accuracy',

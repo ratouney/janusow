@@ -34,8 +34,14 @@ class SettingsForm extends Component {
 
       <Form onSubmit={(e) => { return this.handleSubmit(e, onSubmit); }} layout="horizontal" >
         <FormItemSwitch
-          customFormItemProps={{ label: 'Auto load' }}
+          customFormItemProps={{ label: 'Auto load after adding Account' }}
           id="autoLoad"
+          getFieldDecorator={getFieldDecorator}
+        />
+
+        <FormItemSwitch
+          customFormItemProps={{ label: 'Preload Account data on PageOpen' }}
+          id="preload"
           getFieldDecorator={getFieldDecorator}
         />
 
@@ -60,6 +66,7 @@ const mapPropsToFields = ({ settings }) => {
   console.log('Props to Fields : ', settings);
   return {
     autoLoad: { value: settings.autoLoad },
+    preload:  { value: settings.preload },
     language: { value: settings.language },
   };
 };

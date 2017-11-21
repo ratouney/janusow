@@ -1,7 +1,8 @@
-import WidowmakerCard from './WidowmakerCard';
-import MainHeroCard from './MainHero';
+import HeroCard from './HeroCard';
+
+const TMP = '';
 
 export {
-  MainHeroCard,
-  WidowmakerCard,
+  TMP,
+  HeroCard,
 };

@@ -4,6 +4,7 @@ import {
   Modal,
 } from 'antd';
 import { closeModal } from './duck-reducer';
+import { HeroCard } from '../HeroCard';
 
 class QuickPlayModal extends Component {
   componentDidMount() {
@@ -18,13 +19,15 @@ class QuickPlayModal extends Component {
 
     return (
       <Modal
+        closable={false}
         visible={showModal}
         onCancel={onCloseModal}
         footer={null}
         width="750px"
         height="750px"
+        className={`${selected.hero}Card`}
       >
-        {JSON.stringify(selected)}
+        <HeroCard data={selected} />
       </Modal>
     );
   }

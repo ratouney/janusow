@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Menu, Icon, Avatar, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import DB from '../../utils/DB/';
+import { reset as resetSelected } from '../QuickPlayProfile/duck-reducer';
 
 const { Item } = Menu;
 
@@ -67,6 +68,7 @@ class SideMenu extends Component {
     const {
       menuProps,
       collapsed,
+      onChangeAccount,
     } = this.props;
 
     const {
@@ -83,7 +85,7 @@ class SideMenu extends Component {
       ...accounts.map((elem) => {
         return {
           key:    `${elem.username}#${elem.battletag}`,
-          to:     `/account/${elem.username}#${elem.battletag}`,
+          to:     `/account/${elem.username}-${elem.battletag}`,
           icon:   false,
           avatar: elem.icon,
           text:   `${elem.username}#${elem.battletag}`,
@@ -101,8 +103,8 @@ class SideMenu extends Component {
       <Menu {...menuProps} mode={collapsed ? 'vertical' : 'inline'} >
         {ITEMS.map((elem) => {
           return (
-            <Item key={elem.key} style={{ marginBottom: 5 }} >
-              <Link to={elem.to} >
+            <Item key={elem.key} style={{ marginBottom: 5 }} onClick={() => { onChangeAccount(); }}>
+              <Link to={elem.to} onClick={() => { onChangeAccount(); }}>
                 {elem.icon === false
                   ? <Avatar src={elem.avatar} />
                   : <Icon {...elem.icon} />
@@ -125,4 +127,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(SideMenu);
+function mapDispatchToProps(dispatch) {
+  return {
+    onChangeAccount: () => {
+      dispatch(resetSelected());
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideMenu);

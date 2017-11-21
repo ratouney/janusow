@@ -11,6 +11,7 @@ import {
   SettingsForm,
   editSettings,
 } from '../../modules/Settings/';
+import { ThemeColorForm } from '../../modules/ThemeColor/';
 
 class SettingsPage extends Component {
   componentDidMount() {
@@ -40,6 +41,7 @@ class SettingsPage extends Component {
             <Card
               title="Manage Settings"
             >
+              <ThemeColorForm />
               <Button style={{ marginBottom: 5 }}>
               Clear account data
               </Button>
