@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import _, { capitalize, range, forEach } from 'lodash';
+import _, { capitalize } from 'lodash';
 import {
   Row,
   Col,
@@ -10,7 +9,6 @@ import {
   HERO_ICONS,
   HERO_CARD_STATS,
   HERO_COLORS,
-  HERO_TEXT_COLORS,
 } from '../../utils/consts';
 
 const arraySlice = (givenArray, groupSize = 3) => {
@@ -25,7 +23,7 @@ const arraySlice = (givenArray, groupSize = 3) => {
 const StatCol = ({ label, value }) => {
   return (
     <div>
-      <div style={{ fontWeight: 900 }} >{label}</div> : {value}
+      <div style={{ fontWeight: 900 }} >{label}</div>: {value}
     </div>
   );
 };
@@ -66,7 +64,7 @@ class HeroCard extends Component {
     // http://jsbin.com/dokivomuzake/1/edit?js,console
     const stats = arraySlice(HERO_CARD_STATS[data.hero], 3);
 
-    console.log('>>>>>> Data : ', data);
+    console.log('>>>>>> Data : ', data, stats);
 
     return (
       <div>

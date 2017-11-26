@@ -37,6 +37,12 @@ class AccountList extends Component {
     };
   }
 
+  componentWillReceiveProps({ accountList }) {
+    this.setState({
+      accountList,
+    });
+  }
+
   handleChange(selectedIndexes, selectedEntries) {
     this.setState({
       selectedRows: selectedEntries,
@@ -45,8 +51,7 @@ class AccountList extends Component {
 
   handleUpdateSelected() {
     this.state.selectedRows.map((elem) => {
-      console.log('Fetching Data for : ', elem);
-      this.props.onRequestData(elem);
+      return this.props.onRequestData(elem);
     });
   }
 
@@ -65,12 +70,6 @@ class AccountList extends Component {
         accountList: this.props.accountList,
       });
     }
-  }
-
-  componentWillReceiveProps({ accountList }) {
-    this.setState({
-      accountList,
-    });
   }
 
   handleSubmit(evt) {

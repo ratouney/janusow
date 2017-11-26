@@ -1,44 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Menu, Icon, Avatar, Row, Col } from 'antd';
+import { Menu, Icon, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 import DB from '../../utils/DB/';
-import { reset as resetSelected } from '../QuickPlayProfile/duck-reducer';
+import { reset as resetQPSelected } from '../QuickPlayProfile/duck-reducer';
+import { reset as resetCompSelected } from '../CompetitiveProfile/duck-reducer';
 
 const { Item } = Menu;
-
-const uncollapsedMenuItemRender = ({ elem }) => {
-  return (
-    <Row>
-      <Col span={5} style={{ margin: 5 }} >
-        {elem.icon === false
-          ? <Avatar src={elem.avatar} />
-          : <Icon {...elem.icon} />
-        }
-      </Col>
-      <Col span={17}>{elem.text} </Col>
-    </Row>
-  );
-};
-
-const collapsedMenuItemRender = ({ elem }) => {
-  return (
-    elem.icon === false
-      ? <Avatar src={elem.avatar} style={{ border: 0, margin: 0 }} />
-      : <Icon {...elem.icon} />
-  );
-};
-
-const MenuItemRender = ({ elem, collapsed }) => {
-  if (collapsed) {
-    return (
-      <collapsedMenuItemRender elem={elem} />
-    );
-  }
-  return (
-    <unCollapsedMenuItemRender elem={elem} />
-  );
-};
 
 class SideMenu extends Component {
   constructor(props) {
@@ -130,7 +98,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onChangeAccount: () => {
-      dispatch(resetSelected());
+      dispatch(resetQPSelected());
+      dispatch(resetCompSelected());
     },
   };
 }

@@ -1,5 +1,4 @@
 import { message } from 'antd';
-import { isEmpty } from 'lodash';
 import {
   FETCH_USER_DATA_FAILURE,
   FETCH_USER_DATA_REQUEST,
@@ -152,12 +151,12 @@ function accountReducer(state = initialState, action) {
           return { ...elem, loaded: true, icon: action.data.icon };
         } return elem;
       });
-      const val = DB.get('users')
+      DB.get('users')
         .find({ ...action.userData })
         .assign({ icon: action.data.icon })
         .write();
 
-      const fd = DB.get('users')
+      DB.get('users')
         .find({ username: action.userData.username, battletag: action.userData.battletag })
         .assign({ icon: action.data.icon })
         .value();

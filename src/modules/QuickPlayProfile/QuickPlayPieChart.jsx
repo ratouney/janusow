@@ -6,14 +6,11 @@ import {
 } from 'react-chartjs-2';
 import {
   HERO_COLORS,
-  HERO_NAMES,
 } from '../../utils/consts';
 import {
-  QuickPlay,
   QuickPlayHeroes,
 } from '../../utils/ApiParse';
 import {
-  playtimePercentage,
   playtimeToMinute,
 } from '../../utils/ApiParse/func';
 import {

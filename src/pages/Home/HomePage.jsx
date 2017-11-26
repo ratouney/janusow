@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DashboardLayout from '../../modules/DashboardLayout';
 import AccountList from '../../modules/AccountList/';
-import { AccountForm } from '../../modules/AccountForm/';
-import DB from '../../utils/DB/';
 
 class Homepage extends Component {
   componentDidMount() {
@@ -11,12 +9,6 @@ class Homepage extends Component {
   }
 
   render() {
-    const hasUsers =
-      DB.get('users')
-        .size()
-        .value();
-
-    console.log('Has users : ', hasUsers);
     return (
       <DashboardLayout>
         <AccountList />

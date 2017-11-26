@@ -9,6 +9,7 @@ const HERO_ICONS = {
   lucio:      'https://blzgdapipro-a.akamaihd.net/hero/lucio/hero-select-portrait.png',
   mccree:     'https://blzgdapipro-a.akamaihd.net/hero/mccree/hero-select-portrait.png',
   mei:        'https://blzgdapipro-a.akamaihd.net/hero/mei/hero-select-portrait.png',
+  moira:      'https://blzgdapipro-a.akamaihd.net/hero/moira/hero-select-portrait.png',
   mercy:      'https://blzgdapipro-a.akamaihd.net/hero/mercy/hero-select-portrait.png',
   orisa:      'https://blzgdapipro-a.akamaihd.net/hero/orisa/hero-select-portrait.png',
   pharah:     'https://blzgdapipro-a.akamaihd.net/hero/pharah/hero-select-portrait.png',

@@ -6,7 +6,7 @@ import {
 } from '../../utils/ApiParse/func';
 import { HERO_IMPORTANT_STATS } from '../../utils/consts';
 
-const QuickPlayStats = (props) => {
+const CompetitiveStats = (props) => {
   const {
     currentSelected,
     currentHero,
@@ -49,4 +49,4 @@ const QuickPlayStats = (props) => {
   );
 };
 
-export default QuickPlayStats;
+export default CompetitiveStats;

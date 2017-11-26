@@ -66,6 +66,7 @@ export const HERO_NAMES = [
   'lucio',
   'mccree',
   'mei',
+  'moira',
   'mercy',
   'orisa',
   'pharah',

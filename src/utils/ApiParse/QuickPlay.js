@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import {
-  playtimePercentage,
   playtimeToMinute,
 } from './func';
 
@@ -44,6 +43,6 @@ export const QuickPlayFullTime = (data) => {
 export const QuickPlayHeroPercentage = (data, hero) => {
   const HeroPL = QuickPlayHeroPlaytime(data, hero);
   const FullPL = QuickPlayFullTime(data);
-  
+
   return playtimeToMinute(HeroPL) / (playtimeToMinute(FullPL) / 100);
 };

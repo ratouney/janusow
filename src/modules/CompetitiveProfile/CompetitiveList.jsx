@@ -9,7 +9,7 @@ import {
   HERO_TEXT_COLORS,
 } from '../../utils/consts';
 import {
-  QuickPlayHeroes,
+  CompetitiveHeroes,
 } from '../../utils/ApiParse';
 import {
   setSelectedHero,
@@ -36,7 +36,7 @@ const columns = [
   },
 ];
 
-class QuickPlayList extends Component {
+class CompetitiveList extends Component {
   componentDidMount() {
     // stuff
   }
@@ -46,7 +46,7 @@ class QuickPlayList extends Component {
       onSelectHero,
     } = this.props;
 
-    const QPHeroes = QuickPlayHeroes(data);
+    const QPHeroes = CompetitiveHeroes(data);
 
     const tableData = QPHeroes.map((elem) => {
       return {
@@ -57,7 +57,7 @@ class QuickPlayList extends Component {
       };
     });
 
-    console.log('QPL : ', data);
+    console.log('CompL : ', data);
     console.log('TableData : ', tableData);
 
     return (
@@ -88,4 +88,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuickPlayList);
+export default connect(mapStateToProps, mapDispatchToProps)(CompetitiveList);

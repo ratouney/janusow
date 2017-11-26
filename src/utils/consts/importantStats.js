@@ -91,6 +91,7 @@ const HERO_IMPORTANT_STATS = {
     },
   ],
   mei:   [],
+  moira: [],
   mercy: [
     {
       key:    '',

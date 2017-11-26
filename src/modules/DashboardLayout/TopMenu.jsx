@@ -5,7 +5,6 @@ import {
   Col,
   Avatar,
   Button,
-  Icon,
   Dropdown,
   Menu,
 } from 'antd';

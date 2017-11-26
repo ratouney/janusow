@@ -8,19 +8,19 @@ import {
   Col,
 } from 'antd';
 import {
-  QuickPlayHeroes,
+  CompetitiveHeroes,
 } from '../../utils/ApiParse';
 import {
   HERO_ICONS,
   HERO_COLORS,
 } from '../../utils/consts';
-import QuickPlayPieChart from './QuickPlayPieChart';
-import QuickPlayStats from './QuickPlayStats';
-import QuickPlayList from './QuickPlayList';
-import QuickPlayModal from './QuickPlayModal';
+import CompetitivePieChart from './CompetitivePieChart';
+import CompetitiveStats from './CompetitiveStats';
+import CompetitiveList from './CompetitiveList';
+import CompetitiveModal from './CompetitiveModal';
 import { openModal } from './duck-reducer';
 
-class QuickPlayProfile extends Component {
+class CompetitiveProfile extends Component {
   constructor(props) {
     super(props);
 
@@ -48,9 +48,10 @@ class QuickPlayProfile extends Component {
       showPiechart,
     } = this.state;
 
-    const QPHeroes = QuickPlayHeroes(data);
+    const CompHeroes = CompetitiveHeroes(data);
+    console.log('CompData : ', CompHeroes);
 
-    const currentSelected = isEmpty(selected) ? QPHeroes[0] : selected;
+    const currentSelected = isEmpty(selected) ? CompHeroes[0] : selected;
     const currentColor = HERO_COLORS[currentSelected.hero];
     const currentHero = currentSelected.hero;
 
@@ -73,13 +74,13 @@ class QuickPlayProfile extends Component {
             >
               {
                 showPiechart
-                  ? <QuickPlayPieChart data={data} />
-                  : <QuickPlayList data={data} />
+                  ? <CompetitivePieChart data={data} />
+                  : <CompetitiveList data={data} />
               }
             </Card>
           </Col>
 
-          {showModal && <QuickPlayModal selected={currentSelected} />}
+          {showModal && <CompetitiveModal selected={currentSelected} />}
 
           <Col span={14}>
             <Card
@@ -104,7 +105,7 @@ class QuickPlayProfile extends Component {
                 </Col>
 
                 <Col span={19}>
-                  <QuickPlayStats
+                  <CompetitiveStats
                     currentSelected={currentSelected}
                     currentColor={currentColor}
                     currentHero={currentHero}
@@ -121,8 +122,8 @@ class QuickPlayProfile extends Component {
 
 function mapStateToProps(state) {
   return {
-    selected:  state.quickPlayReducer.selected,
-    showModal: state.quickPlayReducer.showModal,
+    selected:  state.competitiveReducer.selected,
+    showModal: state.competitiveReducer.showModal,
   };
 }
 
@@ -134,4 +135,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuickPlayProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(CompetitiveProfile);
