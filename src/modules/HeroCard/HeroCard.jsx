@@ -59,10 +59,23 @@ class HeroCard extends Component {
   render() {
     const {
       data,
+      competitive = false,
     } = this.props;
 
+    const Winrate = {
+      label: 'Winrate',
+      value: (curdata) => {
+        return curdata.game.winPercentage;
+      },
+    };
+
+    const localHeroCardStats = HERO_CARD_STATS[data.hero];
     // http://jsbin.com/dokivomuzake/1/edit?js,console
-    const stats = arraySlice(HERO_CARD_STATS[data.hero], 3);
+    if (competitive) {
+      localHeroCardStats.unshift(Winrate);
+    }
+
+    const stats = arraySlice(localHeroCardStats, 3);
 
     console.log('>>>>>> Data : ', data, stats);
 

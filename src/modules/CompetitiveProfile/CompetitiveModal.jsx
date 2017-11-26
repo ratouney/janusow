@@ -27,7 +27,7 @@ class CompetitiveModal extends Component {
         height="750px"
         className={`${selected.hero}Card`}
       >
-        <HeroCard data={selected} />
+        <HeroCard data={selected} competitive />
       </Modal>
     );
   }
