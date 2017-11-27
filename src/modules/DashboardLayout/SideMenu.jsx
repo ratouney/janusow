@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Menu, Icon, Avatar } from 'antd';
+import { Menu, Icon, Avatar, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import DB from '../../utils/DB/';
 import { reset as resetQPSelected } from '../QuickPlayProfile/duck-reducer';
@@ -34,6 +34,7 @@ class SideMenu extends Component {
 
   render() {
     const {
+      homeText = 'HOME',
       menuProps,
       collapsed,
       onChangeAccount,
@@ -45,10 +46,11 @@ class SideMenu extends Component {
 
     const ITEMS = [
       {
-        key:  '-2',
-        to:   '/',
-        icon: { type: 'home' },
-        text: 'HOME',
+        key:   '-2',
+        to:    '/',
+        icon:  { type: 'home' },
+        text:  homeText,
+        class: 'other-menu-item',
       },
       ...accounts.map((elem) => {
         return {
@@ -57,28 +59,38 @@ class SideMenu extends Component {
           icon:   false,
           avatar: elem.icon,
           text:   `${elem.username}#${elem.battletag}`,
+          class:  'account-menu-entry',
         };
       }),
       {
-        key:  '-1',
-        to:   '/select',
-        icon: { type: 'plus', style: { backgroundColor: 'green', color: 'white' } },
-        text: 'Add Account',
+        key:   '-1',
+        to:    '/select',
+        icon:  { type: 'plus', style: { backgroundColor: 'green', color: 'white' } },
+        text:  'Add Account',
+        class: 'other-menu-item',
       },
     ];
 
     return (
-      <Menu {...menuProps} mode={collapsed ? 'vertical' : 'inline'} >
+      <Menu {...menuProps} mode={collapsed ? 'vertical' : 'inline'}>
         {ITEMS.map((elem) => {
           return (
-            <Item key={elem.key} style={{ marginBottom: 5 }} onClick={() => { onChangeAccount(); }}>
+            <Item
+              className={elem.class}
+              key={elem.key}
+              style={{ marginBottom: 5 }}
+              onClick={() => { onChangeAccount(); }}
+            >
               <Link to={elem.to} onClick={() => { onChangeAccount(); }}>
-                {elem.icon === false
-                  ? <Avatar src={elem.avatar} />
-                  : <Icon {...elem.icon} />
-                }
                 {
-                  !collapsed && elem.text
+                  elem.icon === false ?
+                    <span>
+                      <Avatar src={elem.avatar} style={{ marginBottom: -12, marginRight: 20 }} />
+                      <span className="menu-text">{elem.text}</span>
+                    </span> :
+                    <Button icon={elem.icon.type} style={{ width: '100%', height: '100%' }}>
+                      <span className="menu-text">{elem.text}</span>
+                    </Button>
                 }
               </Link>
             </Item>

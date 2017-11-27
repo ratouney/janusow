@@ -23,7 +23,7 @@ const arraySlice = (givenArray, groupSize = 3) => {
 const StatCol = ({ label, value }) => {
   return (
     <div>
-      <div style={{ fontWeight: 900 }} >{label}</div>: {value}
+      <div style={{ fontWeight: 900 }} >{label}</div> {value}
     </div>
   );
 };
@@ -69,10 +69,10 @@ class HeroCard extends Component {
       },
     };
 
-    const localHeroCardStats = HERO_CARD_STATS[data.hero];
+    let localHeroCardStats = HERO_CARD_STATS[data.hero];
     // http://jsbin.com/dokivomuzake/1/edit?js,console
     if (competitive) {
-      localHeroCardStats.unshift(Winrate);
+      localHeroCardStats = [Winrate, ...localHeroCardStats];
     }
 
     const stats = arraySlice(localHeroCardStats, 3);

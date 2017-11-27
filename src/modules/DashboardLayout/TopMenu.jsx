@@ -70,8 +70,6 @@ class TopMenu extends Component {
               <Dropdown.Button onClick={() => { console.log('Goto account page'); }} overlay={settingsOverlay}>
                 {userName}
               </Dropdown.Button>
-
-              {/*  */}
             </Row>
           </Col>
         </Row>

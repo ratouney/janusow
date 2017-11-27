@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { debounce } from 'lodash';
+import windowDimensions from 'react-window-dimensions';
 import {
   Layout,
 } from 'antd';
@@ -12,12 +14,11 @@ class DashboardLayout extends Component {
     super(props);
 
     this.state = {
-      collapsed: false,
+      //collapsed: props.width < 400,
+      collapsed: true,
     };
   }
 
-  componentDidMount() {
-  }
 
   handleMenuCollapse() {
     this.setState({
@@ -28,6 +29,7 @@ class DashboardLayout extends Component {
   render() {
     const {
       children,
+      width,
     } = this.props;
 
     return (
@@ -40,6 +42,7 @@ class DashboardLayout extends Component {
           style={{ height: '100vh', minWidth: '85px' }}
         >
           <SideMenu
+            homeText={width}
             collapsed={this.state.collapsed}
             menuProps={{
               theme: 'dark',
@@ -63,4 +66,6 @@ class DashboardLayout extends Component {
   }
 }
 
-export default DashboardLayout;
+export default windowDimensions({
+  debounce: (onResize) => { return debounce(onResize, 100); },
+})(DashboardLayout);

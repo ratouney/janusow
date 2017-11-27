@@ -7,6 +7,7 @@ import {
 import DashboardLayout from '../../modules/DashboardLayout';
 import { QuickPlayProfile } from '../../modules/QuickPlayProfile/';
 import { CompetitiveProfile } from '../../modules/CompetitiveProfile/';
+import { GeneralProfile } from '../../modules/GeneralProfile/';
 // import xQc from '../../utils/mock';
 
 const { TabPane } = Tabs;
@@ -37,9 +38,9 @@ class AccountPage extends Component {
 
     return (
       <DashboardLayout>
-        <Tabs type="card" defaultActiveKey="3">
+        <Tabs type="card" defaultActiveKey="1">
           <TabPane tab="General" key="1">
-            General
+            <GeneralProfile username={currentUser.fullname || fullname} data={currentUser} />
           </TabPane>
           <TabPane tab="QuickPlay" key="2">
             <QuickPlayProfile username={currentUser.fullname || fullname} data={currentUser} />

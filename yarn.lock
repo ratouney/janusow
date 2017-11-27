@@ -6742,9 +6742,9 @@ react-lazy-load@^3.0.12:
     lodash.throttle "^4.0.0"
     prop-types "^15.5.8"
 
-react-native@0.50.3:
-  version "0.50.3"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.50.3.tgz#91282bd5356cc7d794969cdc443cc764389b9af4"
+react-native@^0.50.4:
+  version "0.50.4"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.50.4.tgz#194f5da4939087b3acee712a503475f4942dca7e"
   dependencies:
     absolute-path "^0.0.0"
     art "^0.10.0"
@@ -6918,9 +6918,13 @@ react-transform-hmr@^1.0.4:
     global "^4.3.0"
     react-proxy "^1.1.7"
 
+react-window-dimensions@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-window-dimensions/-/react-window-dimensions-1.0.1.tgz#35116bc9b8a471ab6293ad3fdc4a3f14eb47092c"
+
 react-window-size@^1.0.1:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-window-size/-/react-window-size-1.1.0.tgz#3e9ec7ffe0752780f294a88d5e8a9662f14bde42"
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-window-size/-/react-window-size-1.0.1.tgz#c5e0e52602049ae9fb2c230626a8d1ce9ed8e3e4"
   dependencies:
     babel-runtime "^6.6.1"
 

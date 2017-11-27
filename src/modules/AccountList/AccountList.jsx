@@ -103,11 +103,11 @@ class AccountList extends Component {
       <Menu>
         <Menu.Item>
           {
-            loaded ? <Link to={`/account/${entry.username}#${entry.battletag}`}>
+            loaded ? <Link to={`/account/${entry.username}-${entry.battletag}`}>
               <Button style={{ width: '100%' }} icon="search">
                   Show profile
               </Button>
-                     </Link>
+            </Link>
               : <Button onClick={() => { return onRequestData(entry); }} style={{ width: '100%' }} icon="reload" >Load profile</Button>
           }
         </Menu.Item>
