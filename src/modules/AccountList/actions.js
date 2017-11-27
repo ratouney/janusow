@@ -1,5 +1,6 @@
 import {
   REMOVE_USER,
+  SET_FILTERED_USER,
 } from './types';
 
 const removeUser = (userData) => {
@@ -9,6 +10,14 @@ const removeUser = (userData) => {
   };
 };
 
+const setFiltered = (filtered) => {
+  return {
+    type: SET_FILTERED_USER,
+    filtered,
+  };
+};
+
 export {
   removeUser,
+  setFiltered,
 };

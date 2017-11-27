@@ -44,27 +44,39 @@ class TopMenu extends Component {
         padding: 0,
       }}
       >
-        <Row gutter={16} type="flex" justify="space-around" align="middle" >
-          <Col span={2} >
-            <span>
-              <Button
-                style={{ marginLeft: 10 }}
-                type="primary"
-                size="large"
-                onClick={() => { return collapseAction(); }}
-                icon={collapseStatus ? 'menu-unfold' : 'menu-fold'}
-              />
-            </span>
+        <Row gutter={16} type="flex">
+          <Col
+            className="collapse-trigger"
+            xs={4}
+            sm={8}
+            md={12}
+            lg={16}
+            xl={20}
+          >
+            <Button
+              style={{ marginLeft: 10 }}
+              type="primary"
+              size="large"
+              onClick={() => { return collapseAction(); }}
+              icon={collapseStatus ? 'menu-unfold' : 'menu-fold'}
+            />
           </Col>
-          <Col span={22}>
-            <Row type="flex" justify="end" align="middle" style={{ marginRight: 50 }} >
-              <Col span={1} >
+          <Col
+            className="settings-trigger"
+            xs={20}
+            sm={16}
+            md={12}
+            lg={8}
+            xl={4}
+          >
+            <Row gutter={16} type="flex" justify="end" align="center" >
+              <Col>
                 <Button
                   disabled
                   icon="mail"
                 />
               </Col>
-              <Col span={1} >
+              <Col>
                 <Avatar shape="square" size="small" icon="user" style={{ marginLeft: 8, marginRight: 8, overflow: 'visible' }} />
               </Col>
               <Dropdown.Button onClick={() => { console.log('Goto account page'); }} overlay={settingsOverlay}>

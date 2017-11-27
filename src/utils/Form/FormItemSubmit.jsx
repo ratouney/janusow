@@ -1,7 +1,14 @@
 import React from 'react';
 import { Form, Button } from 'antd';
+import Styles from './Styles';
 
-const defaultFormItemProps = {};
+const {
+  fluidFormItemLayout,
+} = Styles;
+
+const defaultFormItemProps = {
+  ...fluidFormItemLayout,
+};
 
 const defaultButtonProps = {
   type:     'primary',

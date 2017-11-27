@@ -1,13 +1,21 @@
 import React from 'react';
 import { Form, Input } from 'antd';
+import Styles from './Styles';
 
 const defaultInputProps = {
   placeholder: 'Enter',
 };
 
+const {
+  fluidFormItemLayout,
+} = Styles;
+
 const defaultFormItemProps = {
-  width: '100vh',
+  ...fluidFormItemLayout,
   label: 'Input',
+  style: {
+    width: '100%',
+  },
 };
 
 const FormItemInput = (props) => {

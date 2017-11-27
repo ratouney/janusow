@@ -65,7 +65,7 @@ class SideMenu extends Component {
       {
         key:   '-1',
         to:    '/select',
-        icon:  { type: 'plus', style: { backgroundColor: 'green', color: 'white' } },
+        icon:  { type: 'plus' },
         text:  'Add Account',
         class: 'other-menu-item',
       },
@@ -79,7 +79,6 @@ class SideMenu extends Component {
               className={elem.class}
               key={elem.key}
               style={{ marginBottom: 5 }}
-              onClick={() => { onChangeAccount(); }}
             >
               <Link to={elem.to} onClick={() => { onChangeAccount(); }}>
                 {
@@ -88,7 +87,8 @@ class SideMenu extends Component {
                       <Avatar src={elem.avatar} style={{ marginBottom: -12, marginRight: 20 }} />
                       <span className="menu-text">{elem.text}</span>
                     </span> :
-                    <Button icon={elem.icon.type} style={{ width: '100%', height: '100%' }}>
+                    <Button style={{ width: '100%', height: '100%' }}>
+                      <Icon {...elem.icon} />
                       <span className="menu-text">{elem.text}</span>
                     </Button>
                 }

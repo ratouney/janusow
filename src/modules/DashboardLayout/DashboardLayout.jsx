@@ -14,8 +14,7 @@ class DashboardLayout extends Component {
     super(props);
 
     this.state = {
-      //collapsed: props.width < 400,
-      collapsed: true,
+      collapsed: props.width < 500,
     };
   }
 

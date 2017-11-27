@@ -1,11 +1,17 @@
 import React from 'react';
 import { Form, Switch } from 'antd';
+import Styles from './Styles';
 
 const defaultSwitchProps = {
   // defaultChecked: false,
 };
 
+const {
+  fluidFormItemLayout,
+} = Styles;
+
 const defaultFormItemProps = {
+  ...fluidFormItemLayout,
   width: '100vh',
 };
 

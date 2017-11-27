@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import windowDimensions from 'react-window-dimensions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { isEmpty } from 'lodash';
+import { isEmpty, debounce } from 'lodash';
 import {
   Button,
   Form,
@@ -16,16 +17,31 @@ import {
 import { fetchUserData } from '../SelectUser';
 import {
   FormItemInput,
+  FormItemSelect,
   FormItemSubmit,
 } from '../../utils/Form/';
 import {
   removeUser,
+  setFiltered,
 } from './actions';
 import {
   ModalAccountForm,
   open as openAccountModal,
   editUser,
 } from '../AccountForm';
+import {
+  REGIONS,
+  PLATFORMS,
+} from '../../utils/consts/';
+
+const filterFormLayout = {
+  style: { marginRight: 10, marginBottom: 10 },
+  xs:    24,
+  sm:    24,
+  md:    4,
+  lg:    4,
+  xl:    4,
+};
 
 class AccountList extends Component {
   constructor(props) {
@@ -55,21 +71,30 @@ class AccountList extends Component {
     });
   }
 
-  handleSearch(search) {
-    console.log('Set search to : ', search);
+  handleSearch(username, region, platform) {
+    const {
+      accountList,
+      onSetFiltered,
+    } = this.props;
 
-    if (!isEmpty(search)) {
-      this.setState({
-        accountList: this.props.accountList.filter((elem) => {
-          const reg = new RegExp(search, 'gi');
-          return elem.username.match(reg);
-        }),
-      });
-    } else {
-      this.setState({
-        accountList: this.props.accountList,
+    let acclist = accountList;
+
+    console.log('Set search to : ', username, region, platform);
+
+    if (region !== undefined) {
+      acclist = acclist.filter((elem) => { return elem.region === region; });
+    }
+    if (platform !== undefined) {
+      acclist = acclist.filter((elem) => { return elem.platform === platform; });
+    }
+    if (username !== undefined) {
+      acclist = acclist.filter((elem) => {
+        const reg = new RegExp(username, 'gi');
+        return elem.username.match(reg);
       });
     }
+
+    onSetFiltered(acclist);
   }
 
   handleSubmit(evt) {
@@ -78,7 +103,7 @@ class AccountList extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        this.handleSearch(values.search);
+        this.handleSearch(values.search, values.region, values.platform);
       }
     });
   }
@@ -103,11 +128,12 @@ class AccountList extends Component {
       <Menu>
         <Menu.Item>
           {
-            loaded ? <Link to={`/account/${entry.username}-${entry.battletag}`}>
-              <Button style={{ width: '100%' }} icon="search">
+            loaded ?
+              <Link to={`/account/${entry.username}-${entry.battletag}`}>
+                <Button style={{ width: '100%' }} icon="search">
                   Show profile
-              </Button>
-            </Link>
+                </Button>
+              </Link>
               : <Button onClick={() => { return onRequestData(entry); }} style={{ width: '100%' }} icon="reload" >Load profile</Button>
           }
         </Menu.Item>
@@ -133,11 +159,12 @@ class AccountList extends Component {
     );
   }
 
-
   render() {
     const {
       onEditUser,
       modalVisible,
+      filteredAccounts,
+      form: { getFieldDecorator },
     } = this.props;
 
     const columns = [
@@ -154,11 +181,13 @@ class AccountList extends Component {
       {
         title:     'Username',
         dataIndex: 'username',
+        width:     '200px',
         render:    (_, elem) => { return (`${elem.username}#${elem.battletag}`); },
       },
       {
         title:     'Platform',
         dataIndex: 'platform',
+        width:     '80px',
         render:    (val) => {
           if (val === 'pc') {
             return 'PC';
@@ -172,6 +201,7 @@ class AccountList extends Component {
       {
         title:     'Region',
         dataIndex: 'region',
+        width:     '80px',
       },
       {
         title:     'Actions',
@@ -186,6 +216,8 @@ class AccountList extends Component {
       onChange: (selectedIndexes, selectedEntries) => { return this.handleChange(selectedIndexes, selectedEntries); },
     };
 
+    console.log('DataSource : ', this.state.accountList);
+
     return (
       <Card>
         {
@@ -196,14 +228,29 @@ class AccountList extends Component {
         }
         <Row style={{ marginBottom: 12, marginTop: 12 }}>
           <Form layout="inline" onSubmit={(e) => { return this.handleSubmit(e); }} >
-            <Col style={{ textAlign: 'left' }} span={6} >
+            <Col {...filterFormLayout}>
               <FormItemInput
                 id="search"
-                customFormItemProps={{ label: 'Search Account' }}
-                getFieldDecorator={this.props.form.getFieldDecorator}
+                customFormItemProps={{ label: null }}
+                customInputProps={{ placeholder: 'Username' }}
+                getFieldDecorator={getFieldDecorator}
               />
             </Col>
-            <Col span={2} >
+            <Col {...filterFormLayout} >
+              <FormItemSelect
+                id="region"
+                getFieldDecorator={getFieldDecorator}
+                dataSource={REGIONS}
+              />
+            </Col>
+            <Col {...filterFormLayout} >
+              <FormItemSelect
+                id="platform"
+                getFieldDecorator={getFieldDecorator}
+                dataSource={PLATFORMS}
+              />
+            </Col>
+            <Col {...filterFormLayout} >
               <FormItemSubmit
                 buttonContent="Search"
               />
@@ -216,7 +263,7 @@ class AccountList extends Component {
             </Col>
           }
         </Row>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={this.state.accountList} />
+        <Table rowSelection={rowSelection} columns={columns} dataSource={filteredAccounts} scroll={{ x: 600 }} />
       </Card>
     );
   }
@@ -224,9 +271,10 @@ class AccountList extends Component {
 
 function mapStateToProps(state) {
   return {
-    accountList:    state.accountReducer.accountList,
-    isFetchingData: state.accountReducer.isFetchingData,
-    modalVisible:   state.accountModalReducer.visible,
+    accountList:      state.accountReducer.accountList,
+    isFetchingData:   state.accountReducer.isFetchingData,
+    filteredAccounts: state.accountReducer.filteredAccounts,
+    modalVisible:     state.accountModalReducer.visible,
   };
 }
 
@@ -244,7 +292,12 @@ function mapDispatchToProps(dispatch) {
     onEditUser: (before, after) => {
       dispatch(editUser(before, after));
     },
+    onSetFiltered: (filtered) => {
+      dispatch(setFiltered(filtered));
+    },
   };
 }
 
-export default Form.create()(connect(mapStateToProps, mapDispatchToProps)(AccountList));
+export default windowDimensions({
+  debounce: (onResize) => { return debounce(onResize, 100); },
+})(Form.create()(connect(mapStateToProps, mapDispatchToProps)(AccountList)));

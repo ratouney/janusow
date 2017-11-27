@@ -11,6 +11,7 @@ import {
 } from '../modules/SelectUser/types';
 import {
   REMOVE_USER,
+  SET_FILTERED_USER,
 } from '../modules/AccountList/types';
 import {
   EDIT_USER,
@@ -39,17 +40,25 @@ const accountListFromLocalStorage = accountsFromLocalStorage()
   });
 
 const initialState = {
-  accountData:     [],
-  accountList:     accountListFromLocalStorage,
-  errors:          [],
-  isFetchingExist: false,
-  isFetchingData:  false,
-  searchStep:      0,
-  searchError:     false,
+  accountData:      [],
+  accountList:      accountListFromLocalStorage,
+  filteredAccounts: accountListFromLocalStorage,
+  errors:           [],
+  isFetchingExist:  false,
+  isFetchingData:   false,
+  searchStep:       0,
+  searchError:      false,
 };
 
 function accountReducer(state = initialState, action) {
   switch (action.type) {
+    case SET_FILTERED_USER: {
+      return {
+        ...state,
+        filteredAccounts: action.filtered,
+      };
+    }
+
     case ACCOUNT_MODAL_OPEN: {
       return {
         ...state,

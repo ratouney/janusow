@@ -1,14 +1,18 @@
 import React from 'react';
 import { Form, Select } from 'antd';
+import Styles from './Styles';
 
 const defaultSelectProps = {
   placeholder: 'Enter',
-  style:       {
-    width: '100%',
-  },
+  allowClear:  true,
 };
 
+const {
+  fluidFormItemLayout,
+} = Styles;
+
 const defaultFormItemProps = {
+  ...fluidFormItemLayout,
   label: false,
   style: {
     width: '100%',
@@ -52,7 +56,7 @@ const FormItemSelect = (props) => {
               </Select.Option>
             );
           })}
-          </Select>)
+        </Select>)
       }
     </Form.Item>
   );
