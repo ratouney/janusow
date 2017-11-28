@@ -3,17 +3,17 @@ import {
   REMOVE_GROUP,
 } from './types';
 
-export const addGroup = (data, name) => {
+export const addGroup = (groupname, data) => {
   return {
     type: ADD_GROUP,
+    groupname,
     data,
-    name,
   };
 };
 
-export const removeGroup = (name) => {
+export const removeGroup = (groupname) => {
   return {
     type: REMOVE_GROUP,
-    name,
+    groupname,
   };
 };

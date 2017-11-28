@@ -124,6 +124,7 @@ class QuickPlayProfile extends Component {
                     align="center"
                     alt=""
                     height="220px"
+
                     src={HERO_ICONS[currentSelected.hero]}
                     style={{
                       border:  `solid 3px ${currentColor}`,

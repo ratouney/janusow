@@ -19,9 +19,6 @@ import {
 import {
   OPEN as ACCOUNT_MODAL_OPEN,
 } from '../modules/AccountForm/ModalAccountForm/reducer';
-import {
-  ADD_GROUP,
-} from '../modules/MultiAccountForm/types';
 
 import DB from '../utils/DB/';
 
@@ -55,11 +52,6 @@ const initialState = {
 
 function accountReducer(state = initialState, action) {
   switch (action.type) {
-    case ADD_GROUP: {
-      debugger;
-      return state;
-    }
-
     case SET_FILTERED_USER: {
       return {
         ...state,
@@ -211,11 +203,7 @@ function accountReducer(state = initialState, action) {
         message.warn(`User ${action.userData.username}#${action.userData.battletag} already exists`);
       } else {
         message.success(`User ${action.userData.username}#${action.userData.battletag} saved in list`);
-        accountList.push({
-          ...action.userData,
-          loaded: false,
-          key:    `${action.userData.username}#${action.userData.battletag}`,
-        });
+        accountList.push({ ...action.userData, loaded: false });
       }
       return {
         ...state,

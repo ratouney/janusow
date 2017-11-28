@@ -11,6 +11,7 @@ import { QuickPlayHeroes, CompetitiveHeroes } from '../../utils/ApiParse/';
 const LevelTag = ({ level, prestige, rank }) => {
   return (
     <div style={{
+      border:      'solid 1px red',
       width:       '250px',
       height:      '350px',
       marginRight: 12,

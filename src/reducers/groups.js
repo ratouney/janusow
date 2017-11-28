@@ -1,8 +1,6 @@
 import { message } from 'antd';
-import {
-  ADD_GROUP,
-} from '../modules/MultiAccountForm/types';
-
+import _, { find } from 'lodash';
+import { ADD_GROUP, REMOVE_GROUP } from '../modules/MultiAccountForm/types';
 import DB from '../utils/DB/';
 
 const fulltagGen = (userData) => {
@@ -21,20 +19,36 @@ const groupListFromLocalStorage = groupsFromLocalStorage()
   .map((elem) => {
     return {
       ...elem,
-      keys: elem.children.map((acc) => { return fulltagGen(acc); }),
+      loaded: false,
+      keys:   elem.children.map((acc) => { return fulltagGen(acc); }),
     };
   });
 
 const initialState = {
-  groupData: [],
   groupList: groupListFromLocalStorage,
+  groupData: [],
   errors:    [],
 };
 
 function groupReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_GROUP: {
-      debugger;
+      if (!_.find(state.groupList, { groupname: action.groupname })) {
+        DB.get('groups')
+          .push({ ...action.data })
+          .write();
+
+        message.success(`Group ${action.groupname} successfully created`);
+        return {
+          ...state,
+          groupList: [...state.groupList, { ...action.data }],
+        };
+      }
+      message.error('Groupname is already taken');
+      return state;
+    }
+
+    case REMOVE_GROUP: {
       return state;
     }
 

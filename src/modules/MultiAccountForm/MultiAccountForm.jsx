@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import {
-  Transfer,
-  Form,
-  Row,
-  Col,
-} from 'antd';
 import { connect } from 'react-redux';
+import {
+  Row,
+  message,
+  Col,
+  Form,
+  Transfer,
+} from 'antd';
 import {
   FormItemInput,
   FormItemSelect,
@@ -22,49 +23,47 @@ class MultiAccountForm extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('Next : ', nextProps);
-    console.log('Now : ', this.props);
-
-    this.setState({
-      dataSource: this.props.accountList.map((elem) => {
-        return {
-          key:         elem.key,
-          title:       elem.key,
-          description: `${elem.key}-${elem.platform}-${elem.region}`,
-        };
-      }),
-    });
-  }
-
   handleSubmit(e, onSubmit) {
     e.preventDefault();
 
     this.props.form.validateFields((err, values) => {
-      if (!err) {
-        const { accountList } = this.props;
-        const { selectedKeys } = this.state;
+      const { selectedKeys } = this.state;
+      if (selectedKeys.length > 1) {
+        if (!err) {
+          const { accountList } = this.props;
 
-        const data = {
-          children: accountList.filter((elem) => {
-            return selectedKeys.includes(elem.key);
-          }),
-          groupname: values.groupname,
-        };
+          const data = {
+            children: accountList.filter((elem) => {
+              return selectedKeys.includes(elem.key);
+            }),
+            groupname: values.groupname,
+            main:      values.main,
+          };
 
-        onSubmit(data, values.groupname);
+          onSubmit(values.groupname, data);
+        }
+      } else {
+        message.error('Select at least 2 accounts');
       }
     });
   }
 
+  /*
+  componentDidUpdate(props, state) {
+    console.log('Props : ', props, this.props);
+    console.log('State : ', state, this.state);
+  }
+  */
+
   render() {
     const {
-      accountList,
+      accountList = [],
       onAddGroup,
       form: { getFieldDecorator },
     } = this.props;
 
     const showForm = this.state.selectedKeys.length > 1;
+    let mainSelectData = [];
 
     const transferSpan = {
       xs: 24,
@@ -82,7 +81,27 @@ class MultiAccountForm extends Component {
       xl: 12,
     };
 
-    console.log('accountList : ', accountList);
+    const dataSource = accountList.length && accountList.map((elem) => {
+      return {
+        key:         elem.key,
+        title:       elem.key,
+        description: elem.key,
+      };
+    });
+
+    if (showForm) {
+      mainSelectData = accountList
+        .filter((elem) => {
+          return this.state.selectedKeys.includes(elem.key);
+        })
+        .map((elem) => {
+          return {
+            key:   elem.key,
+            value: elem.key,
+            text:  elem.key,
+          };
+        });
+    }
 
     return (
       <Row>
@@ -90,10 +109,10 @@ class MultiAccountForm extends Component {
           <Transfer
             className="multi-account-transfer"
             showSearch
-            dataSource={this.state.dataSource}
-            render={(item) => { return `${item.title}`; }}
-            // onChange={(keys) => { this.setState({ selectedKeys: keys }); }}
-            // targetKeys={this.state.selectedKeys}
+            dataSource={dataSource}
+            render={(item) => { return `${item.key}`; }}
+            onChange={(keys) => { this.setState({ selectedKeys: keys }); }}
+            targetKeys={this.state.selectedKeys}
           />
         </Col>
         {
@@ -103,7 +122,6 @@ class MultiAccountForm extends Component {
               layout="horizontal"
               onSubmit={(e) => { return this.handleSubmit(e, onAddGroup); }}
             >
-
               <FormItemInput
                 isRequired
                 customFormItemProps={{ label: 'Group Name' }}
@@ -111,7 +129,12 @@ class MultiAccountForm extends Component {
                 getFieldDecorator={getFieldDecorator}
                 id="groupname"
               />
-
+              <FormItemSelect
+                customFormItemProps={{ label: 'Main Account' }}
+                getFieldDecorator={getFieldDecorator}
+                id="main"
+                dataSource={mainSelectData}
+              />
               <FormItemSubmit
                 buttonContent="Save Accounts"
               />
@@ -124,7 +147,6 @@ class MultiAccountForm extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('State : ', state);
   return {
     accountList: state.accountReducer.accountList,
   };
@@ -132,8 +154,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onAddGroup: (data, name) => {
-      dispatch(addGroup(data, name));
+    onAddGroup: (groupname, data) => {
+      dispatch(addGroup(groupname, data));
     },
   };
 }

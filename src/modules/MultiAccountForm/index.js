@@ -1,4 +1,4 @@
-import MultiAccountForm from './MultiAccountForm';
+import MultiAccountForm from './MultiAccountForm.jsx';
 
 const TMP = '';
 
