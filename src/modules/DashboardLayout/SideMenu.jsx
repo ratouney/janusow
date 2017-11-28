@@ -87,7 +87,7 @@ class SideMenu extends Component {
                       <Avatar src={elem.avatar} style={{ marginBottom: -12, marginRight: 20 }} />
                       <span className="menu-text">{elem.text}</span>
                     </span> :
-                    <Button style={{ width: '100%', height: '100%' }}>
+                    <Button style={{ width: '100%', color: '#fff' }} type="ghost">
                       <Icon {...elem.icon} />
                       <span className="menu-text">{elem.text}</span>
                     </Button>

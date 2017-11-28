@@ -52,9 +52,10 @@ class QuickPlayPieChart extends Component {
     };
 
     return (
-      <div>
-        <Pie data={pieData} options={pieOptions} />
-      </div>
+      <Pie
+        data={pieData}
+        options={pieOptions}
+      />
     );
   }
 }

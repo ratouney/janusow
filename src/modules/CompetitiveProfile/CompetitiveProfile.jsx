@@ -25,7 +25,7 @@ class CompetitiveProfile extends Component {
     super(props);
 
     this.state = {
-      showPiechart: false,
+      showPiechart: true,
     };
   }
 
@@ -55,10 +55,42 @@ class CompetitiveProfile extends Component {
     const currentColor = HERO_COLORS[currentSelected.hero];
     const currentHero = currentSelected.hero;
 
+    const pieChartSpan = {
+      xs: 24,
+      sm: 24,
+      md: 24,
+      lg: 10,
+      xl: 10,
+    };
+
+    const heroCardSpan = {
+      xs: 24,
+      sm: 24,
+      md: 24,
+      lg: 14,
+      xl: 14,
+    };
+
+    const heroImageSpan = {
+      xs: 24,
+      sm: 12,
+      md: 8,
+      lg: 8,
+      xl: 6,
+    };
+
+    const heroStatSpan = {
+      xs: 24,
+      sm: 12,
+      md: 16,
+      lg: 16,
+      xl: 18,
+    };
+
     return (
       <Card title={<h2>{username}</h2>} bordered={false}>
         <Row gutter={24}>
-          <Col span={10}>
+          <Col {...pieChartSpan}>
             <Card
               title="Total hours per hero"
               style={{ height: '300px' }}
@@ -82,7 +114,7 @@ class CompetitiveProfile extends Component {
 
           {showModal && <CompetitiveModal selected={currentSelected} />}
 
-          <Col span={14}>
+          <Col {...heroCardSpan} className="no-padding-card">
             <Card
               title={capitalize(currentHero)}
               style={{ height: '300px' }}
@@ -90,7 +122,7 @@ class CompetitiveProfile extends Component {
               onClick={() => { onShowModal(); }}
             >
               <Row gutter={16}>
-                <Col span={5}>
+                <Col {...heroImageSpan}>
                   <img
                     align="center"
                     alt=""
@@ -104,7 +136,7 @@ class CompetitiveProfile extends Component {
                   />
                 </Col>
 
-                <Col span={19}>
+                <Col {...heroStatSpan}>
                   <CompetitiveStats
                     currentSelected={currentSelected}
                     currentColor={currentColor}

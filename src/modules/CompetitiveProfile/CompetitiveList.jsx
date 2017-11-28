@@ -18,7 +18,7 @@ import {
 const columns = [
   {
     title:     'Hero Name',
-    width:     '120px',
+    width:     '110px',
     dataIndex: 'hero',
     key:       'hero',
     render:    (value, item) => {
@@ -32,6 +32,7 @@ const columns = [
   {
     title:     'Playtime',
     dataIndex: 'playtime',
+    width:     '90px',
     key:       'playtime',
   },
 ];

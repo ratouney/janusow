@@ -16,11 +16,13 @@ const CompetitiveStats = (props) => {
     {
       title:     'Stat name',
       dataIndex: 'key',
+      width:     '130px',
       key:       'key',
     },
     {
       title:     'Stat Value',
       dataIndex: 'value',
+      width:     '70px',
       key:       'value',
     },
   ];
