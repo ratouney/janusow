@@ -93,7 +93,6 @@ class CompetitiveProfile extends Component {
           <Col {...pieChartSpan}>
             <Card
               title="Total hours per hero"
-              style={{ height: '300px' }}
               bordered={false}
               extra={
                 <Switch
@@ -117,7 +116,6 @@ class CompetitiveProfile extends Component {
           <Col {...heroCardSpan} className="no-padding-card">
             <Card
               title={capitalize(currentHero)}
-              style={{ height: '300px' }}
               bordered={false}
               onClick={() => { onShowModal(); }}
             >
@@ -126,8 +124,7 @@ class CompetitiveProfile extends Component {
                   <img
                     align="center"
                     alt=""
-                    height="auto"
-                    width="100%"
+                    height="220px"
                     src={HERO_ICONS[currentSelected.hero]}
                     style={{
                       border:  `solid 3px ${currentColor}`,

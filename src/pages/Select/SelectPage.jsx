@@ -4,6 +4,7 @@ import {
   Row,
   Col,
   Card,
+  Tabs,
 } from 'antd';
 import DashboardLayout from '../../modules/DashboardLayout';
 import {
@@ -11,6 +12,11 @@ import {
   fetchUserExist,
 } from '../../modules/SelectUser/';
 import { AccountForm } from '../../modules/AccountForm/';
+import { MultiAccountForm } from '../../modules/MultiAccountForm/';
+
+const {
+  TabPane,
+} = Tabs;
 
 class SelectPage extends Component {
   componentDidMount() {
@@ -25,27 +31,34 @@ class SelectPage extends Component {
 
     return (
       <DashboardLayout>
-        <Row>
-          <Card title="Select your account" style={{ marginBottom: 15 }} >
-            <AccountForm
-              onSubmit={onSubmit}
-              userData={{}}
-            />
-          </Card>
-
-          {
-            searchStep > 0 &&
-            <Card title="Query progress" >
-              <Col xs={0} sm={0} md={24} lg={24} xl={24}>
-                <ProgressDiag direction="horizontal" />
-              </Col>
-
-              <Col xs={24} sm={24} md={0} lg={0} xl={0}>
-                <ProgressDiag direction="vertical" />
-              </Col>
+        <Tabs type="card" defaultActiveKey="2">
+          <TabPane tab="Add Acount" key="1" >
+            <Card title="Select your account" style={{ marginBottom: 15 }} >
+              <AccountForm
+                onSubmit={onSubmit}
+                userData={{}}
+              />
             </Card>
-          }
-        </Row>
+
+            {
+              searchStep > 0 &&
+                <Card title="Query progress" >
+                  <Col xs={0} sm={0} md={24} lg={24} xl={24}>
+                    <ProgressDiag direction="horizontal" />
+                  </Col>
+
+                  <Col xs={24} sm={24} md={0} lg={0} xl={0}>
+                    <ProgressDiag direction="vertical" />
+                  </Col>
+                </Card>
+            }
+          </TabPane>
+          <TabPane tab="Fuse Accounts" key="2">
+            <Card title="Select your accounts" style={{ marginBottom: 15 }} >
+              <MultiAccountForm />
+            </Card>
+          </TabPane>
+        </Tabs>
       </DashboardLayout>
     );
   }

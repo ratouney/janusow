@@ -28,7 +28,6 @@ class DashboardLayout extends Component {
   render() {
     const {
       children,
-      width,
     } = this.props;
 
     return (
@@ -41,7 +40,6 @@ class DashboardLayout extends Component {
           style={{ height: '100vh', minWidth: '85px' }}
         >
           <SideMenu
-            homeText={width}
             collapsed={this.state.collapsed}
             menuProps={{
               theme: 'dark',

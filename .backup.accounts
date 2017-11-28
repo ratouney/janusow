@@ -1,0 +1,103 @@
+{
+  "groups": [],
+  "users": [
+    {
+      "region": "us",
+      "platform": "pc",
+      "username": "xQc",
+      "battletag": "11273",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x02500000000008C7.png",
+      "loaded": false,
+      "key": "saltsaltsalt#11273",
+    },
+    {
+      "region": "kr",
+      "platform": "pc",
+      "username": "ryujehong",
+      "battletag": "31878",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x0250000000000B14.png"
+    },
+    {
+      "region": "us",
+      "platform": "pc",
+      "username": "GaleAdelade",
+      "battletag": "1452",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x02500000000010FA.png"
+    },
+    {
+      "region": "us",
+      "platform": "pc",
+      "username": "Kephrii",
+      "battletag": "11520",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x025000000000115F.png"
+    },
+    {
+      "region": "eu",
+      "platform": "pc",
+      "username": "adherry",
+      "battletag": "2241",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x0250000000000C79.png"
+    },
+    {
+      "region": "us",
+      "platform": "pc",
+      "username": "Fuey500",
+      "battletag": "1558",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x02500000000009DC.png"
+    },
+    {
+      "region": "eu",
+      "platform": "pc",
+      "username": "apieceofshit",
+      "battletag": "21134",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x025000000000114B.png"
+    },
+    {
+      "region": "eu",
+      "platform": "pc",
+      "username": "Necros",
+      "battletag": "2326",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x0250000000000A90.png"
+    },
+    {
+      "region": "eu",
+      "platform": "pc",
+      "username": "Ratouney",
+      "battletag": "21805",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x0250000000001322.png"
+    },
+    {
+      "region": "us",
+      "platform": "pc",
+      "username": "Kolorbastion",
+      "battletag": "1178",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x0250000000000A90.png"
+    },
+    {
+      "region": "us",
+      "platform": "pc",
+      "username": "KYLE1FAN",
+      "battletag": "2391",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x025000000000030C.png"
+    },
+    {
+      "region": "eu",
+      "platform": "pc",
+      "username": "ƇǞŊĊƐȐ",
+      "battletag": "2157",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x0250000000000310.png"
+    },
+    {
+      "region": "eu",
+      "platform": "pc",
+      "username": "MercyMainBtw",
+      "battletag": "2579",
+      "icon": "https://d1u1mce87gyfbn.cloudfront.net/game/unlocks/0x02500000000002F7.png"
+    }
+  ],
+  "settings": {
+    "autoLoad": true,
+    "preload": true,
+    "language": "fr"
+  }
+}

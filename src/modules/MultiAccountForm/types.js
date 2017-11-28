@@ -1,0 +1,7 @@
+const ADD_GROUP = 'ADD_GROUP';
+const REMOVE_GROUP = 'REMOVE_GROUP';
+
+export {
+  ADD_GROUP,
+  REMOVE_GROUP,
+};

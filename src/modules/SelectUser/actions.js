@@ -134,6 +134,7 @@ const fetchUserExist = (userData) => {
             DB.get('users')
               .push({ ...userData, icon: data.icon })
               .write();
+
             dispatch(fetchUserExistSuccess(data, userData, true));
             if (settings.autoLoad) {
               dispatch(fetchUserData(userData));
