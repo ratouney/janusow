@@ -1,12 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Menu, Icon, Avatar, Button } from 'antd';
+import {
+  Menu,
+  Icon,
+  Avatar,
+  Input,
+  Switch,
+  Button,
+  Row,
+  Col,
+} from 'antd';
 import { Link } from 'react-router-dom';
 import DB from '../../utils/DB/';
 import { reset as resetQPSelected } from '../QuickPlayProfile/duck-reducer';
 import { reset as resetCompSelected } from '../CompetitiveProfile/duck-reducer';
 
-const { Item } = Menu;
+const { Search } = Input;
+const { Item, SubMenu, ItemGroup } = Menu;
+
+const AccountItem = ({ icon, name, collapsed }) => {
+  return (
+    <span>
+      <Avatar src={icon} style={{ marginBottom: -12, marginRight: 20 }} />
+      <span className="account-item-text">
+        {name}
+      </span>
+    </span>
+  );
+};
 
 class SideMenu extends Component {
   constructor(props) {
@@ -16,8 +37,16 @@ class SideMenu extends Component {
       DB.get('users')
         .value();
 
+    const groups =
+        DB.get('groups')
+          .value();
+
     this.state = {
-      accounts: users || [],
+      showAccounts: true,
+      filters:      false,
+      accounts:     users || [],
+      groups:       groups || [],
+      search:       '',
     };
   }
 
@@ -26,10 +55,27 @@ class SideMenu extends Component {
       DB.get('users')
         .value();
 
+    const groups =
+      DB.get('groups')
+        .value();
+
     this.state = {
       ...this.state,
       accounts: users || [],
+      groups:   groups || [],
     };
+  }
+
+  handleSwitch() {
+    this.setState({
+      showAccounts: !this.state.showAccounts,
+    });
+  }
+
+  handleFilter(search) {
+    this.setState({
+      search,
+    });
   }
 
   render() {
@@ -42,27 +88,24 @@ class SideMenu extends Component {
 
     const {
       accounts,
+      groups,
+      showAccounts,
+      search,
+      filters,
     } = this.state;
 
-    const ITEMS = [
-      ...accounts.map((elem) => {
-        return {
-          key:    `${elem.username}#${elem.battletag}`,
-          to:     `/account/${elem.username}-${elem.battletag}`,
-          icon:   false,
-          avatar: elem.icon,
-          text:   `${elem.username}#${elem.battletag}`,
-          class:  'account-menu-entry',
-        };
-      }),
-      {
-        key:   '-1',
-        to:    '/select',
-        icon:  { type: 'plus' },
-        text:  'Add Account',
-        class: 'other-menu-item',
-      },
-    ];
+    let source = showAccounts ? accounts : groups;
+
+    if (filters && search !== '') {
+      const reg = new RegExp(search, 'gi');
+
+      source = source.filter((elem) => {
+        if (elem.groupname) {
+          return elem.groupname.match(reg);
+        }
+        return elem.username.match(reg);
+      });
+    }
 
     return (
       <span>
@@ -77,30 +120,69 @@ class SideMenu extends Component {
             <img src="https://image.ibb.co/kogbFG/Screen_Shot_2017_11_29_at_11_10_42.png" alt="Logo" style={{ width: '100%', height: '100%' }} />
           </div>
         </Link>
-        <Menu {...menuProps} mode={collapsed ? 'vertical' : 'inline'}>
-          {ITEMS.map((elem) => {
-            return (
-              <Item
-                className={elem.class}
-                key={elem.key}
-                style={{ marginBottom: 5 }}
-              >
-                <Link to={elem.to} onClick={() => { onChangeAccount(); }}>
-                  {
-                    elem.icon === false ?
-                      <span>
-                        <Avatar src={elem.avatar} style={{ marginBottom: -12, marginRight: 20 }} />
-                        <span className="menu-text">{elem.text}</span>
-                      </span> :
-                      <Button style={{ width: '100%', color: '#fff' }} type="ghost">
-                        <Icon {...elem.icon} />
-                        <span className="menu-text">{elem.text}</span>
-                      </Button>
-                  }
-                </Link>
+        <Menu theme="dark" mode="inline">
+          {
+            !collapsed &&
+            <SubMenu
+              title="Filters"
+              style={{ marginBottom: 10 }}
+              onTitleClick={() => { this.setState({ filters: !this.state.filters }); }}
+            >
+              <Item key="1">
+                <Search
+                  onSearch={(e) => { this.handleFilter(e); }}
+                  suffix={null}
+                />
               </Item>
-            );
-          })}
+              <Item key="2">
+                <Switch
+                  checked={showAccounts}
+                  onChange={() => { return this.handleSwitch(); }}
+                  checkedChildren="Show Accounts"
+                  unCheckedChildren="Show Groups"
+                />
+              </Item>
+            </SubMenu>
+          }
+          {
+            source.map((elem) => {
+              if (elem.groupname) {
+                return (
+                  <SubMenu title={elem.groupname} >
+                    {elem.children.map((account) => {
+                      return (
+                        <Item
+                          key={`${account.username}#${account.battletag}`}
+                        >
+                          <AccountItem
+                            className="group-account-item"
+                            collapsed={collapsed}
+                            icon={account.icon}
+                            name={`${account.username}#${account.battletag}`}
+                          />
+                        </Item>
+                      );
+                    })}
+                  </SubMenu>
+                );
+              }
+              console.log('Elem : ', elem);
+              return (
+                <Item
+                  className="account-item"
+                  key={`${elem.username}#${elem.battletag}`}
+                >
+                  <Link to={`/account/${elem.username}-${elem.battletag}`}>
+                    <AccountItem
+                      collapsed={collapsed}
+                      icon={elem.icon}
+                      name={`${elem.username}#${elem.battletag}`}
+                    />
+                  </Link>
+                </Item>
+              );
+            })
+          }
         </Menu>
       </span>
     );
