@@ -28,6 +28,12 @@ To check for any mistakes, run  `yarn lint` on the `src/` directory.
 
 So if you many any improvements/features/changes, feel free to open a PR !
 
+## TodoList for the future 
+
+- [X] Save accounts in localStorage and load on page refresh
+- [ ] Fuse Accounts and display combined stats
+- [ ] Set an Account as reference for a Hero and compare all accounts to his stats
+- [ ] Periodic synchronisation of SR and saving it to localStorage
 
 ## Contact
 
