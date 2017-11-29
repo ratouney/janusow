@@ -1,6 +1,6 @@
 # JanusOW - Overwatch Profile Stalker
 
-![Image bugged](https://github.com/ratouney/janusow/raw/master/logo.png)
+![Image bugged](https://github.com/ratouney/janusow/blob/development/logo.png)
 
 ## Setup
 To start the application, clone the repository and install the NodeJS modules using Yarn or Npm, then simply run the start-up script.
