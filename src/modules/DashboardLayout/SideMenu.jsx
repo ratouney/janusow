@@ -113,11 +113,11 @@ class SideMenu extends Component {
           <div style={{
             border:       'solid 3px #b57320',
             color:        'white',
-            height:       '200px',
+            height:       '250px',
             marginBottom: '10px',
           }}
           >
-            <img src="https://image.ibb.co/kogbFG/Screen_Shot_2017_11_29_at_11_10_42.png" alt="Logo" style={{ width: '100%', height: '100%' }} />
+            <img src="https://image.ibb.co/e75qaG/24273324_1514772271952775_764001959_n_1.png" alt="Logo" style={{ width: '100%', height: '100%' }} />
           </div>
         </Link>
         <Menu theme="dark" mode="inline">
