@@ -110,7 +110,7 @@ class MultiAccountForm extends Component {
             className="multi-account-transfer"
             showSearch
             dataSource={dataSource}
-            render={(item) => { return `${item.key}`; }}
+            render={(item) => { return (<span>{item.key}</span>); }}
             onChange={(keys) => { this.setState({ selectedKeys: keys }); }}
             targetKeys={this.state.selectedKeys}
           />
