@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import windowDimensions from 'react-window-dimensions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { isEmpty, debounce } from 'lodash';
+import { debounce } from 'lodash';
 import {
   Button,
   Form,
@@ -78,8 +78,6 @@ class AccountList extends Component {
     } = this.props;
 
     let acclist = accountList;
-
-    console.log('Set search to : ', username, region, platform);
 
     if (region !== undefined) {
       acclist = acclist.filter((elem) => { return elem.region === region; });
@@ -216,8 +214,6 @@ class AccountList extends Component {
       onChange: (selectedIndexes, selectedEntries) => { return this.handleChange(selectedIndexes, selectedEntries); },
     };
 
-    console.log('DataSource : ', this.state.accountList);
-
     return (
       <Card>
         {
@@ -259,7 +255,7 @@ class AccountList extends Component {
           {
             this.state.selectedRows.length > 0 &&
             <Col style={{ textAlign: 'right' }} >
-              <Button onClick={() => { this.handleUpdateSelected(); }} > Update selected</Button>
+              <Button onClick={() => { this.handleUpdateSelected(); }} > Load selected</Button>
             </Col>
           }
         </Row>

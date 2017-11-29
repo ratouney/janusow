@@ -81,7 +81,7 @@ class MultiAccountForm extends Component {
       xl: 12,
     };
 
-    const dataSource = accountList.length && accountList.map((elem) => {
+    const dataSource = accountList.map((elem) => {
       return {
         key:         elem.key,
         title:       elem.key,

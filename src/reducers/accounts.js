@@ -203,7 +203,7 @@ function accountReducer(state = initialState, action) {
         message.warn(`User ${action.userData.username}#${action.userData.battletag} already exists`);
       } else {
         message.success(`User ${action.userData.username}#${action.userData.battletag} saved in list`);
-        accountList.push({ ...action.userData, loaded: false });
+        accountList.push({ ...action.userData, loaded: false, key: fulltagGen(action.userData) });
       }
       return {
         ...state,
