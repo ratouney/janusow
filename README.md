@@ -1,6 +1,10 @@
-# JanusOW - Overwatch Profile Stalker
+# JanusOW
 
 ![Image bugged](https://github.com/ratouney/janusow/blob/development/logo.png)
+
+> ### Overwatch Profile Stalker
+> Stalk a profile, know what someone should and should not play
+> Track your own stats accross multiple accounts
 
 ## Setup
 To start the application, clone the repository and install the NodeJS modules using Yarn or Npm, then simply run the start-up script.
