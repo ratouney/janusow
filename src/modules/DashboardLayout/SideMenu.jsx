@@ -183,6 +183,14 @@ class SideMenu extends Component {
               );
             })
           }
+          <Item key="select">
+            <Link to="/select">
+              <Button style={{ width: '100%', color: '#fff' }} type="ghost">
+                <Icon type="plus" />
+                Add Account
+              </Button>
+            </Link>
+          </Item>
         </Menu>
       </span>
     );
