@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import DB from '../../utils/DB/';
 import { reset as resetQPSelected } from '../QuickPlayProfile/duck-reducer';
 import { reset as resetCompSelected } from '../CompetitiveProfile/duck-reducer';
+import { openAddModal, closeAddModal } from './actions';
 
 const { Search } = Input;
 const { Item, SubMenu, ItemGroup } = Menu;
@@ -84,6 +85,7 @@ class SideMenu extends Component {
       menuProps,
       collapsed,
       onChangeAccount,
+      onOpenAddModal,
     } = this.props;
 
     const {
@@ -125,14 +127,13 @@ class SideMenu extends Component {
         </Link>
         <Row className="action-buttons" >
           <Col span={collapsed ? 24 : 12}>
-            <Link to="/select" >
-              <Button
+            <Button
+                onClick={() => { onOpenAddModal()}}
                 style={{ width: '100%' }}
                 type="ghost"
               >
             Add
               </Button>
-            </Link>
           </Col>
           <Col span={collapsed ? 24 : 12}>
             <Button style={{ width: '100%' }} type="ghost" disabled>
@@ -186,7 +187,6 @@ class SideMenu extends Component {
                   </SubMenu>
                 );
               }
-              console.log('Elem : ', elem);
               return (
                 <Item
                   className="account-item"
@@ -220,6 +220,12 @@ function mapDispatchToProps(dispatch) {
     onChangeAccount: () => {
       dispatch(resetQPSelected());
       dispatch(resetCompSelected());
+    },
+    onOpenAddModal: () => {
+      dispatch(openAddModal());
+    },
+    onCloseAddModal: () => {
+      dispatch(closeAddModal());
     },
   };
 }
