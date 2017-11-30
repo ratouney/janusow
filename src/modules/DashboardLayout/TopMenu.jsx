@@ -4,6 +4,7 @@ import {
   Row,
   Col,
   Avatar,
+  Icon,
   Button,
   Dropdown,
   Menu,
@@ -30,12 +31,8 @@ class TopMenu extends Component {
       <Menu>
         <Menu.Item key="1">
           <Link to="/settings">
+            <Icon type="setting" style={{ marginRight: '5px' }} />
           Settings
-          </Link>
-        </Menu.Item>
-        <Menu.Item key="2" >
-          <Link to="/logout">
-          Logout
           </Link>
         </Menu.Item>
       </Menu>
@@ -71,7 +68,7 @@ class TopMenu extends Component {
             lg={8}
             xl={4}
           >
-            <Row gutter={16} type="flex" justify="end" align="center" >
+            <Row gutter={16} type="flex" justify="end" align="center" style={{ marginRight: '8px' }} >
               <Col>
                 <Button
                   disabled
@@ -79,11 +76,13 @@ class TopMenu extends Component {
                 />
               </Col>
               <Col>
-                <Avatar shape="square" size="small" icon="user" style={{ marginLeft: 8, marginRight: 8, overflow: 'visible' }} />
+                <Dropdown overlay={settingsOverlay}>
+                  <Button onClick={() => { console.log('Goto account page'); }}>
+                    {userName}
+                    <Icon type="down" />
+                  </Button >
+                </Dropdown>
               </Col>
-              <Dropdown.Button onClick={() => { console.log('Goto account page'); }} overlay={settingsOverlay}>
-                {userName}
-              </Dropdown.Button>
             </Row>
           </Col>
         </Row>

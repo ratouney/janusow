@@ -111,13 +111,16 @@ class SideMenu extends Component {
       <span>
         <Link to="/" >
           <div style={{
-            border:       'solid 3px #b57320',
             color:        'white',
-            height:       '250px',
+            height:       collapsed ? '55px' : '250px',
             marginBottom: '10px',
           }}
           >
-            <img src="https://image.ibb.co/e75qaG/24273324_1514772271952775_764001959_n_1.png" alt="Logo" style={{ width: '100%', height: '100%' }} />
+            <img
+              src={collapsed ? 'https://image.ibb.co/jKz1hw/logo.png' : 'https://image.ibb.co/e75qaG/24273324_1514772271952775_764001959_n_1.png'}
+              alt="Logo"
+              style={{ width: '100%', height: '100%' }}
+            />
           </div>
         </Link>
         <Menu theme="dark" mode="inline">
