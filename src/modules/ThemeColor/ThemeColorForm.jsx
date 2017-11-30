@@ -15,7 +15,7 @@ class ThemeColorForm extends Component {
       if (!err) {
         console.log('Received values of form: ', values);
         less.modifyVars({
-          'themeColor': values.color
+          'primaryColor': values.color,
         })
       }
     });

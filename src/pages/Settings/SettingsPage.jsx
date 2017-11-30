@@ -41,7 +41,7 @@ class SettingsPage extends Component {
             <Card
               title="Manage Settings"
             >
-              <ThemeColorForm />
+              <primaryColorForm />
               <Button style={{ marginBottom: 5 }}>
               Clear account data
               </Button>

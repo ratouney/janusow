@@ -123,6 +123,23 @@ class SideMenu extends Component {
             />
           </div>
         </Link>
+        <Row className="action-buttons" >
+          <Col span={collapsed ? 24 : 12}>
+            <Link to="/select" >
+              <Button
+                style={{ width: '100%' }}
+                type="ghost"
+              >
+            Add
+              </Button>
+            </Link>
+          </Col>
+          <Col span={collapsed ? 24 : 12}>
+            <Button style={{ width: '100%' }} type="ghost" disabled>
+            Fuse
+            </Button>
+          </Col>
+        </Row>
         <Menu theme="dark" mode="inline">
           {
             !collapsed &&
@@ -186,14 +203,6 @@ class SideMenu extends Component {
               );
             })
           }
-          <Item key="select">
-            <Link to="/select">
-              <Button style={{ width: '100%', color: '#fff' }} type="ghost">
-                <Icon type="plus" />
-                Add Account
-              </Button>
-            </Link>
-          </Item>
         </Menu>
       </span>
     );

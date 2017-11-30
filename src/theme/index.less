@@ -31,15 +31,24 @@ body {
         border-bottom: none;
       }
       .ant-tabs-tab-active {
-        color: @themeColor !important;
+        color: @primaryColor !important;
       }
     }
   }
   .ant-layout-sider {
     .ant-menu {
       .ant-menu-item-selected {
-        border-right: solid 5px @invertedColor;
+        border-right: solid 5px @secondaryColor;
         background-color: transparent;
+      }
+    }
+
+    .action-buttons {
+      .ant-btn {
+        width: 100%;
+        color: #fff;
+        margin-right: 5px;
+        margin-bottom: 5px;
       }
     }
 

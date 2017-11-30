@@ -41,7 +41,7 @@ export const PLATFORMS = [
   {
     key:   '1',
     value: 'pc',
-    text:  'Masterrace',
+    text:  'PC (Masterrace)',
   },
   {
     key:   '2',

@@ -20,7 +20,7 @@ const LevelTag = ({ level, prestige, rank }) => {
       <img src={level} alt="Unleveled" />
       <img
         src={rank}
-        alt="Unleveled"
+        alt=""
         style={{
           position: 'relative',
           top:      -100,
@@ -31,7 +31,7 @@ const LevelTag = ({ level, prestige, rank }) => {
       />
       <img
         src={prestige}
-        alt="Unleveled"
+        alt=""
         style={{
           position: 'relative',
           top:      -195,
@@ -82,9 +82,13 @@ class GeneralProfile extends Component {
       username,
     } = this.props;
 
+    let compHeroes;
+    const hasPlayedCompetitive = data.competitiveStats.careerStats !== undefined;
 
     const qpHeroes = QuickPlayHeroes(data);
-    const compHeroes = CompetitiveHeroes(data);
+    if (hasPlayedCompetitive) {
+      compHeroes = CompetitiveHeroes(data);
+    }
 
     console.log('Data : ', data, qpHeroes, compHeroes);
 
@@ -104,11 +108,11 @@ class GeneralProfile extends Component {
       },
       {
         key:   'Competitive Time',
-        value: data.competitiveStats.careerStats.allHeroes.game.timePlayed,
+        value: hasPlayedCompetitive ? data.competitiveStats.careerStats.allHeroes.game.timePlayed : 'Did not play Comp',
       },
       {
         key:   'Competitive Main',
-        value: `${capitalize(compHeroes[0].hero)}`,
+        value: hasPlayedCompetitive ? `${capitalize(compHeroes[0].hero)}` : 'Did not play Comp',
         // value: `${capitalize(compHeroes[0].hero)} - ${compHeroes[0].game.timePlayed}`,
       },
     ];

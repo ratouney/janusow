@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import enUS from 'antd/lib/locale-provider/en_US';
 import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { createLogger } from 'redux-logger';
@@ -35,7 +36,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <LocaleProvider >
+    <LocaleProvider locale={enUS} >
       <IntlProvider >
         <Router history={history} >
           <App>

@@ -38,9 +38,9 @@ const filterFormLayout = {
   style: { marginRight: 10, marginBottom: 10 },
   xs:    24,
   sm:    24,
-  md:    4,
-  lg:    4,
-  xl:    4,
+  md:    5,
+  lg:    5,
+  xl:    5,
 };
 
 class AccountList extends Component {
@@ -236,6 +236,7 @@ class AccountList extends Component {
               <FormItemSelect
                 id="region"
                 getFieldDecorator={getFieldDecorator}
+                customSelectProps={{ placeholder: 'Region' }}
                 dataSource={REGIONS}
               />
             </Col>
@@ -243,6 +244,7 @@ class AccountList extends Component {
               <FormItemSelect
                 id="platform"
                 getFieldDecorator={getFieldDecorator}
+                customSelectProps={{ placeholder: 'Platform' }}
                 dataSource={PLATFORMS}
               />
             </Col>
@@ -252,14 +254,16 @@ class AccountList extends Component {
               />
             </Col>
           </Form>
-          {
-            this.state.selectedRows.length > 0 &&
-            <Col style={{ textAlign: 'right' }} >
-              <Button onClick={() => { this.handleUpdateSelected(); }} > Load selected</Button>
-            </Col>
-          }
         </Row>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={filteredAccounts} scroll={{ x: 600 }} />
+        {
+          this.state.selectedRows.length > 0 &&
+            <Row style={{ marginBottom: 12, marginTop: 12 }}>
+              <Col style={{ textAlign: 'right' }} >
+                <Button onClick={() => { this.handleUpdateSelected(); }} > Load selected</Button>
+              </Col>
+            </Row>
+        }
+        <Table rowSelection={rowSelection} columns={columns} dataSource={filteredAccounts || []} scroll={{ x: 600 }} />
       </Card>
     );
   }

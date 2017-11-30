@@ -8,11 +8,16 @@ const {
 
 const defaultFormItemProps = {
   ...fluidFormItemLayout,
+  style: {
+    width: '100%',
+  },
 };
 
 const defaultButtonProps = {
-  type:     'primary',
-  width:    '100vh',
+  type:  'primary',
+  style: {
+    width: '100%',
+  },
   htmlType: 'submit',
 };
 
