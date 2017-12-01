@@ -186,7 +186,6 @@ class SideMenu extends Component {
                   </SubMenu>
                 );
               }
-              console.log('Elem : ', elem);
               return (
                 <Item
                   className="account-item"

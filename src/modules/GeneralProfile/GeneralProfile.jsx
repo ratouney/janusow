@@ -10,32 +10,23 @@ import { QuickPlayHeroes, CompetitiveHeroes } from '../../utils/ApiParse/';
 
 const LevelTag = ({ level, prestige, rank }) => {
   return (
-    <div style={{
-      border:      'solid 1px red',
-      width:       '250px',
-      height:      '350px',
-      marginRight: 12,
-    }}
+    <div
+      className="account-tag"
     >
-      <img src={level} alt="Unleveled" />
       <img
-        src={rank}
-        alt=""
-        style={{
-          position: 'relative',
-          top:      -100,
-          left:     89,
-          width:    '32%',
-          height:   '27%',
-        }}
+        className="account-tag-level"
+        src={level}
+        alt="Unleveled"
       />
       <img
+        className="account-tag-rank"
+        src={rank}
+        alt=""
+      />
+      <img
+        className="account-tag-prestige"
         src={prestige}
         alt=""
-        style={{
-          position: 'relative',
-          top:      -195,
-        }}
       />
     </div>
   );
@@ -44,7 +35,7 @@ const LevelTag = ({ level, prestige, rank }) => {
 const levelSpan = {
   xs: 24,
   sm: 24,
-  md: 8,
+  md: 10,
   lg: 8,
   xl: 4,
 };
@@ -52,7 +43,7 @@ const levelSpan = {
 const statsSpan = {
   xs: 24,
   sm: 24,
-  md: 16,
+  md: 14,
   lg: 16,
   xl: 20,
 };
@@ -63,6 +54,12 @@ const columns = [
     dataIndex: 'key',
     width:     '130px',
     key:       'key',
+    render:    (value) => {
+      return (
+        <span className="general-profile-table-label">
+          {value}
+        </span>);
+    },
   },
   {
     title:     'Stat Value',
@@ -119,7 +116,7 @@ class GeneralProfile extends Component {
 
     return (
       <Card title={<h2>{username}</h2>} bordered={false}>
-        <Row gutter={8}>
+        <Row gutter={8} type="flex" justify="center" align="middle">
           <Col {...levelSpan}>
             <LevelTag
               level={data.levelIcon}
