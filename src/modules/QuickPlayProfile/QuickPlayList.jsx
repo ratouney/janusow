@@ -45,8 +45,8 @@ const columns = [
     render:    (value, item) => {
       return (
         <div
-          className="quickplay-profile-table-label"
-          style={{ backgroundColor: item.backgroundColor, color: item.textColor }}
+          className={`quickplay-profile-table-label ${item.className}`}
+          // style={{ backgroundColor: item.backgroundColor, color: item.textColor }}
         >
           {capitalize(value)}
         </div>
@@ -76,6 +76,7 @@ class QuickPlayList extends Component {
     const tableData = QPHeroes.map((elem) => {
       return {
         ...elem,
+        className:       `${elem.hero}Color`,
         backgroundColor: HERO_COLORS[elem.hero],
         textColor:       HERO_TEXT_COLORS[elem.hero],
         heroIcon:        HERO_ICONS[elem.hero],
