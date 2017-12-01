@@ -24,7 +24,6 @@ const columns = [
     width:     '40px',
     key:       'heroIcon',
     render:    (value) => {
-      console.log('Value : ', value);
       return (
         <span
           className="profile-list-avatar"
