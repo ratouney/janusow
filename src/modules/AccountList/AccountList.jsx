@@ -138,7 +138,7 @@ class AccountList extends Component {
         <Menu.Item>
           <Button
             icon="edit"
-            // onClick={() => { return onOpenSelectModal(entry); }}
+            onClick={() => { return onOpenSelectModal(entry); }}
             style={{ width: '100%' }}
           >
                 Edit User

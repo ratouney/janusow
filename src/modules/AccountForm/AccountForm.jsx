@@ -22,11 +22,16 @@ class AccountForm extends Component {
   }
 
   handleSubmit(e, onSubmit) {
+    const {
+      form: { validateFields },
+      userData,
+    } = this.props;
+
     e.preventDefault();
 
-    this.props.form.validateFields((err, values) => {
+    validateFields((err, values) => {
       if (!err) {
-        onSubmit(this.props.userData, values);
+        onSubmit(userData, values);
       }
     });
   }
