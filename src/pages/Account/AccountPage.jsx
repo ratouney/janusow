@@ -38,7 +38,7 @@ class AccountPage extends Component {
 
     return (
       <DashboardLayout>
-        <Tabs type="card" defaultActiveKey="2">
+        <Tabs type="card" defaultActiveKey="3">
           <TabPane tab="General" key="1">
             <GeneralProfile username={currentUser.fullname || fullname} data={currentUser} />
           </TabPane>

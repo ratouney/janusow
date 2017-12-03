@@ -18,6 +18,15 @@ const QuickPlayStats = (props) => {
       dataIndex: 'key',
       width:     '130px',
       key:       'key',
+      render:    (value) => {
+        return (
+          <span
+            className="table-label-font"
+          >
+            {value}
+          </span>
+        );
+      },
     },
     {
       title:     'Stat Value',
@@ -30,7 +39,7 @@ const QuickPlayStats = (props) => {
   const dataSource = [
     {
       key:   'Time Played',
-      value: `${playtimeToMinute(currentSelected.game.timePlayed) / 60} hours`,
+      value: `${round(playtimeToMinute(currentSelected.game.timePlayed) / 60, 2)} hours`,
     },
     {
       key:   'Average damage per 10 mins',

@@ -6,26 +6,29 @@ import {
   Switch,
   Row,
   Col,
+  Button,
 } from 'antd';
 import {
   QuickPlayHeroes,
 } from '../../utils/ApiParse';
 import {
   HERO_ICONS,
-  HERO_COLORS,
 } from '../../utils/consts';
 import QuickPlayPieChart from './QuickPlayPieChart';
 import QuickPlayStats from './QuickPlayStats';
 import QuickPlayList from './QuickPlayList';
 import QuickPlayModal from './QuickPlayModal';
 import { openModal } from './duck-reducer';
+import getHeroColors from '../../utils/getHeroColors';
+
+const heroColors = getHeroColors(document);
 
 class QuickPlayProfile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      showPiechart: false,
+      showPiechart: true,
     };
   }
 
@@ -51,7 +54,7 @@ class QuickPlayProfile extends Component {
     const QPHeroes = QuickPlayHeroes(data);
 
     const currentSelected = isEmpty(selected) ? QPHeroes[0] : selected;
-    const currentColor = HERO_COLORS[currentSelected.hero];
+    const currentColor = heroColors[currentSelected.hero].backgroundColor;
     const currentHero = currentSelected.hero;
 
     const pieChartSpan = {
@@ -72,18 +75,18 @@ class QuickPlayProfile extends Component {
 
     const heroImageSpan = {
       xs: 24,
-      sm: 12,
-      md: 8,
-      lg: 8,
+      sm: 7,
+      md: 5,
+      lg: 7,
       xl: 6,
     };
 
     const heroStatSpan = {
       xs: 24,
-      sm: 12,
-      md: 16,
-      lg: 16,
-      xl: 18,
+      sm: 24 - heroImageSpan.sm,
+      md: 24 - heroImageSpan.md,
+      lg: 24 - heroImageSpan.lg,
+      xl: 24 - heroImageSpan.xl,
     };
 
     return (
@@ -116,7 +119,7 @@ class QuickPlayProfile extends Component {
             <Card
               title={`Hero - ${capitalize(currentHero)}`}
               bordered={false}
-              onClick={() => { onShowModal(); }}
+              extra={<Button onClick={() => { onShowModal(); }}>Further Information</Button>}
             >
               <Row gutter={16}>
                 <Col {...heroImageSpan}>
@@ -127,7 +130,8 @@ class QuickPlayProfile extends Component {
                     src={HERO_ICONS[currentSelected.hero]}
                     style={{
                       border:  `solid 3px ${currentColor}`,
-                      display: 'inline',
+                      display: 'block',
+                      margin:  'auto',
                     }}
                   />
                 </Col>

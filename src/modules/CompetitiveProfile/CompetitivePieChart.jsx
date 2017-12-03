@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash';
+import { isEmpty, round } from 'lodash';
 import {
   Pie,
 } from 'react-chartjs-2';
-import {
-  HERO_COLORS,
-} from '../../utils/consts';
 import {
   CompetitiveHeroes,
 } from '../../utils/ApiParse';
@@ -16,6 +13,9 @@ import {
 import {
   setSelectedHero,
 } from './duck-reducer';
+import getHeroColors from '../../utils/getHeroColors';
+
+const heroColors = getHeroColors(document);
 
 class CompetitivePieChart extends Component {
   componentDidMount() {
@@ -34,9 +34,9 @@ class CompetitivePieChart extends Component {
       labels:   CompHeroes.map((elem) => { return elem.hero; }),
       datasets: [{
         data: CompHeroes.map((elem) => {
-          return playtimeToMinute(elem.game.timePlayed) / 60;
+          return round(playtimeToMinute(elem.game.timePlayed) / 60, 2);
         }),
-        backgroundColor: CompHeroes.map((elem) => { return HERO_COLORS[elem.hero]; }),
+        backgroundColor: CompHeroes.map((elem) => { return heroColors[elem.hero].backgroundColor; }),
       }],
     };
 
@@ -52,7 +52,11 @@ class CompetitivePieChart extends Component {
     };
 
     return (
-      <Pie data={pieData} options={pieOptions} />
+      <div
+        className="pie-chart"
+      >
+        <Pie data={pieData} options={pieOptions} />
+      </div>
     );
   }
 }

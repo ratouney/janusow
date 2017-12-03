@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash';
+import { isEmpty, round } from 'lodash';
 import {
   Pie,
 } from 'react-chartjs-2';
-import {
-  HERO_COLORS,
-} from '../../utils/consts';
 import {
   QuickPlayHeroes,
 } from '../../utils/ApiParse';
@@ -16,6 +13,9 @@ import {
 import {
   setSelectedHero,
 } from './duck-reducer';
+import getHeroColors from '../../utils/getHeroColors';
+
+const heroColors = getHeroColors(document);
 
 class QuickPlayPieChart extends Component {
   componentDidMount() {
@@ -34,13 +34,18 @@ class QuickPlayPieChart extends Component {
       labels:   QPHeroes.map((elem) => { return elem.hero; }),
       datasets: [{
         data: QPHeroes.map((elem) => {
-          return playtimeToMinute(elem.game.timePlayed) / 60;
+          return round(playtimeToMinute(elem.game.timePlayed) / 60, 2);
         }),
-        backgroundColor: QPHeroes.map((elem) => { return HERO_COLORS[elem.hero]; }),
+        backgroundColor: QPHeroes.map((elem) => { return heroColors[elem.hero].backgroundColor; }),
       }],
     };
 
     const pieOptions = {
+      tooltips: {
+        custom: (tooltip) => {
+          console.log('Tooltip : ', tooltip);
+        },
+      },
       legend: {
         display: false,
       },
@@ -52,10 +57,14 @@ class QuickPlayPieChart extends Component {
     };
 
     return (
-      <Pie
-        data={pieData}
-        options={pieOptions}
-      />
+      <div
+        className="pie-chart"
+      >
+        <Pie
+          data={pieData}
+          options={pieOptions}
+        />
+      </div>
     );
   }
 }

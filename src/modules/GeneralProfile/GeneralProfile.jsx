@@ -56,7 +56,7 @@ const columns = [
     key:       'key',
     render:    (value) => {
       return (
-        <span className="general-profile-table-label">
+        <span className="table-label-font">
           {value}
         </span>);
     },

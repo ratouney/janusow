@@ -16,6 +16,9 @@ import {
 import {
   setSelectedHero,
 } from './duck-reducer';
+import getHeroColors from '../../utils/getHeroColors';
+
+const heroColors = getHeroColors(document);
 
 const columns = [
   {
@@ -44,7 +47,7 @@ const columns = [
     render:    (value, item) => {
       return (
         <div
-          className={`quickplay-profile-table-label ${item.className}`}
+          className={`table-label-font ${item.className}`}
           // style={{ backgroundColor: item.backgroundColor, color: item.textColor }}
         >
           {capitalize(value)}
@@ -76,8 +79,8 @@ class CompetitiveList extends Component {
       return {
         ...elem,
         className:       `${elem.hero}Color`,
-        backgroundColor: HERO_COLORS[elem.hero],
-        textColor:       HERO_TEXT_COLORS[elem.hero],
+        backgroundColor: heroColors[elem.hero].backgroundColor,
+        textColor:       heroColors[elem.hero].color,
         heroIcon:        HERO_ICONS[elem.hero],
         playtime:        elem.game.timePlayed,
       };

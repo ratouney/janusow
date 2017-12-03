@@ -8,8 +8,10 @@ import {
 import {
   HERO_ICONS,
   HERO_CARD_STATS,
-  HERO_COLORS,
 } from '../../utils/consts';
+import getHeroColors from '../../utils/getHeroColors';
+
+const heroColors = getHeroColors(document);
 
 const arraySlice = (givenArray, groupSize = 3) => {
   return _.map(givenArray, (item, index) => {
@@ -77,8 +79,6 @@ class HeroCard extends Component {
 
     const stats = arraySlice(localHeroCardStats, 3);
 
-    console.log('>>>>>> Data : ', data, stats);
-
     return (
       <div>
         <Row gutter={16}>
@@ -90,7 +90,7 @@ class HeroCard extends Component {
               width="100%"
               src={HERO_ICONS[data.hero]}
               style={{
-                border:  `solid 5px ${HERO_COLORS[data.hero]}`,
+                border:  `solid 5px ${heroColors[data.hero].backgroundColor}`,
                 display: 'inline',
               }}
             />
