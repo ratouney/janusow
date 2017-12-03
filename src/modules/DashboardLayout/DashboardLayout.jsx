@@ -4,17 +4,13 @@ import { debounce } from 'lodash';
 import windowDimensions from 'react-window-dimensions';
 import {
   Layout,
-  Modal,
 } from 'antd';
 import SideMenu from './SideMenu';
 import TopMenu from './TopMenu';
 import {
   openSidemenu,
   closeSidemenu,
-  closeAddModal,
-} from './actions';
-import { NewAccountFormModal } from './NewAccountFormModal/';
-import { fetchUserExist } from '../SelectUser/actions';
+} from './duck-reducer';
 
 const { Sider, Content } = Layout;
 
@@ -27,49 +23,39 @@ class RenderDashboardLayout extends Component {
     }
   }
 
-
   handleMenuCollapse() {
     const {
-      menuCollapsed,
+      showSidemenu,
       onOpenSidemenu,
       onCloseSidemenu,
     } = this.props;
 
-    if (menuCollapsed) {
-      onOpenSidemenu();
-    } else {
+    if (showSidemenu) {
       onCloseSidemenu();
+    } else {
+      onOpenSidemenu();
     }
   }
 
   render() {
     const {
       children,
-      menuCollapsed,
       width,
-      addModalOpen,
-      onAddSubmit,
-      onCloseAddModal,
+      showSidemenu,
     } = this.props;
 
-    console.log('addModalOpen : ', addModalOpen);
     return (
       <Layout>
-        <NewAccountFormModal
-          visible={addModalOpen}
-          onCancel={() => { onCloseAddModal(); }}
-          onSubmit={(userData, values) => { onAddSubmit(userData, values); }}
-        />
         <Sider
           trigger={null}
           position="fixed"
           collapsible
-          collapsed={menuCollapsed}
+          collapsed={!showSidemenu}
           style={{ height: '100vh', minWidth: '85px' }}
         >
           <SideMenu
             homeText={width}
-            collapsed={menuCollapsed}
+            collapsed={!showSidemenu}
             menuProps={{
               theme: 'dark',
             }}
@@ -78,7 +64,7 @@ class RenderDashboardLayout extends Component {
         <Layout>
           <TopMenu
             collapseAction={() => { return this.handleMenuCollapse(); }}
-            collapseStatus={menuCollapsed}
+            collapseStatus={!showSidemenu}
           />
           <Content
             style={{
@@ -94,9 +80,7 @@ class RenderDashboardLayout extends Component {
 
 function mapStateToProps(state) {
   return {
-    menuCollapsed: state.dashboardReducer.menuCollapsed,
-    addModalOpen:  state.dashboardReducer.addModalOpen,
-    fuseModalOpen: state.dashboardReducer.fuseModalOpen,
+    showSidemenu: state.dashboardReducer.showSidemenu,
   };
 }
 
@@ -108,16 +92,10 @@ function mapDispatchToProps(dispatch) {
     onCloseSidemenu: () => {
       dispatch(closeSidemenu());
     },
-    onCloseAddModal: () => {
-      dispatch(closeAddModal());
-    },
-    onAddSubmit: (useless, values) => {
-      dispatch(fetchUserExist(values));
-    },
   };
 }
 
-const DashboardLayout  = windowDimensions({
+const DashboardLayout = windowDimensions({
   debounce: (onResize) => { return debounce(onResize, 100); },
 })(RenderDashboardLayout);
 

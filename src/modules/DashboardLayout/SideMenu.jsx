@@ -14,7 +14,14 @@ import { Link } from 'react-router-dom';
 import DB from '../../utils/DB/';
 import { reset as resetQPSelected } from '../QuickPlayProfile/duck-reducer';
 import { reset as resetCompSelected } from '../CompetitiveProfile/duck-reducer';
-import { openAddModal, closeAddModal } from './actions';
+import ModalAccountForm from '../AccountForm/ModalAccountForm/ModalAccountForm';
+import {
+  openAddModal,
+  closeAddModal,
+} from './duck-reducer';
+import {
+  fetchUserExist,
+} from '../SelectUser/';
 
 const { Search } = Input;
 const { Item, SubMenu, ItemGroup } = Menu;
@@ -85,7 +92,10 @@ class SideMenu extends Component {
       menuProps,
       collapsed,
       onChangeAccount,
+      showAddModal,
+      onCloseAddModal,
       onOpenAddModal,
+      onFetchUserExist,
     } = this.props;
 
     const {
@@ -111,6 +121,14 @@ class SideMenu extends Component {
 
     return (
       <span>
+        <ModalAccountForm
+          overrideVisible={{ do: true, value: showAddModal }}
+          userData={{}}
+          onCancel={onCloseAddModal}
+          onSubmit={(a, b) => {
+            onFetchUserExist(b);
+          }}
+        />
         <Link to="/" >
           <div style={{
             color:        'white',
@@ -128,12 +146,12 @@ class SideMenu extends Component {
         <Row className="action-buttons" >
           <Col span={collapsed ? 24 : 12}>
             <Button
-                onClick={() => { onOpenAddModal()}}
-                style={{ width: '100%' }}
-                type="ghost"
-              >
+              style={{ width: '100%' }}
+              type="ghost"
+              onClick={() => { return onOpenAddModal(); }}
+            >
             Add
-              </Button>
+            </Button>
           </Col>
           <Col span={collapsed ? 24 : 12}>
             <Button style={{ width: '100%' }} type="ghost" disabled>
@@ -211,7 +229,8 @@ class SideMenu extends Component {
 
 function mapStateToProps(state) {
   return {
-    searchStep: state.accountReducer.searchStep,
+    searchStep:   state.accountReducer.searchStep,
+    showAddModal: state.dashboardReducer.showAddModal,
   };
 }
 
@@ -226,6 +245,9 @@ function mapDispatchToProps(dispatch) {
     },
     onCloseAddModal: () => {
       dispatch(closeAddModal());
+    },
+    onFetchUserExist: (userData) => {
+      dispatch(fetchUserExist(userData));
     },
   };
 }

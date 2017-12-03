@@ -3,11 +3,15 @@ import { connect } from 'react-redux';
 import {
   Modal,
   Alert,
+  Card,
+  Row,
+  Col,
 } from 'antd';
 import {
   close as closeModal,
 } from './';
 import { AccountForm } from '../';
+import ProgressDiag from '../../SelectUser/ProgressDiag';
 
 class ModalAccountForm extends Component {
   componentDidMount() {
@@ -17,7 +21,12 @@ class ModalAccountForm extends Component {
   render() {
     const {
       visible,
+      overrideVisible = {
+        do:    false,
+        value: false,
+      },
       onCloseModal,
+      onCancel,
       userData,
       onSubmit,
       customModalProps,
@@ -26,7 +35,7 @@ class ModalAccountForm extends Component {
 
     return (
       <Modal
-        visible={visible}
+        visible={overrideVisible.do ? overrideVisible.value : visible}
         footer={errors && errors.length > 0 ? (
           <Alert
             message={errors[0]}
@@ -34,14 +43,19 @@ class ModalAccountForm extends Component {
             closable
           />
         ) : null}
-        onCancel={() => { return onCloseModal(); }}
+        onCancel={() => {
+          if (onCancel) {
+            return onCancel();
+          }
+          return onCloseModal();
+        }}
         {...customModalProps}
       >
         <AccountForm
           userData={userData}
           onSubmit={onSubmit}
         />
-
+        <ProgressDiag direction="vertical" />
       </Modal>
     );
   }
