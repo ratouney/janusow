@@ -1,7 +1,10 @@
 const OPEN_ADD_MODAL = 'Dashboard/OPEN_ADD_MODAL';
 const CLOSE_ADD_MODAL = 'Dashboard/CLOSE_ADD_MODAL';
+const OPEN_FUSE_MODAL = 'Dashboard/OPEN_FUSE_MODAL';
+const CLOSE_FUSE_MODAL = 'Dashboard/CLOSE_FUSE_MODAL';
 const OPEN_SIDEMENU = 'Dashboard/OPEN_SIDEMENU';
 const CLOSE_SIDEMENU = 'Dashboard/CLOSE_SIDEMENU';
+
 
 const openAddModal = () => {
   return {
@@ -12,6 +15,18 @@ const openAddModal = () => {
 const closeAddModal = () => {
   return {
     type: CLOSE_ADD_MODAL,
+  };
+};
+
+const openFuseModal = () => {
+  return {
+    type: OPEN_FUSE_MODAL,
+  };
+};
+
+const closeFuseModal = () => {
+  return {
+    type: CLOSE_FUSE_MODAL,
   };
 };
 
@@ -29,8 +44,9 @@ const closeSidemenu = () => {
 
 
 const initialState = {
-  showSidemenu: true,
-  showAddModal: false,
+  showSidemenu:  true,
+  showAddModal:  false,
+  showFuseModal: false,
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -38,10 +54,24 @@ const dashboardReducer = (state = initialState, action) => {
     default:
       return state;
 
+    case OPEN_FUSE_MODAL:
+      return {
+        ...state,
+        showFuseModal: true,
+        showAddModal:  false,
+      };
+
+    case CLOSE_FUSE_MODAL:
+      return {
+        ...state,
+        showFuseModal: false,
+      };
+
     case OPEN_ADD_MODAL:
       return {
         ...state,
-        showAddModal: true,
+        showAddModal:  true,
+        showFuseModal: false,
       };
 
     case CLOSE_ADD_MODAL:
@@ -68,6 +98,8 @@ export default dashboardReducer;
 export {
   openAddModal,
   openSidemenu,
+  openFuseModal,
   closeAddModal,
+  closeFuseModal,
   closeSidemenu,
 };

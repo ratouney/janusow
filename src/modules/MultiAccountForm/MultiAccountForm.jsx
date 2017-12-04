@@ -60,6 +60,7 @@ class MultiAccountForm extends Component {
       accountList = [],
       onAddGroup,
       form: { getFieldDecorator },
+      inModal = false,
     } = this.props;
 
     const showForm = this.state.selectedKeys.length > 1;
@@ -69,16 +70,19 @@ class MultiAccountForm extends Component {
       xs: 24,
       sm: 24,
       md: 24,
-      lg: 12,
-      xl: 12,
+      lg: inModal ? 24 : 12,
+      xl: inModal ? 24 : 12,
     };
 
     const fieldsSpan = {
+      style: {
+        marginTop: inModal ? '15px' : '0px',
+      },
       xs: 24,
       sm: 24,
       md: 24,
-      lg: 12,
-      xl: 12,
+      lg: inModal ? 24 : 12,
+      xl: inModal ? 24 : 12,
     };
 
     const dataSource = accountList.map((elem) => {
