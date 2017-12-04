@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+  - "node"
+
+cache:
+  bundler: true
+  directories:
+    - node_modules
+
+bundler_args: --without production
+
+before_install:
+  - "npm install -g yarn"
+
+install:
+  - yarn
+script:
+  - "yarn lint"
+  - "yarn test"
