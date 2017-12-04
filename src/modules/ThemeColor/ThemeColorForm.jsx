@@ -25,8 +25,6 @@ class ThemeColorForm extends Component {
       form: { getFieldDecorator },
     } = this.props;
 
-    console.log('Form  :', getFieldDecorator);
-
     return (
       <Form onSubmit={this.handleSubmit} style={{ border: 'solid 5px red' }} >
         <FormItemInput
