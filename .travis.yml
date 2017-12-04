@@ -1,0 +1,21 @@
+language: node_js
+
+cache:
+  bundler: true
+  directories:
+    - node_modules
+
+bundler_args: --without production
+
+before_install:
+  - "nvm install 6.7.0"
+  - "nvm use 6.7.0"
+  - "npm install -g yarn"
+
+install:
+  - yarn
+script:
+  - "bundle exec rspec spec/"
+  - "bundle exec rubocop"
+  - "yarn lint"
+  - "yarn test"
