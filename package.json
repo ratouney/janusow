@@ -1,6 +1,7 @@
 {
   "name": "janusow",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "antd": "^2.13.7",
@@ -48,6 +49,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "jest": "^21.2.1",
     "react-app-rewired": "^1.3.5"
   }
 }

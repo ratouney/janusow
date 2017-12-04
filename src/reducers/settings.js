@@ -13,7 +13,6 @@ const initialValues = {
 const settingsReducer = (state = initialValues, action) => {
   switch (action.type) {
     case EDIT_SETTINGS: {
-      console.log('NewSettings: ', action.newSettings);
       DB.set('settings', { ...action.newSettings })
         .write();
 
