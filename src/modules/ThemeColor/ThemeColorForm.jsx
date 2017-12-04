@@ -9,14 +9,13 @@ class ThemeColorForm extends Component {
     // stuff
   }
 
-  handleSubmit = (e) => {
+  handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         less.modifyVars({
-          'primaryColor': values.color,
-        })
+          primaryColor: values.color,
+        });
       }
     });
   }
@@ -29,7 +28,7 @@ class ThemeColorForm extends Component {
     console.log('Form  :', getFieldDecorator);
 
     return (
-      <Form onSubmit={this.handleSubmit} style={{ border: 'solid 5px red'}} >
+      <Form onSubmit={this.handleSubmit} style={{ border: 'solid 5px red' }} >
         <FormItemInput
           id="color"
           getFieldDecorator={getFieldDecorator}

@@ -173,7 +173,8 @@ const HERO_IMPORTANT_STATS = {
       key:    '',
       name:   'Jumpack and melee kills ratio',
       render: (specs) => {
-        return `${round((specs.heroSpecific.jumpPackKills + specs.heroSpecific.meleeKills) / (specs.combat.eliminations / 100), 1)} %`;
+        return `${round((specs.heroSpecific.jumpPackKills + specs.heroSpecific.meleeKills)
+          / (specs.combat.eliminations / 100), 1)} %`;
       },
     },
   ],
