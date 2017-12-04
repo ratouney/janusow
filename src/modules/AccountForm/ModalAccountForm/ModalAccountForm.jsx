@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import {
   Modal,
   Alert,
-  Card,
-  Row,
-  Col,
 } from 'antd';
 import {
   close as closeModal,

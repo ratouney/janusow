@@ -3,14 +3,12 @@ import {
   Layout,
   Row,
   Col,
-  Avatar,
   Icon,
   Button,
   Dropdown,
   Menu,
 } from 'antd';
 import { Link } from 'react-router-dom';
-import { ModalAccountForm } from '../AccountForm/';
 
 const { Header } = Layout;
 
@@ -24,7 +22,6 @@ class TopMenu extends Component {
       userName = 'Guest',
       collapseAction,
       collapseStatus,
-      visible,
     } = this.props;
 
     const settingsOverlay = (

@@ -4,7 +4,6 @@ import {
 } from 'antd';
 import {
   FormItemInput,
-  FormItemSelect,
   FormItemSubmit,
   FormItemRadio,
 } from '../../utils/Form/';

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Menu,
-  Icon,
   Avatar,
   Input,
   Switch,
@@ -24,9 +23,9 @@ import {
 } from '../SelectUser/';
 
 const { Search } = Input;
-const { Item, SubMenu, ItemGroup } = Menu;
+const { Item, SubMenu } = Menu;
 
-const AccountItem = ({ icon, name, collapsed }) => {
+const AccountItem = ({ icon, name }) => {
   return (
     <span>
       <Avatar src={icon} style={{ marginBottom: -12, marginRight: 20 }} />
@@ -67,6 +66,7 @@ class SideMenu extends Component {
       DB.get('groups')
         .value();
 
+    // eslint-disable-next-line
     this.state = {
       ...this.state,
       accounts: users || [],
@@ -88,8 +88,6 @@ class SideMenu extends Component {
 
   render() {
     const {
-      homeText = 'HOME',
-      menuProps,
       collapsed,
       onChangeAccount,
       showAddModal,
@@ -137,7 +135,9 @@ class SideMenu extends Component {
           }}
           >
             <img
-              src={collapsed ? 'https://image.ibb.co/jKz1hw/logo.png' : 'https://image.ibb.co/e75qaG/24273324_1514772271952775_764001959_n_1.png'}
+              src={collapsed
+                ? 'https://image.ibb.co/jKz1hw/logo.png'
+                : 'https://image.ibb.co/e75qaG/24273324_1514772271952775_764001959_n_1.png'}
               alt="Logo"
               style={{ width: '100%', height: '100%' }}
             />
@@ -187,7 +187,10 @@ class SideMenu extends Component {
             source.map((elem) => {
               if (elem.groupname) {
                 return (
-                  <SubMenu title={elem.groupname} >
+                  <SubMenu
+                    title={elem.groupname}
+                    onClick={() => { onChangeAccount(); }}
+                  >
                     {elem.children.map((account) => {
                       return (
                         <Item
