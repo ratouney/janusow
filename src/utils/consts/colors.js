@@ -50,7 +50,7 @@ export const HERO_TEXT_COLORS = {
   symmetra:   'rgb(163, 19, 0)',
   torbjorn:   'rgb(0, 157, 255)',
   tracer:     'rgb(7, 110, 228)',
-  widowmaker: 'rgb(174, 164, 101)',
+  widowmaker: 'rgb(255, 148, 213)',
   winston:    'rgb(179, 175, 163)',
   zarya:      'rgb(10, 142, 87)',
   zenyatta:   'rgb(56, 99, 255)',

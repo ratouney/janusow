@@ -12,13 +12,15 @@ import {
 } from '../../utils/ApiParse';
 import {
   HERO_ICONS,
-  HERO_COLORS,
 } from '../../utils/consts';
 import CompetitivePieChart from './CompetitivePieChart';
 import CompetitiveStats from './CompetitiveStats';
 import CompetitiveList from './CompetitiveList';
 import CompetitiveModal from './CompetitiveModal';
 import { openModal } from './duck-reducer';
+import getHeroColors from '../../utils/getHeroColors';
+
+const heroColors = getHeroColors(document);
 
 class CompetitiveProfile extends Component {
   constructor(props) {
@@ -52,7 +54,7 @@ class CompetitiveProfile extends Component {
     console.log('CompData : ', CompHeroes);
 
     const currentSelected = isEmpty(selected) ? CompHeroes[0] : selected;
-    const currentColor = HERO_COLORS[currentSelected.hero];
+    const currentColor = heroColors[currentSelected.hero].backgroundColor;
     const currentHero = currentSelected.hero;
 
     const pieChartSpan = {
@@ -73,18 +75,18 @@ class CompetitiveProfile extends Component {
 
     const heroImageSpan = {
       xs: 24,
-      sm: 12,
-      md: 8,
-      lg: 8,
+      sm: 7,
+      md: 5,
+      lg: 7,
       xl: 6,
     };
 
     const heroStatSpan = {
       xs: 24,
-      sm: 12,
-      md: 16,
-      lg: 16,
-      xl: 18,
+      sm: 24 - heroImageSpan.sm,
+      md: 24 - heroImageSpan.md,
+      lg: 24 - heroImageSpan.lg,
+      xl: 24 - heroImageSpan.xl,
     };
 
     return (
@@ -128,7 +130,8 @@ class CompetitiveProfile extends Component {
                     src={HERO_ICONS[currentSelected.hero]}
                     style={{
                       border:  `solid 3px ${currentColor}`,
-                      display: 'inline',
+                      display: 'block',
+                      margin:  'auto',
                     }}
                   />
                 </Col>
