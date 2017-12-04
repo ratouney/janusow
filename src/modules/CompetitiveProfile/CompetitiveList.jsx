@@ -6,8 +6,6 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 import {
-  HERO_COLORS,
-  HERO_TEXT_COLORS,
   HERO_ICONS,
 } from '../../utils/consts';
 import {
