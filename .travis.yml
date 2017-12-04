@@ -1,4 +1,6 @@
 language: node_js
+node_js:
+  - "node"
 
 cache:
   bundler: true
@@ -13,7 +15,4 @@ before_install:
 install:
   - yarn
 script:
-  - "bundle exec rspec spec/"
-  - "bundle exec rubocop"
   - "yarn lint"
-  - "yarn test"

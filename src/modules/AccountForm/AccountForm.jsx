@@ -4,13 +4,29 @@ import {
 } from 'antd';
 import {
   FormItemInput,
-  FormItemSelect,
   FormItemSubmit,
+  FormItemRadio,
 } from '../../utils/Form/';
 import {
   REGIONS,
   PLATFORMS,
 } from '../../utils/consts';
+
+const REGION_BUTTONS = REGIONS.map((elem) => {
+  return {
+    ...elem,
+    key:    elem.value,
+    button: true,
+  };
+});
+
+const PLATFORM_BUTTONS = PLATFORMS.map((elem) => {
+  return {
+    ...elem,
+    key:    elem.value,
+    button: true,
+  };
+});
 
 class AccountForm extends Component {
   constructor(props) {
@@ -40,33 +56,41 @@ class AccountForm extends Component {
     } = this.props;
 
     const isPC = getFieldValue('platform') === 'pc';
+    const hasPreviousValues = getFieldValue('platform') && getFieldValue('region');
 
     return (
-      <Form onSubmit={(e) => { return this.handleSubmit(e, onSubmit); }} layout="horizontal" >
-        <FormItemSelect
-          customFormItemProps={{ label: 'Region' }}
+      <Form
+        className="account-form-modal"
+        onSubmit={(e) => { return this.handleSubmit(e, onSubmit); }}
+        layout="horizontal"
+      >
+        <FormItemRadio
           id="region"
           getFieldDecorator={getFieldDecorator}
-          dataSource={REGIONS}
+          dataSource={REGION_BUTTONS}
+          customFormItemProps={{ label: 'Region' }}
         />
 
-        <FormItemSelect
-          customFormItemProps={{ label: 'Platform' }}
+        <FormItemRadio
           id="platform"
           getFieldDecorator={getFieldDecorator}
-          dataSource={PLATFORMS}
-        />
-
-        <FormItemInput
-          isRequired
-          customFormItemProps={{ label: 'Username' }}
-          customInputProps={{ placeholder: 'Krusher99' }}
-          getFieldDecorator={getFieldDecorator}
-          id="username"
+          dataSource={PLATFORM_BUTTONS}
+          customFormItemProps={{ label: 'Platform' }}
         />
 
         {
-          isPC &&
+          hasPreviousValues &&
+          <FormItemInput
+            isRequired
+            customFormItemProps={{ label: 'Username' }}
+            customInputProps={{ placeholder: 'Krusher99' }}
+            getFieldDecorator={getFieldDecorator}
+            id="username"
+          />
+        }
+
+        {
+          hasPreviousValues && isPC &&
           <FormItemInput
             isRequired
             customFormItemProps={{ label: 'Battletag' }}
@@ -85,21 +109,4 @@ class AccountForm extends Component {
   }
 }
 
-const mapPropsToFields = ({
-  userData = {
-    region:    'eu',
-    platform:  'pc',
-    username:  'Ana',
-    battletag: '22345',
-  },
-}) => {
-  return {
-    region:    { value: userData.region },
-    platform:  { value: userData.platform },
-    username:  { value: userData.username },
-    battletag: { value: userData.battletag },
-
-  };
-};
-
-export default Form.create({ mapPropsToFields })(AccountForm);
+export default Form.create()(AccountForm);

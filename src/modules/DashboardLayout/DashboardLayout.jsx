@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 import windowDimensions from 'react-window-dimensions';
 import {
@@ -6,29 +7,41 @@ import {
 } from 'antd';
 import SideMenu from './SideMenu';
 import TopMenu from './TopMenu';
+import {
+  openSidemenu,
+  closeSidemenu,
+} from './duck-reducer';
 
 const { Sider, Content } = Layout;
 
-class DashboardLayout extends Component {
+class RenderDashboardLayout extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      collapsed: props.width < 500,
-    };
+    if (props.width < 500) {
+      props.onCloseSidemenu();
+    }
   }
 
-
   handleMenuCollapse() {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
+    const {
+      showSidemenu,
+      onOpenSidemenu,
+      onCloseSidemenu,
+    } = this.props;
+
+    if (showSidemenu) {
+      onCloseSidemenu();
+    } else {
+      onOpenSidemenu();
+    }
   }
 
   render() {
     const {
       children,
       width,
+      showSidemenu,
     } = this.props;
 
     return (
@@ -37,12 +50,12 @@ class DashboardLayout extends Component {
           trigger={null}
           position="fixed"
           collapsible
-          collapsed={this.state.collapsed}
+          collapsed={!showSidemenu}
           style={{ height: '100vh', minWidth: '85px' }}
         >
           <SideMenu
             homeText={width}
-            collapsed={this.state.collapsed}
+            collapsed={!showSidemenu}
             menuProps={{
               theme: 'dark',
             }}
@@ -51,7 +64,7 @@ class DashboardLayout extends Component {
         <Layout>
           <TopMenu
             collapseAction={() => { return this.handleMenuCollapse(); }}
-            collapseStatus={this.state.collapsed}
+            collapseStatus={!showSidemenu}
           />
           <Content
             style={{
@@ -65,6 +78,25 @@ class DashboardLayout extends Component {
   }
 }
 
-export default windowDimensions({
+function mapStateToProps(state) {
+  return {
+    showSidemenu: state.dashboardReducer.showSidemenu,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onOpenSidemenu: () => {
+      dispatch(openSidemenu());
+    },
+    onCloseSidemenu: () => {
+      dispatch(closeSidemenu());
+    },
+  };
+}
+
+const DashboardLayout = windowDimensions({
   debounce: (onResize) => { return debounce(onResize, 100); },
-})(DashboardLayout);
+})(RenderDashboardLayout);
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardLayout);

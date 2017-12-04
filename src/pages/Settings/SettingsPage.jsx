@@ -11,7 +11,6 @@ import {
   SettingsForm,
   editSettings,
 } from '../../modules/Settings/';
-import { ThemeColorForm } from '../../modules/ThemeColor/';
 
 class SettingsPage extends Component {
   componentDidMount() {

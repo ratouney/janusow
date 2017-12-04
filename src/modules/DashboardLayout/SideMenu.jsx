@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Menu,
-  Icon,
   Avatar,
   Input,
   Switch,
@@ -14,11 +13,19 @@ import { Link } from 'react-router-dom';
 import DB from '../../utils/DB/';
 import { reset as resetQPSelected } from '../QuickPlayProfile/duck-reducer';
 import { reset as resetCompSelected } from '../CompetitiveProfile/duck-reducer';
+import ModalAccountForm from '../AccountForm/ModalAccountForm/ModalAccountForm';
+import {
+  openAddModal,
+  closeAddModal,
+} from './duck-reducer';
+import {
+  fetchUserExist,
+} from '../SelectUser/';
 
 const { Search } = Input;
-const { Item, SubMenu, ItemGroup } = Menu;
+const { Item, SubMenu } = Menu;
 
-const AccountItem = ({ icon, name, collapsed }) => {
+const AccountItem = ({ icon, name }) => {
   return (
     <span>
       <Avatar src={icon} style={{ marginBottom: -12, marginRight: 20 }} />
@@ -59,6 +66,7 @@ class SideMenu extends Component {
       DB.get('groups')
         .value();
 
+    // eslint-disable-next-line
     this.state = {
       ...this.state,
       accounts: users || [],
@@ -80,10 +88,12 @@ class SideMenu extends Component {
 
   render() {
     const {
-      homeText = 'HOME',
-      menuProps,
       collapsed,
       onChangeAccount,
+      showAddModal,
+      onCloseAddModal,
+      onOpenAddModal,
+      onFetchUserExist,
     } = this.props;
 
     const {
@@ -109,6 +119,14 @@ class SideMenu extends Component {
 
     return (
       <span>
+        <ModalAccountForm
+          overrideVisible={{ do: true, value: showAddModal }}
+          userData={{}}
+          onCancel={onCloseAddModal}
+          onSubmit={(a, b) => {
+            onFetchUserExist(b);
+          }}
+        />
         <Link to="/" >
           <div style={{
             color:        'white',
@@ -117,7 +135,9 @@ class SideMenu extends Component {
           }}
           >
             <img
-              src={collapsed ? 'https://image.ibb.co/jKz1hw/logo.png' : 'https://image.ibb.co/e75qaG/24273324_1514772271952775_764001959_n_1.png'}
+              src={collapsed
+                ? 'https://image.ibb.co/jKz1hw/logo.png'
+                : 'https://image.ibb.co/e75qaG/24273324_1514772271952775_764001959_n_1.png'}
               alt="Logo"
               style={{ width: '100%', height: '100%' }}
             />
@@ -125,14 +145,13 @@ class SideMenu extends Component {
         </Link>
         <Row className="action-buttons" >
           <Col span={collapsed ? 24 : 12}>
-            <Link to="/select" >
-              <Button
-                style={{ width: '100%' }}
-                type="ghost"
-              >
+            <Button
+              style={{ width: '100%' }}
+              type="ghost"
+              onClick={() => { return onOpenAddModal(); }}
+            >
             Add
-              </Button>
-            </Link>
+            </Button>
           </Col>
           <Col span={collapsed ? 24 : 12}>
             <Button style={{ width: '100%' }} type="ghost" disabled>
@@ -168,7 +187,10 @@ class SideMenu extends Component {
             source.map((elem) => {
               if (elem.groupname) {
                 return (
-                  <SubMenu title={elem.groupname} >
+                  <SubMenu
+                    title={elem.groupname}
+                    onClick={() => { onChangeAccount(); }}
+                  >
                     {elem.children.map((account) => {
                       return (
                         <Item
@@ -186,7 +208,6 @@ class SideMenu extends Component {
                   </SubMenu>
                 );
               }
-              console.log('Elem : ', elem);
               return (
                 <Item
                   className="account-item"
@@ -211,7 +232,8 @@ class SideMenu extends Component {
 
 function mapStateToProps(state) {
   return {
-    searchStep: state.accountReducer.searchStep,
+    searchStep:   state.accountReducer.searchStep,
+    showAddModal: state.dashboardReducer.showAddModal,
   };
 }
 
@@ -220,6 +242,15 @@ function mapDispatchToProps(dispatch) {
     onChangeAccount: () => {
       dispatch(resetQPSelected());
       dispatch(resetCompSelected());
+    },
+    onOpenAddModal: () => {
+      dispatch(openAddModal());
+    },
+    onCloseAddModal: () => {
+      dispatch(closeAddModal());
+    },
+    onFetchUserExist: (userData) => {
+      dispatch(fetchUserExist(userData));
     },
   };
 }

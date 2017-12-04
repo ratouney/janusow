@@ -72,7 +72,8 @@ const fetchUserData = (userData) => {
         }
       })
       .catch((error) => {
-        console.log('FUCK OFF : ', error.toString());
+        // eslint-disable-next-line
+        console.log('Request failed : ', error.toString());
         dispatch(fetchErrorStep(3));
       });
   };
@@ -146,6 +147,7 @@ const fetchUserExist = (userData) => {
         }
       })
       .catch((error) => {
+        // eslint-disable-next-line
         console.log('Response.Json failed: ', error.toString());
         dispatch(fetchErrorStep(1));
       });
