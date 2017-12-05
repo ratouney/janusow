@@ -2,9 +2,24 @@ const OPEN_ADD_MODAL = 'Dashboard/OPEN_ADD_MODAL';
 const CLOSE_ADD_MODAL = 'Dashboard/CLOSE_ADD_MODAL';
 const OPEN_FUSE_MODAL = 'Dashboard/OPEN_FUSE_MODAL';
 const CLOSE_FUSE_MODAL = 'Dashboard/CLOSE_FUSE_MODAL';
-const OPEN_SIDEMENU = 'Dashboard/OPEN_SIDEMENU';
-const CLOSE_SIDEMENU = 'Dashboard/CLOSE_SIDEMENU';
+const OPEN_SIDEMENU = 'Dashboard/Sidemenu/OPEN';
+const CLOSE_SIDEMENU = 'Dashboard/Sidemenu/CLOSE';
 
+const TOGGLE_TYPE_FILTER = 'Dashboard/Sidemenu/TOGGLE_FILTER';
+const SET_FILTER_SEARCH = 'Dashboard/Sidemenu/SET_FILTER_SEARCH';
+
+const toggleTypeFilter = () => {
+  return {
+    type: TOGGLE_TYPE_FILTER,
+  };
+};
+
+const setFilterSearch = (search) => {
+  return {
+    type: SET_FILTER_SEARCH,
+    search,
+  };
+};
 
 const openAddModal = () => {
   return {
@@ -44,15 +59,29 @@ const closeSidemenu = () => {
 
 
 const initialState = {
-  showSidemenu:  true,
-  showAddModal:  false,
-  showFuseModal: false,
+  showSidemenu:       true,
+  showAddModal:       false,
+  showFuseModal:      false,
+  filterShowAccounts: true,
+  filterSearch:       '',
 };
 
 const dashboardReducer = (state = initialState, action) => {
   switch (action.type) {
     default:
       return state;
+
+    case SET_FILTER_SEARCH:
+      return {
+        ...state,
+        filterSearch: action.search,
+      };
+
+    case TOGGLE_TYPE_FILTER:
+      return {
+        ...state,
+        filterShowAccounts: !state.filterShowAccounts,
+      };
 
     case OPEN_FUSE_MODAL:
       return {
@@ -102,4 +131,6 @@ export {
   closeAddModal,
   closeFuseModal,
   closeSidemenu,
+  toggleTypeFilter,
+  setFilterSearch,
 };

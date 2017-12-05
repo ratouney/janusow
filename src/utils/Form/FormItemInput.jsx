@@ -26,6 +26,7 @@ const FormItemInput = (props) => {
     requiredMessage = 'Please enter a value',
     customInputProps,
     customFormItemProps,
+    validPattern = null,
   } = props;
 
   const inputProps = {
@@ -45,7 +46,7 @@ const FormItemInput = (props) => {
       {
         getFieldDecorator(
           id,
-          { rules: [{ required: isRequired, message: requiredMessage }] },
+          { rules: [{ required: isRequired, message: requiredMessage, pattern: validPattern }] },
         )(<Input {...inputProps} />)
       }
     </Form.Item>

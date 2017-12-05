@@ -4,7 +4,7 @@ export const playtimeToMinute = (timeAsString) => {
   if (time[1] === 'seconds') {
     return time[0] / 60;
   } else if (time[1] === 'minutes') {
-    return time[0];
+    return parseInt(time[0], 10);
   }
   return time[0] * 60;
 };

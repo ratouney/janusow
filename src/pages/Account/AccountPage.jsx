@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { find } from 'lodash';
 import {
   Tabs,
+  Card,
 } from 'antd';
 import DashboardLayout from '../../modules/DashboardLayout';
 import { QuickPlayProfile } from '../../modules/QuickPlayProfile/';
@@ -30,7 +31,9 @@ class AccountPage extends Component {
     if (currentUser === undefined) {
       return (
         <DashboardLayout>
-          User not loaded
+          <Card>
+            User not loaded
+          </Card>
         </DashboardLayout>
       );
     }

@@ -46,7 +46,6 @@ const columns = [
       return (
         <div
           className={`table-label-font ${item.className}`}
-          // style={{ backgroundColor: item.backgroundColor, color: item.textColor }}
         >
           {capitalize(value)}
         </div>

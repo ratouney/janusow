@@ -9,7 +9,7 @@ import {
   Row,
   Col,
 } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import DB from '../../utils/DB/';
 import { reset as resetQPSelected } from '../QuickPlayProfile/duck-reducer';
 import { reset as resetCompSelected } from '../CompetitiveProfile/duck-reducer';
@@ -20,6 +20,8 @@ import {
   closeAddModal,
   openFuseModal,
   closeFuseModal,
+  toggleTypeFilter,
+  setFilterSearch,
 } from './duck-reducer';
 import {
   fetchUserExist,
@@ -52,11 +54,9 @@ class SideMenu extends Component {
           .value();
 
     this.state = {
-      showAccounts: true,
-      filters:      false,
-      accounts:     users || [],
-      groups:       groups || [],
-      search:       '',
+      filters:  false,
+      accounts: users || [],
+      groups:   groups || [],
     };
   }
 
@@ -78,9 +78,7 @@ class SideMenu extends Component {
   }
 
   handleSwitch() {
-    this.setState({
-      showAccounts: !this.state.showAccounts,
-    });
+    this.props.onToggleTypeFilter;
   }
 
   handleFilter(search) {
@@ -100,20 +98,21 @@ class SideMenu extends Component {
       showFuseModal,
       onOpenFuseModal,
       onCloseFuseModal,
+      onToggleTypeFilter,
+      onSetFilterSearch,
+      filterSearch,
+      filterShowAccounts,
     } = this.props;
 
     const {
       accounts,
       groups,
-      showAccounts,
-      search,
-      filters,
     } = this.state;
 
-    let source = showAccounts ? accounts : groups;
+    let source = filterShowAccounts ? accounts : groups;
 
-    if (filters && search !== '') {
-      const reg = new RegExp(search, 'gi');
+    if (filterSearch !== '') {
+      const reg = new RegExp(filterSearch, 'gi');
 
       source = source.filter((elem) => {
         if (elem.groupname) {
@@ -183,14 +182,14 @@ class SideMenu extends Component {
             >
               <Item key="1">
                 <Search
-                  onSearch={(e) => { this.handleFilter(e); }}
+                  onSearch={(e) => { onSetFilterSearch(e); }}
                   suffix={null}
                 />
               </Item>
               <Item key="2">
                 <Switch
-                  checked={showAccounts}
-                  onChange={() => { return this.handleSwitch(); }}
+                  checked={filterShowAccounts}
+                  onChange={() => { return onToggleTypeFilter(); }}
                   checkedChildren="Show Accounts"
                   unCheckedChildren="Show Groups"
                 />
@@ -200,18 +199,37 @@ class SideMenu extends Component {
           {
             source.map((elem) => {
               if (elem.groupname) {
+                if (collapsed) {
+                  return (
+                    <Item
+                      className="account-item"
+                      onClick={() => { console.log('Open group  :', elem.groupname); }}
+                      key={elem.groupname}
+                    >
+                      <Link to={`/group/${elem.groupname}`}>
+                        <AccountItem
+                          collapsed
+                          icon={elem.children[0].icon}
+                          name={`${elem.children[0].username}#${elem.children[0].battletag}`}
+                        />
+                      </Link>
+                    </Item>
+                  );
+                }
                 return (
                   <SubMenu
-                    title={elem.groupname}
-                    onClick={() => { onChangeAccount(); }}
+                    key={elem.groupname}
+                    className="group-account-menu"
+                    title={<Link to={`/group/${elem.groupname}`} >{elem.groupname}</Link>}
                   >
                     {elem.children.map((account) => {
                       return (
                         <Item
+                          className="group-account-item"
                           key={`${account.username}#${account.battletag}`}
+                          onClick={() => { onChangeAccount(); }}
                         >
                           <AccountItem
-                            className="group-account-item"
                             collapsed={collapsed}
                             icon={account.icon}
                             name={`${account.username}#${account.battletag}`}
@@ -226,6 +244,7 @@ class SideMenu extends Component {
                 <Item
                   className="account-item"
                   key={`${elem.username}#${elem.battletag}`}
+                  onClick={() => { onChangeAccount(); }}
                 >
                   <Link to={`/account/${elem.username}-${elem.battletag}`}>
                     <AccountItem
@@ -246,9 +265,11 @@ class SideMenu extends Component {
 
 function mapStateToProps(state) {
   return {
-    searchStep:    state.accountReducer.searchStep,
-    showAddModal:  state.dashboardReducer.showAddModal,
-    showFuseModal: state.dashboardReducer.showFuseModal,
+    searchStep:         state.accountReducer.searchStep,
+    showAddModal:       state.dashboardReducer.showAddModal,
+    showFuseModal:      state.dashboardReducer.showFuseModal,
+    filterShowAccounts: state.dashboardReducer.filterShowAccounts,
+    filterSearch:       state.dashboardReducer.filterSearch,
   };
 }
 
@@ -273,7 +294,13 @@ function mapDispatchToProps(dispatch) {
     onFetchUserExist: (userData) => {
       dispatch(fetchUserExist(userData));
     },
+    onSetFilterSearch: (search) => {
+      dispatch(setFilterSearch(search));
+    },
+    onToggleTypeFilter: () => {
+      dispatch(toggleTypeFilter());
+    },
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SideMenu);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SideMenu));

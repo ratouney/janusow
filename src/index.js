@@ -20,10 +20,11 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import SelectPage from './pages/Select/';
-import Homepage from './pages/Home/';
+import HomePage from './pages/Home/';
 import NotFound from './pages/NotFound';
 import AccountDisplay from './pages/Account/';
 import Settings from './pages/Settings/';
+import GroupPage from './pages/Group/';
 
 const history = createBrowserHistory();
 const loggerMiddleware = createLogger();
@@ -43,8 +44,9 @@ ReactDOM.render(
             <Switch>
               <Route path="/select" exact component={SelectPage} />
               <Route path="/account/:username-:battletag" exact component={AccountDisplay} />
+              <Route path="/group/:groupname" exact component={GroupPage} />
               <Route path="/settings" exact component={Settings} />
-              <Route path="/" exact component={Homepage} />
+              <Route path="/" exact component={HomePage} />
               <Route component={NotFound} />
             </Switch>
           </App>

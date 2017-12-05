@@ -6,6 +6,7 @@ import {
   Switch,
   Row,
   Col,
+  Button,
 } from 'antd';
 import {
   CompetitiveHeroes,
@@ -51,7 +52,6 @@ class CompetitiveProfile extends Component {
     } = this.state;
 
     const CompHeroes = CompetitiveHeroes(data);
-    console.log('CompData : ', CompHeroes);
 
     const currentSelected = isEmpty(selected) ? CompHeroes[0] : selected;
     const currentColor = heroColors[currentSelected.hero].backgroundColor;
@@ -119,7 +119,7 @@ class CompetitiveProfile extends Component {
             <Card
               title={capitalize(currentHero)}
               bordered={false}
-              onClick={() => { onShowModal(); }}
+              extra={<Button onClick={() => { onShowModal(); }}>Further Information</Button>}
             >
               <Row gutter={16}>
                 <Col {...heroImageSpan}>
