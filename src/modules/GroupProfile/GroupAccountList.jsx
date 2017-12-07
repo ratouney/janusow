@@ -70,7 +70,7 @@ class GroupAccountList extends Component {
 
     return (
       <Card bordered={false}>
-        <Table columns={columns} dataSource={accountsFetched} />
+        <Table columns={columns} dataSource={accountsFetched} pagination={false} />
       </Card>
     );
   }

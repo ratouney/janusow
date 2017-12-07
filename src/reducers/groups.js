@@ -28,6 +28,7 @@ const initialState = {
   groupList: groupListFromLocalStorage,
   groupData: [],
   errors:    [],
+  success:   false,
 };
 
 function groupReducer(state = initialState, action) {
@@ -42,6 +43,7 @@ function groupReducer(state = initialState, action) {
         return {
           ...state,
           groupList: [...state.groupList, { ...action.data }],
+          success:   true,
         };
       }
       message.error('Groupname is already taken');

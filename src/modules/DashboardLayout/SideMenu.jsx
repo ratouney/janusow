@@ -152,8 +152,8 @@ class SideMenu extends Component {
             />
           </div>
         </Link>
-        <Row className="action-buttons" >
-          <Col span={collapsed ? 24 : 12}>
+        <Row className="action-buttons" justify="center" align="middle">
+          <Col span={collapsed ? 24 : 10} style={{ marginLeft: '5px', marginRight: '5px' }} >
             <Button
               style={{ width: '100%' }}
               type="ghost"
@@ -162,7 +162,7 @@ class SideMenu extends Component {
             Add
             </Button>
           </Col>
-          <Col span={collapsed ? 24 : 12}>
+          <Col span={collapsed ? 24 : 10} style={{ marginLeft: '5px', marginRight: '5px' }} >
             <Button
               style={{ width: '100%' }}
               type="ghost"

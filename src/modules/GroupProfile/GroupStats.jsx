@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import _, { round, sum, sortBy } from 'lodash';
+import _, { round, sum, sortBy, capitalize } from 'lodash';
 import {
   Card,
+  Row,
+  Col,
   Button,
+  Switch,
   Table,
 } from 'antd';
 import {
@@ -13,14 +16,49 @@ import {
   Group,
   playtimeToMinute,
 } from '../../utils/ApiParse/';
+import getHeroColors from '../../utils/getHeroColors';
+
+const heroColors = getHeroColors(document);
+
+const cardTitleSpan = {
+  xs: 24,
+  sm: 24,
+  md: 12,
+  lg: 12,
+  xl: 12,
+};
+
+const CardTitle = ({ groupData, showCompetitive, handleSwitch }) => {
+  return (
+    <Row>
+      <Col {...cardTitleSpan}>
+        {`You played ${showCompetitive ? Group.competitivePlaytime(groupData) : Group.quickplayPlaytime(groupData)} hours ${showCompetitive ? 'this season' : 'in QuickPlay'}`}
+      </Col>
+      <Col {...cardTitleSpan}>
+        <Switch
+          checked={showCompetitive}
+          onChange={() => { return handleSwitch(); }}
+          checkedChildren="Competitive"
+          unCheckedChildren="QuickPlay"
+        />
+      </Col>
+    </Row>
+  );
+};
 
 class GroupStats extends Component {
-  componentDidMount() {
-    // stuff
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showCompetitive: true,
+    };
   }
 
-  combinestuff(competitiveData) {
-    debugger;
+  handleSwitch() {
+    this.setState({
+      showCompetitive: !this.state.showCompetitive,
+    });
   }
 
   render() {
@@ -29,17 +67,39 @@ class GroupStats extends Component {
       accountData,
     } = this.props;
 
+    const {
+      showCompetitive,
+    } = this.state;
+
     const groupData = accountData.filter((elem) => {
       return group.keys.includes(elem.fullname);
     });
 
-    const competitiveData = Group.combineCompetitive(Group.competitiveData(groupData));
+    let competitiveData;
+    let quickplayData;
+
+    if (showCompetitive) {
+      competitiveData = Group.combineCompetitive(Group.competitiveData(groupData));
+    } else {
+      quickplayData = Group.combineQuickplay(Group.quickplayData(groupData));
+    }
 
     const columns = [
       {
         title:     'Hero',
         dataIndex: 'hero',
         width:     '120px',
+        render:    (value) => {
+          return (
+            <div style={{
+              color:           heroColors[value].color,
+              backgroundColor: heroColors[value].backgroundColor,
+            }}
+            >
+              {capitalize(value)}
+            </div>
+          );
+        },
       },
       {
         width:     '80px',
@@ -57,10 +117,14 @@ class GroupStats extends Component {
 
     return (
       <Card
-        title={`You played ${Group.competitivePlaytime(groupData)} hours this season`}
+        title={<CardTitle groupData={groupData} showCompetitive={showCompetitive} handleSwitch={() => { this.setState({ showCompetitive: !this.state.showCompetitive }); }} />}
         bordered={false}
       >
-        <Table dataSource={competitiveData} columns={columns} />
+        <Table
+          dataSource={showCompetitive ? competitiveData : quickplayData}
+          columns={columns}
+          size="small"
+        />
       </Card>
     );
   }

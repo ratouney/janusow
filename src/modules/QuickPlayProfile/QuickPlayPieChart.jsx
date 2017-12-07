@@ -42,8 +42,8 @@ class QuickPlayPieChart extends Component {
 
     const pieOptions = {
       tooltips: {
-        custom: (tooltip) => {
-          console.log('Tooltip : ', tooltip);
+        custom: (/* tooltip */) => {
+          // console.log('Tooltip : ', tooltip);
         },
       },
       legend: {

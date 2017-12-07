@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import DashboardLayout from '../../modules/DashboardLayout';
 import { GroupProfile } from '../../modules/GroupProfile/';
 
 class GroupPage extends Component {
-  componentDidMount() {
-    // stuff
+  componentWillReceiveProps({ success }) {
+    const { success: prevSuccess } = this.props;
+
+    debugger;
+    if (success && success !== prevSuccess) {
+      console.log('successfully created');
+      // message.success
+    }
   }
+
   render() {
     const {
       match: { params: { groupname } },
@@ -19,4 +27,12 @@ class GroupPage extends Component {
   }
 }
 
-export default GroupPage;
+function mapStateToProps({
+  groupReducer: { success },
+}) {
+  return {
+    success,
+  };
+}
+
+export default connect(mapStateToProps)(GroupPage);

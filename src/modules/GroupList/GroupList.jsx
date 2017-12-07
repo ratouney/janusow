@@ -19,7 +19,6 @@ const getDataSource = (groups, accountData) => {
       children: elem.children.map((acc) => {
         const current = _.find(accountData, { fullname: acc.key });
 
-        console.log('Current : ', current);
         return {
           ...acc,
           key:        `${elem.groupname}|${acc.key}`,
@@ -103,8 +102,6 @@ class GroupList extends Component {
         dataIndex: 'totalLevel',
       },
     ];
-
-    console.log('RENDERING');
 
     return (
       <Card>
