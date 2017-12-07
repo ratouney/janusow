@@ -14,9 +14,12 @@ import DB from '../../utils/DB/';
 import { reset as resetQPSelected } from '../QuickPlayProfile/duck-reducer';
 import { reset as resetCompSelected } from '../CompetitiveProfile/duck-reducer';
 import ModalAccountForm from '../AccountForm/ModalAccountForm/ModalAccountForm';
+import ModalMultiAccountForm from '../MultiAccountForm/ModalMultiAccountForm/';
 import {
   openAddModal,
   closeAddModal,
+  openFuseModal,
+  closeFuseModal,
 } from './duck-reducer';
 import {
   fetchUserExist,
@@ -94,6 +97,9 @@ class SideMenu extends Component {
       onCloseAddModal,
       onOpenAddModal,
       onFetchUserExist,
+      showFuseModal,
+      onOpenFuseModal,
+      onCloseFuseModal,
     } = this.props;
 
     const {
@@ -127,6 +133,10 @@ class SideMenu extends Component {
             onFetchUserExist(b);
           }}
         />
+        <ModalMultiAccountForm
+          visible={showFuseModal}
+          onCancel={onCloseFuseModal}
+        />
         <Link to="/" >
           <div style={{
             color:        'white',
@@ -154,8 +164,12 @@ class SideMenu extends Component {
             </Button>
           </Col>
           <Col span={collapsed ? 24 : 12}>
-            <Button style={{ width: '100%' }} type="ghost" disabled>
-            Fuse
+            <Button
+              style={{ width: '100%' }}
+              type="ghost"
+              onClick={() => { return onOpenFuseModal(); }}
+            >
+        Fuse
             </Button>
           </Col>
         </Row>
@@ -232,8 +246,9 @@ class SideMenu extends Component {
 
 function mapStateToProps(state) {
   return {
-    searchStep:   state.accountReducer.searchStep,
-    showAddModal: state.dashboardReducer.showAddModal,
+    searchStep:    state.accountReducer.searchStep,
+    showAddModal:  state.dashboardReducer.showAddModal,
+    showFuseModal: state.dashboardReducer.showFuseModal,
   };
 }
 
@@ -248,6 +263,12 @@ function mapDispatchToProps(dispatch) {
     },
     onCloseAddModal: () => {
       dispatch(closeAddModal());
+    },
+    onOpenFuseModal: () => {
+      dispatch(openFuseModal());
+    },
+    onCloseFuseModal: () => {
+      dispatch(closeFuseModal());
     },
     onFetchUserExist: (userData) => {
       dispatch(fetchUserExist(userData));
