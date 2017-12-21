@@ -45,6 +45,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "lint": "./node_modules/.bin/eslint src/",
+    "locales": "cat src/locales/locales.yml | ./scripts/yml2json.sh > src/locales/data.json",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },

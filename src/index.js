@@ -1,29 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import enUS from 'antd/lib/locale-provider/en_US';
-import thunkMiddleware from 'redux-thunk';
-import { Provider } from 'react-redux';
+
+import { createBrowserHistory } from 'history';
+
 import { createLogger } from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
 import { routerMiddleware as createRouterMiddleware } from 'react-router-redux';
-import { Router, Route, Switch } from 'react-router-dom';
+
 import {
   IntlProvider,
+  addLocaleData,
 } from 'react-intl';
-import { LocaleProvider } from 'antd';
-import { createBrowserHistory } from 'history';
+
+import { Provider } from 'react-redux';
 import {
   createStore,
   applyMiddleware,
 } from 'redux';
-import AppReducer from './reducers/';
-import './index.css';
-import App from './App';
+
+import { Router } from 'react-router-dom';
+
 import registerServiceWorker from './registerServiceWorker';
-import SelectPage from './pages/Select/';
-import Homepage from './pages/Home/';
-import NotFound from './pages/NotFound';
-import AccountDisplay from './pages/Account/';
-import Settings from './pages/Settings/';
+import localeData from './locales/data.json';
+import App from './App';
+import Routes from './Routes';
+import AppReducer from './reducers/';
+import ConnectedIntlProvider from './modules/ConnectedIntlProvider';
+import './index.css';
 
 const history = createBrowserHistory();
 const loggerMiddleware = createLogger();
@@ -34,23 +37,24 @@ const store = createStore(
   applyMiddleware(thunkMiddleware, loggerMiddleware, routerMiddleware),
 );
 
+/*
+            <Switch>
+            <Route path="/select" exact component={SelectPage} />
+            </Switch>
+<LocaleProvider locale={enUS} >
+</LocaleProvider>
+*/
+
+
 ReactDOM.render(
   <Provider store={store}>
-    <LocaleProvider locale={enUS} >
-      <IntlProvider >
-        <Router history={history} >
-          <App>
-            <Switch>
-              <Route path="/select" exact component={SelectPage} />
-              <Route path="/account/:username-:battletag" exact component={AccountDisplay} />
-              <Route path="/settings" exact component={Settings} />
-              <Route path="/" exact component={Homepage} />
-              <Route component={NotFound} />
-            </Switch>
-          </App>
-        </Router>
-      </IntlProvider>
-    </LocaleProvider>
+    <ConnectedIntlProvider>
+      <Router history={history} >
+        <App>
+          <Routes />
+        </App>
+      </Router>
+    </ConnectedIntlProvider>
   </Provider>
   , document.getElementById('root'),
 );

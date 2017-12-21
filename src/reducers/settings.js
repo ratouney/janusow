@@ -1,26 +1,16 @@
-import DB from '../utils/DB/';
-import { EDIT_SETTINGS } from '../modules/Settings/types';
+import languages from '../consts/languages';
 
-const loadSettingsFromLocalStorage = () => {
-  return DB.get('settings')
-    .value();
+const initialState = {
+  language: languages[0],
 };
 
-const initialValues = {
-  ...loadSettingsFromLocalStorage(),
-};
-
-const settingsReducer = (state = initialValues, action) => {
+const settingsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case EDIT_SETTINGS: {
-      DB.set('settings', { ...action.newSettings })
-        .write();
-
+    case 'settings/SET_LANGUAGE':
       return {
         ...state,
-        ...action.newSettings,
+        language: action.code,
       };
-    }
 
     default:
       return state;

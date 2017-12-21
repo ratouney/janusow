@@ -1,26 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchUserData } from './modules/SelectUser/actions';
-import DB from './utils/DB/';
 import './App.css';
 import './theme/index.less';
 
 class App extends Component {
   componentDidMount() {
-    const {
-      accountList,
-      onFetchData,
-    } = this.props;
-
-    const settings = DB.get('settings')
-      .value();
-
-    if (settings.preload) {
-      accountList.map((elem) => {
-        return onFetchData(elem);
-      });
-    }
+    // some sutff will happen here
   }
 
   render() {
@@ -36,17 +22,14 @@ class App extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps() {
   return {
-    accountList: state.accountReducer.accountList,
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps() {
   return {
-    onFetchData: (userData) => {
-      dispatch(fetchUserData(userData));
-    },
+
   };
 }
 

@@ -1,0 +1,11 @@
+# Locales File for the JanusOW project
+#
+#
+# First version made by Ratouney
+
+de:
+  hello: 'Heyo du da'
+fr: 
+  hello: 'Coucou ducon'
+en:
+  hello: 'Hello there, general Kenobi'
